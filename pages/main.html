@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+
+    <div id="rodape" class="principal">
+        <h1><strong>Conceitos Brechó</strong></h1>
+    </div>
+    <br>
+
+    <div id="menu-login" class="corpo">
+
+        Usuário: 
+        <input type="text" name="username" id="username"><br>
+        Senha: 
+        <input type="text" name="password" id="password">
+        <input type="button" value="Login" onclick="logar()">
+
+    </div>
+
+    <script>
+
+        var menu = window.document.getElementById('rodape');
+        
+        menu.addEventListener('click', clicar);
+        menu.addEventListener('mouseenter', passou);
+
+        function clicar(){
+            menu.innerHTML = "Click!"
+        }
+        function passou(){
+            menu.style.backgroundColor = 'blue';
+        }
+
+    </script>
+
+</body>
+</html>
