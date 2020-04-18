@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href = "../styles/style.css" rel="stylesheet">
     <title>Login</title>
 </head>
 <body>
@@ -18,7 +19,7 @@
         <input type="text" name="username" id="username"><br>
         Senha: 
         <input type="text" name="password" id="password">
-        <input type="button" value="Login" onclick="logar()">
+        <input type="button" value="Login" id= "login" >
 
     </div>
 
@@ -27,13 +28,16 @@
         var menu = window.document.getElementById('rodape');
         
         menu.addEventListener('click', clicar);
-        menu.addEventListener('mouseenter', passou);
+
+        var login = window.document.getElementById('login');
+        login.addEventListener('click', logar)
 
         function clicar(){
-            menu.innerHTML = "Click!"
+            menu.innerHTML = "Click!" //clicar no logo.
         }
-        function passou(){
-            menu.style.backgroundColor = 'blue';
+
+        function logar(){
+            window.location.href = "menu.html"
         }
 
     </script>

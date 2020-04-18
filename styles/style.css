@@ -1,0 +1,67 @@
+#rodape{
+
+    position: fixed;
+    background-color: rgb(233, 195, 195);
+    text-align: center;
+    color: rgb(219, 3, 3);
+    height: 20px;
+    width: 100%;
+    
+}
+
+#barra-principal{
+    background-color: rgb(115, 222, 236);
+    text-align: center;
+    word-spacing: 5px; 
+}
+
+.button-top {
+    background-color: rgb(255, 247, 132);
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-style: inherit;
+
+  }
+
+.dropdown-top{
+    position: relative;
+    display: inline-block;
+
+}
+
+.dropdown-top-conteudo{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.63); /* sombra do dropdown (fora)*/
+    z-index: 1;
+    text-align: justify;
+    word-spacing: 0px; 
+
+}
+
+.dropdown-top-conteudo a {
+
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  
+}
+
+.dropdown-top-conteudo a:hover {
+    
+    background-color: rgb(212, 212, 202)   /* conteudo do dropdown*/
+}
+
+.dropdown-top:hover .dropdown-top-conteudo {
+    display: block;
+  }
+
+.dropdown-top:hover .button-top {
+    background-color: blue;
+}
