@@ -1,10 +1,9 @@
 #rodape{
 
-    position: fixed;
     background-color: rgb(233, 195, 195);
     text-align: center;
     color: rgb(219, 3, 3);
-    height: 20px;
+    height: 20%;
     width: 100%;
     
 }
