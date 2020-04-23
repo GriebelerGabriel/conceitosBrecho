@@ -12,11 +12,7 @@ app.get("/menu", function(req,res){
 });
 
 app.get("/produtos", function(req,res){
-    res.sendFile(__dirname + "/produtos.html"); 
+    res.sendFile(__dirname + "/produtos.html"); // deve ser digitado na url pra funcionar
 });
-
-
-
-
 
 app.listen('8081');
