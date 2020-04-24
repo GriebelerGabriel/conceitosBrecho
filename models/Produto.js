@@ -1,14 +1,4 @@
-const Sequelize = require('sequelize');
-const bd = new Sequelize('conceitosbd', 'root', '12345', { //faz a conexão com o banco de dados
-    host: "localhost",
-    dialect: "mysql"
-});
-
-bd.authenticate().then(function(){ //verifica a conexão com o banco de dados
-    console.log("conectado ao banco de dados!")  
-}).catch(function(erro){
-    console.log("Erro ao se conectar" + erro)
-});
+const db = require('./db'); //Importa a conexão com o banco criada em db.js
 
 const Produtos = bd.define('produtos', {
     codigo: {
@@ -47,4 +37,4 @@ const Produtos = bd.define('produtos', {
 
 })
 
-// Produtos.sync({force: true})  -> sincroniza o banco de dados, coluna produtos
+// Produtos.sync({force: true})  -> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo

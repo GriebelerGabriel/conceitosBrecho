@@ -13,18 +13,17 @@
     </div>
     <br>
 
-    <div id="menu-login" class="corpo">
+    <form action="/login" id = menu-login method="POST">
 
         Usuário: 
         <input type="text" name="username" id="username"><br>
         Senha: 
-        <input type="text" name="password" id="password">
-        <input type="button" value="Login" id= "login" >
+        <input type="password" name="password" id="password">
+        <button type="submit"> Login </button>
 
-    </div>
-
+    </form>
     <script>
-
+        /*
         var menu = window.document.getElementById('rodape');
         
         menu.addEventListener('click', clicar);
@@ -35,11 +34,7 @@
         function clicar(){
             menu.innerHTML = "Click!" //clicar no logo.
         }
-
-        function logar(){
-            window.location.href = "menu.html"
-        }
-
+    */
     </script>
 
 </body>
