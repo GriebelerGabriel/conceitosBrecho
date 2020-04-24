@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 router.get("/", function(req,res){
-    res.render('../views/admin/login', {title: 'res vs app render'}) //mapeando para HTML, __dirname leva a raiz do projeto;
+    res.render('admin/login.html', {title: 'res vs app render'}) //mapeando para HTML, __dirname leva a raiz do projeto;
 });
 
 router.get("/menu", (req,res) =>{
