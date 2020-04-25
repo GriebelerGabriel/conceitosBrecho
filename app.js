@@ -8,7 +8,8 @@ const path = require("path")
 app.use(express.static(path.join(__dirname, "/public"))) 
 // seta a pasta public de arquivos estaticos, contendo o CSS (necessário vincular nas paginas)//
 
-// Render
+// Renderização --> css e Imagens
+
 app.set('views', __dirname + '/views'); // seta pasta de views para renderização posterior
 app.engine('html', require('ejs').renderFile); //seta .html para realizar a renderização nos HTML files
 app.set('view engine', 'ejs'); // seta a engine para a renderização das paginas
@@ -20,7 +21,6 @@ app.set('view engine', 'ejs');
 
 // Rotas
     app.use('/', admin);
-
 
 // servidor local HTTP
 const PORT = 8081;

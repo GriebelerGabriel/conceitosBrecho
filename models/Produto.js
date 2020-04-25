@@ -37,4 +37,4 @@ const Produto = db.bd.define('produtos', {
 
 })
 
-Produto.sync({force: true})  //-> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo
+//Produto.sync({force: true})  //-> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo
