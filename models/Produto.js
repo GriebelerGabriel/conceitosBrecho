@@ -1,6 +1,6 @@
 const db = require('./db'); //Importa a conexão com o banco criada em db.js
 
-const Produtos = bd.define('produtos', {
+const Produto = bd.define('produto', {
     codigo: {
         type: Sequelize.STRING
     },
@@ -37,4 +37,4 @@ const Produtos = bd.define('produtos', {
 
 })
 
-// Produtos.sync({force: true})  -> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo
+Produto.sync({force: true})  //-> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo

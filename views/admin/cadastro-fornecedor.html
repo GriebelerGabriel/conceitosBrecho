@@ -19,7 +19,7 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-            
+
             <button class="button-top">Produto</button>
 
             <div class="dropdown-top-conteudo">
@@ -47,8 +47,18 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-
     <br>
+
+    <form action="/menu" id = menu-login method="POST">
+        <div id = "form-cadastro">
+            Usuário: 
+            <input type="text" name="username" id="username"><br>
+            Senha: 
+            <input type="password" name="password" id="password">
+            <button type="submit" id='login'> Login </button>
+        </div>
+    </form>
+
 </body>
 
 </html>

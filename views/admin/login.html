@@ -13,28 +13,29 @@
     </div>
     <br>
 
-    <form action="/produto" id = menu-login method="POST">
-
-        Usuário: 
-        <input type="text" name="username" id="username"><br>
-        Senha: 
-        <input type="password" name="password" id="password">
-        <button type="submit"> Login </button>
-
+    <form action="/menu" id = menu-login method="POST">
+        <div id = "menu-login-interno">
+            Usuário: 
+            <input type="text" name="username" id="username"><br>
+            Senha: 
+            <input type="password" name="password" id="password">
+            <button type="submit" id='login'> Login </button>
+        </div>
     </form>
+
+    
     <script>
         /*
-        var menu = window.document.getElementById('rodape');
-        
-        menu.addEventListener('click', clicar);
+        document.getElementById("login").addEventListener("click", logar);
+        var nome = document.getElementsByName("username");
+        var senha = document.getElementsByName("password");
 
-        var login = window.document.getElementById('login');
-        login.addEventListener('click', logar)
-
-        function clicar(){
-            menu.innerHTML = "Click!" //clicar no logo.
+        logar => {
+            if(nome == 'admin' && senha == '12345'){
+                
+            }
         }
-    */
+        */
     </script>
 
 </body>
