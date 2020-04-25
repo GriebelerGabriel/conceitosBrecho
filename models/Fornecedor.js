@@ -14,7 +14,7 @@ const Fornecedor = db.bd.define('fornecedores', {
         type: db.Sequelize.STRING
     },
     cep: {
-        type: db.Sequelize.INTEGER
+        type: db.Sequelize.STRING
     },
     municipio: {
         type: db.Sequelize.STRING
@@ -52,7 +52,7 @@ const Fornecedor = db.bd.define('fornecedores', {
     },
 
     observacao: {
-        type: db.Sequelize.STRING
+        type: db.Sequelize.TEXT
     }
 
 })

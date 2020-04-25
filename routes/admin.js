@@ -28,17 +28,17 @@ router.get("/menu/importar-produto", (req,res) =>{
     res.render('admin/importar-produto.html');
 });
 
-// -------- Rotas Venda ----------- //
-router.get("/menu/cadastro-venda", (req,res) =>{
-    res.render('admin/cadastro-venda.html');
+// -------- Rotas Despesa ----------- //
+router.get("/menu/cadastro-despesa", (req,res) =>{
+    res.render('admin/cadastro-despesa.html');
 });
 
-router.get("/menu/editar-venda", (req,res) =>{
-    res.render('admin/editar-venda.html');
+router.get("/menu/editar-despesa", (req,res) =>{
+    res.render('admin/editar-despesa.html');
 });
 
-router.get("/menu/importar-venda", (req,res) =>{
-    res.render('admin/importar-venda.html');
+router.get("/menu/importar-despesa", (req,res) =>{
+    res.render('admin/importar-despesa.html');
 });
 
 // ---------- Rotas Fornecedor -------- //

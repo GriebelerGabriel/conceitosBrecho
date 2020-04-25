@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Menu</title>
+    <title>Fornecedor</title>
 </head>
 
 <body>
@@ -19,11 +19,11 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-            
+
             <button class="button-top">Produto</button>
 
             <div class="dropdown-top-conteudo">
-                <a href='/menu/cadastro-produto'>Cadastrar</a>
+                <a href='/menu/cadastro-produto'>Cadastro</a>
                 <a href='/menu/editar-produto'>Editar</a></button>
                 <a href='/menu/importar-produto'>Importar</a>
             </div>
@@ -41,15 +41,41 @@
         <div class="dropdown-top">
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
-                <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
+                <a href='/menu/cadastro-fornecedor'>Cadastro</a>
                 <a href='/menu/editar-produto'>Editar</a></button>
                 <a href='/menu/importar-produto'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-
     <br>
+
+    <form action="" name="form-cadastros" method="POST">
+        <div class="cadastro" id="cadastro-fornecedor">
+
+            Nome: <input type="text" name="nome" id="nome">
+            Endereço: <input type="text" name="endereco" id="endereco">
+            Bairro: <input type="text" name="bairro" id="bairro">
+            CEP: <input type="text" name="cep" id="cep">
+            <br>
+            Municipio: <input type="text" name="municipio" id="municipio">
+            Estado: <input type="text" name="estado" id="estado">
+            Telefone: <input type="text" name="telefone" id="telefone">
+            Celular: <input type="text" name="celular" id="celular">
+            <br>
+            E-mail: <input type="text" name="email" id="email">
+            CNPJ/CPF: <input type="text" name="cnpj_cpf" id="cnpj_cpf">
+            Grupo: <input type="text" name="grupo" id="grupo">
+            Situação: <input type="text" name="situacao" id="situacao">
+            <br>
+            Data de Nascimento: <input type="text" name="data_nascimento" id="data_nascimento">
+            Observação: <input type="text" name="observacao" id="observacao">
+        </div>
+
+        <button>Cadastrar!</button>
+        
+    </form>
+
 </body>
 
 </html>

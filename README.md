@@ -1,5 +1,3 @@
-# conceitosBrecho
-Private project for <h1><Strong>Joselei</strong></h1>
 <h1> --------- To run on Your PC --------- </h1>
 <br>
 
@@ -23,4 +21,6 @@ Private project for <h1><Strong>Joselei</strong></h1>
 <br>
 1º Rodar com o cmd na pasta do conceitosBrecho, o comando -> "node app.js"
 
-############## FEITO ############
+<h1><strong>OBS:</Strong> os códigos do CMD deve serem rodados sem as ASPAS! </h1>
+
+############## FEITO ##############

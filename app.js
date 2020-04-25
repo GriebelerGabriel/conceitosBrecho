@@ -25,5 +25,5 @@ app.set('view engine', 'ejs');
 // servidor local HTTP
 const PORT = 8081;
 app.listen(PORT, ()=>{
-    console.log("Server UP");  
+    console.log("Server UP! acesse em -> http://localhost:8081/");  
 });
