@@ -10,7 +10,7 @@ bd.authenticate().then(function(){ //verifica a conexão com o banco de dados
     console.log("Erro ao se conectar" + erro)
 });
 
-module.exports = {      // faz a exportação do sequelizer e conexao com o banco
+module.exports = {      // faz a exportação do sequelize e conexao com o banco
     Sequelize: Sequelize,
     bd: bd
 }

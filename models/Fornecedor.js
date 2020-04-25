@@ -1,58 +1,58 @@
 const db = require('./db'); //Importa a conexão com o banco criada em db.js
+const Fornecedor = db.bd.define('fornecedores', {
 
-const Fornecedor = bd.define('fornecedor', {
     nome: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     endereco: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     descricao: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     bairro: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     cep: {
-        type: Sequelize.INTEGER
+        type: db.Sequelize.INTEGER
     },
     municipio: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     estado: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     telefone: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     celular: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     email: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     cnpj_cpf: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     grupo: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     situacao: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
 
     data_nascimento: {
-        type: Sequelize.DATE
+        type: db.Sequelize.DATE
     },
 
     observacao: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     }
 
 })

@@ -1,38 +1,38 @@
 const db = require('./db'); //Importa a conexão com o banco criada em db.js
 
-const Produto = bd.define('produto', {
+const Produto = db.bd.define('produtos', {
     codigo: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     tipo: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     descricao: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     sexo: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     tamanho: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     grupo: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     },
     preco_custo: {
-        type: Sequelize.FLOAT
+        type: db.Sequelize.FLOAT
     },
     porcentagem: {
-        type: Sequelize.INTEGER
+        type: db.Sequelize.INTEGER
     },
     preco_venda: {
-        type: Sequelize.FLOAT
+        type: db.Sequelize.FLOAT
     },
     foto: {
-        type: Sequelize.BOOLEAN
+        type: db.Sequelize.BOOLEAN
     },
     data_venda: {
-        type: Sequelize.STRING
+        type: db.Sequelize.STRING
     }
 
 })
