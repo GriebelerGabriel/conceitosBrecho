@@ -3,13 +3,18 @@ const express = require('express');
 const app = express();
 const admin = require('./routes/admin.js') // linka pasta admin das rotas para este arquivo
 const path = require("path")
+const bodyParser = require("body-parser");
+const Sequelize = require('sequelize');
 
 // Public
 app.use(express.static(path.join(__dirname, "/public"))) 
 // seta a pasta public de arquivos estaticos, contendo o CSS (necessário vincular nas paginas)//
 
-// Renderização --> css e Imagens
+//Configuração BodyParser para recebimento de dados dos formulários!
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
+// Renderização --> css e Imagens
 app.set('views', __dirname + '/views'); // seta pasta de views para renderização posterior
 app.engine('html', require('ejs').renderFile); //seta .html para realizar a renderização nos HTML files
 app.set('view engine', 'ejs'); // seta a engine para a renderização das paginas

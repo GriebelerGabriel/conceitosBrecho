@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Despesa = require('../models/Despesa');
+const Sequelize = require('sequelize');
 
 
 
@@ -54,7 +55,12 @@ router.post("/menu/sendDespesa", (req,res) =>{
 });
 
 router.get("/menu/listar-despesas", (req,res) =>{
-    res.render('admin/listar-despesas.html');
+    Despesa.findAll().then( (despesas) =>{
+        res.render('admin/listar-despesas.html', {
+        data: despesas, descricao: despesas, valor: despesas, observacao: despesas})
+    })
+     
+    //res.render('menu/listar-despesas.html');
 });
 
 router.get("/menu/importar-despesas", (req,res) =>{

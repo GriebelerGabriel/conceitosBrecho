@@ -10,7 +10,7 @@ const Despesa = db.bd.define('despesas', {
     valor: {
         type: db.Sequelize.FLOAT
     },
-    obeservacao: {
+    observacao: {
         type: db.Sequelize.TEXT
     }
 
