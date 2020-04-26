@@ -36,7 +36,7 @@ router.get("/menu/cadastro-despesa", (req,res) =>{
     res.render('admin/cadastro-despesa.html');
 });
 
-router.post("/menu/sendDespesa", (req,res) =>{
+router.post("/menu/saveDespesa", (req,res) =>{
 
     Despesa.create({
 
@@ -46,21 +46,23 @@ router.post("/menu/sendDespesa", (req,res) =>{
         observacao: req.body.observacao,
 
     }).then(function(){
-        res.render('admin/listar-despesas.html');
+        res.redirect("./listar-despesas");
     }).catch(function(erro){
         res.send("Houve um erro: "+ erro);
     })
+});
 
-    
+router.post("/menu/sendDespesas", (req,res) =>{
+    Despesa.findAll().then( (despesas) =>{ // .all() trocado atualmente por .findAll()
+        //res.send({ data: despesas, descricao: despesas, valor: despesas, observacao: despesas })
+        console.log("chegou aqui!");
+    })
 });
 
 router.get("/menu/listar-despesas", (req,res) =>{
-    Despesa.findAll().then( (despesas) =>{
-        res.render('admin/listar-despesas.html', {
-        data: despesas, descricao: despesas, valor: despesas, observacao: despesas})
-    })
-     
-    //res.render('menu/listar-despesas.html');
+
+    res.render('admin/listar-despesas.html');
+
 });
 
 router.get("/menu/importar-despesas", (req,res) =>{
