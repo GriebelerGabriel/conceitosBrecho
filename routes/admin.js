@@ -54,8 +54,7 @@ router.post("/menu/saveDespesa", (req,res) =>{
 
 router.post("/menu/sendDespesas", (req,res) =>{
     Despesa.findAll().then( (despesas) =>{ // .all() trocado atualmente por .findAll()
-        //res.send({ data: despesas, descricao: despesas, valor: despesas, observacao: despesas })
-        console.log("chegou aqui!");
+        res.send(despesas)
     })
 });
 
