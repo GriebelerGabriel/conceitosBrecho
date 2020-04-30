@@ -11,7 +11,7 @@
 <body onload="readData()">
     <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -49,11 +49,29 @@
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
     <hr>
-    <div class="listagem">
-        
+    <form name="filtrarDespesas">
+        DATA: <input type="text" class="filtroData">
+        DESCRIÇÃO: <input type="text" class="filtroDescricao">
+        VALOR: <input type="text" class="fitroValor">
+        OBSERVAÇÃO: <input type="test" class="filtroObservacao">
+        <button type="submit" onClick="filtrarDespesas()" value="pesquisar">Pesquisar!</button>
+    </form>
+    <hr>
+    <div class="menu-listagem">
+        <table id="TABELA" align="center">
+            <tr>
+                <th><strong>DATA</strong></th>
+                <th><strong>DESCRIÇÃO</strong></th>
+                <th><strong>VALOR</strong></th>
+                <th><strong>OBSERVAÇÃO</strong></th>
+                <th><strong>EDITAR</strong></th>
+            </tr>
+            <tr>
+                <label id="#DATA"></label>
+            </tr>
+        </table>
     </div>
-    <script>
-
+    <script> //script de requisição e respostas de dados do banco
         function readData() {
 
             var xhttp = new XMLHttpRequest();
@@ -73,17 +91,83 @@
             xhttp.send(JSON.stringify(body));
 
             // ---------- Resposta da requisição feita acima ---------------//
+
             xhttp.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
                     resposta = JSON.parse(this.responseText)
-                     
+
+                    for (x = 0; x < 10; x++) {
+
+                        for (x = 0; x < 10; x++) {
+
+                            var linha = document.createElement('tr')
+
+                            var noInterno = document.createElement("td");
+                            var textData = document.createTextNode(resposta[x].data);
+                            noInterno.appendChild(textData);
+                            linha.appendChild(noInterno);
+
+                            var noInterno = document.createElement("td");
+                            var textData = document.createTextNode(resposta[x].descricao);
+                            noInterno.appendChild(textData);
+                            linha.appendChild(noInterno);
+
+                            var noInterno = document.createElement("td");
+                            var textData = document.createTextNode(resposta[x].valor);
+                            noInterno.appendChild(textData);
+                            linha.appendChild(noInterno);
+
+                            var noInterno = document.createElement("td");
+                            var textData = document.createTextNode(resposta[x].observacao);
+                            noInterno.appendChild(textData);
+                            linha.appendChild(noInterno);
+
+                            //var noInterno = document.createElement("td"); //botão de Editar! Em teste!
+
+                            document.getElementById("TABELA").appendChild(linha)
+
+                        }
+
+                    }
+
+
                 }
 
             }
         }
     </script>
 
+    <script>
+        function filtrarDespesas(){  // não esta funcando ainda os filtros
+            var xhttp = new XMLHttpRequest();
+
+            var tipo = "POST"
+            /*
+            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
+            */
+
+            var url = "/menu/filtroDespesas";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var body = {}
+
+            xhttp.send(JSON.stringify(body));
+
+            // ---------- Resposta da requisição feita acima ---------------//
+
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    resposta = JSON.parse(this.responseText)
+                    console.log(resposta);
+                }
+
+            }
+        }
+    </script>
 
 
 

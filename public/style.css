@@ -69,3 +69,28 @@
 .dropdown-top:hover .button-top {
     background-color: blue;
 }
+
+#TABELA {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+#TABELA td, #TABELA th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+  
+#TABELA tr:nth-child(even){background-color: #f2f2f2;}
+  
+#TABELA tr:hover {background-color: #ddd;}
+  
+#TABELA th {
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(234, 169, 253);
+    color: white;
+    
+}
