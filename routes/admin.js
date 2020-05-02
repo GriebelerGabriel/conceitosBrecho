@@ -75,8 +75,8 @@ router.get("/menu/importar-despesas", (req, res) => {
 });
 
 router.post("/menu/sendIdDespesa", (req,res)=>{
-    var valueId = req.query;
-    console.log(req.query)
+    var valueId = req.body.id;
+    console.log(req.body.id)
     Despesa.findAll({
 
         where:{
