@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Menu</title>
+</head>
+
+<body onload="readData()">
+    <script src="../js/jquery-1.11.3.js"></script>
+    <div id="rodape" class="principal">
+        <a href='/menu'><img src='/logo.jpeg'></a>
+    </div>
+
+    <div id="barra-principal">
+
+        <button class="button-top"> <a href='/menu'>Home</a></button>
+
+        <div class="dropdown-top">
+
+            <button class="button-top">Produto</button>
+
+            <div class="dropdown-top-conteudo">
+                <a href='/menu/cadastro-produto'>Cadastrar</a>
+                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/importar-produtos'>Importar</a>
+            </div>
+        </div>
+
+        <div class="dropdown-top">
+            <button class="button-top">Despesa</button>
+            <div class="dropdown-top-conteudo">
+                <a href='/menu/cadastro-despesa'>Cadastrar</a>
+                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/importar-despesas'>Importar</a>
+            </div>
+        </div>
+
+        <div class="dropdown-top">
+            <button class="button-top">Fornecedor</button>
+            <div class="dropdown-top-conteudo">
+                <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
+                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/importar-fornecedores'>Importar</a>
+            </div>
+        </div>
+        <button class="button-top"> <a href='/sobre'>Sobre</a></button>
+    </div>
+    <form>
+        <strong>DATA</strong> <textarea id=#DATA></textarea>
+        <strong>DESCRIÇÃO</strong> <textarea id=#DESCRICAO></textarea>
+        <strong>VALOR</strong> <textarea id=#VALOR></textarea>
+        <strong>OBSERVAÇÃO</strong> <textarea id=#OBSERVACAO></textarea>
+        <button type="submit"> Alterar! </button>
+
+    </form>
+
+    <script>
+
+        function readData() {
+            var xhttp = new XMLHttpRequest();
+
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var idValue = url.searchParams.get("id");
+
+            console.log(idValue);
+
+
+            var tipo = "POST"
+
+            var url = "/menu/sendIdDespesa?="+idValue+"";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var body = {}
+
+            xhttp.send(JSON.stringify(body));
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var valores = JSON.parse(this.responseText);
+                    console.log(valores)
+                    var sub = document.getElementById("#DATA");
+                    sub.innerText = valores.data;
+                    var sub = document.getElementById("#DESCRICAO");
+                    sub.innerText = valores.descricao;
+                    var sub = document.getElementById("#VALOR");
+                    sub.innerText = valores.valor;
+                    var sub = document.getElementById("#OBSERVACAO");
+                    sub.innerText = valores.observacao;
+
+                }
+            };
+
+        }
+
+    </script>
+
+</body>
+
+</html>

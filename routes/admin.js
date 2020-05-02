@@ -74,6 +74,27 @@ router.get("/menu/importar-despesas", (req, res) => {
 
 });
 
+router.post("/menu/sendIdDespesa", (req,res)=>{
+    var valueId = req.query;
+    console.log(req.query)
+    Despesa.findAll({
+
+        where:{
+            id: valueId
+        }
+
+    }).then(function(despesa){
+        res.send(despesa)
+    }).catch((erro)=>{
+        res.send(erro);
+    })
+});
+
+router.get("/menu/editar-despesa", (req,res)=>{
+    res.render("admin/editar-despesa.html")
+})
+
+
 
 router.post("/menu/saveDespesa", (req, res) => { // Criar no Banco de dados!
 

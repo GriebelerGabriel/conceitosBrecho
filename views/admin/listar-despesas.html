@@ -9,7 +9,7 @@
 </head>
 
 <body onload="readData()">
-    <script src="../js/jquery-1.11.3.js"></script>
+    <script src="../../jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
         <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
     </div>
@@ -72,6 +72,7 @@
         </table>
     </div>
     <script> //script de requisição e respostas de dados do banco
+
         function readData() {
 
             var xhttp = new XMLHttpRequest();
@@ -97,37 +98,36 @@
                 if (this.readyState == 4 && this.status == 200) {
                     resposta = JSON.parse(this.responseText)
 
-                    for (x = 0; x < 10; x++) {
+                    for (x = 0; x < resposta.length; x++) {
 
-                        for (x = 0; x < 10; x++) {
+                        var linha = document.createElement('tr')
 
-                            var linha = document.createElement('tr')
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].data);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
 
-                            var noInterno = document.createElement("td");
-                            var textData = document.createTextNode(resposta[x].data);
-                            noInterno.appendChild(textData);
-                            linha.appendChild(noInterno);
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].descricao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
 
-                            var noInterno = document.createElement("td");
-                            var textData = document.createTextNode(resposta[x].descricao);
-                            noInterno.appendChild(textData);
-                            linha.appendChild(noInterno);
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].valor);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
 
-                            var noInterno = document.createElement("td");
-                            var textData = document.createTextNode(resposta[x].valor);
-                            noInterno.appendChild(textData);
-                            linha.appendChild(noInterno);
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].observacao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
 
-                            var noInterno = document.createElement("td");
-                            var textData = document.createTextNode(resposta[x].observacao);
-                            noInterno.appendChild(textData);
-                            linha.appendChild(noInterno);
+                        var botao = document.createElement("td");
+                        botao.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
+                            "<img src='/editar.jpeg' width='25' height='25' >"
+                        linha.appendChild(botao);
 
-                            //var noInterno = document.createElement("td"); //botão de Editar! Em teste!
-
-                            document.getElementById("TABELA").appendChild(linha)
-
-                        }
+                        document.getElementById("TABELA").appendChild(linha)
 
                     }
 
@@ -139,13 +139,10 @@
     </script>
 
     <script>
-        function filtrarDespesas(){  // não esta funcando ainda os filtros
+        function filtrarDespesas() {  // não esta funcando ainda os filtros
             var xhttp = new XMLHttpRequest();
 
             var tipo = "POST"
-            /*
-            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-            */
 
             var url = "/menu/filtroDespesas";
 
