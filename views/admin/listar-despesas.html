@@ -65,6 +65,7 @@
                 <th><strong>VALOR</strong></th>
                 <th><strong>OBSERVAÇÃO</strong></th>
                 <th><strong>EDITAR</strong></th>
+                <th><strong>DELETAR</strong></th>
             </tr>
             <tr>
                 <label id="#DATA"></label>
@@ -122,14 +123,20 @@
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
-                        var botao = document.createElement("td");
-                        botao.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
+                        var botaoEdit = document.createElement("td");
+                        botaoEdit.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
                             "<img src='/editar.jpeg' width='25' height='25' >"
-                        linha.appendChild(botao);
+                        linha.appendChild(botaoEdit);
+
+                        var botaoDelete = document.createElement("td");
+                        botaoDelete.innerHTML = "<a href = '/menu/excluir-despesa?id=" + resposta[x].id + "'>" +
+                            "<img src='/delete.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)
 
                     }
+
 
 
                 }

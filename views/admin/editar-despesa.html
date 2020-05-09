@@ -48,14 +48,13 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <form>
-        <strong>DATA</strong> <input type="text" id="#DATA">
-        <strong>DESCRIÇÃO</strong> <textarea id=#DESCRICAO></textarea>
-        <strong>VALOR</strong> <textarea id=#VALOR></textarea>
-        <strong>OBSERVAÇÃO</strong> <textarea id=#OBSERVACAO></textarea>
-        <button type="submit"> Alterar! </button>
 
-    </form>
+        <input type="hidden" id="#ID" value="">
+        <strong>DATA</strong> <input type="date" id="#DATA" value="">
+        <strong>DESCRIÇÃO</strong> <input type="text" id=#DESCRICAO value="">
+        <strong>VALOR</strong> <input type="number" id=#VALOR value="">
+        <strong>OBSERVAÇÃO</strong> <input type="text" id=#OBSERVACAO value="">
+        <button onclick="enviarAlteracao()"> Alterar! </button>
 
     <script>
 
@@ -71,33 +70,54 @@
 
             var tipo = "POST"
 
-            var url = "/menu/sendIdDespesa?="+idValue;
+            var url = "/menu/sendIdDespesa?=" + idValue;
 
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
-            var body = {id : idValue}
+            var body = { id: idValue }
 
             xhttp.send(JSON.stringify(body));
 
             xhttp.onreadystatechange = function () {
-                
+
                 if (this.readyState == 4 && this.status == 200) {
                     var valores = JSON.parse(this.responseText);
-                    console.log(valores[0].data)
-                   
-                    console.log(valores)
-                    var sub = document.getElementById("#DATA");
-                    sub.innerText = valores[0].data;
-                    var sub = document.getElementById("#DESCRICAO");
-                    sub.innerText = valores[0].descricao;
-                    var sub = document.getElementById("#VALOR");
-                    sub.innerText = valores[0].valor;
-                    var sub = document.getElementById("#OBSERVACAO");
-                    sub.innerText = valores[0].observacao;
+
+                    var sub = document.getElementById("#ID").value = valores[0].id; // seta nos campos value do formulario
+                    var sub = document.getElementById("#DATA").value = valores[0].data;
+                    var sub = document.getElementById("#DESCRICAO").value = valores[0].descricao;
+                    var sub = document.getElementById("#VALOR").value = valores[0].valor;
+                    var sub = document.getElementById("#OBSERVACAO").value = valores[0].observacao;
+
 
                 }
             };
+
+        }
+
+        function enviarAlteracao(){
+
+            var alterId = document.getElementById("#ID").value;
+            var alterData = document.getElementById("#DATA").value;
+            var alterDescricao = document.getElementById("#DESCRICAO").value;
+            var alterValor = document.getElementById("#VALOR").value;
+            var alterObs = document.getElementById("#OBSERVACAO").value;
+
+            var xhttp = new XMLHttpRequest();
+
+            var tipo = "POST"
+
+            var url = "/menu/editandoDespesa";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            
+            var body = {id: alterId, data: alterData, descricao: alterDescricao, valor: alterValor, observacao: alterObs}
+
+            xhttp.send(JSON.stringify(body));
+            alert("Alterado com sucesso!");
+            window.location.href = "/menu/listar-despesas";
 
         }
 
