@@ -19,7 +19,6 @@ app.set('views', __dirname + '/views'); // seta pasta de views para renderizaç�
 app.engine('html', require('ejs').renderFile); //seta .html para realizar a renderização nos HTML files
 app.set('view engine', 'ejs'); // seta a engine para a renderização das paginas
 
-app.set('assets', __dirname + '/assets');
 app.engine('jpeg', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 

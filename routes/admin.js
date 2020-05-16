@@ -138,7 +138,7 @@ router.post("/menu/editandoDespesa", (req, res) => { // Salva a edição de uma 
     }).catch((erro) => {
         res.send(erro);
     })
-    
+
 })
 
 router.get("/menu/excluir-despesa", (req, res) => {
@@ -174,6 +174,41 @@ router.post("/menu/filtroDespesas", (req, res) => {
         console.log("estou aqui");
     })
 })
+
+router.post("/menu/importandoDespesa", (req, res) => {
+    xlsxj = require("xlsx-to-json");
+    xlsxj({
+        input: __dirname + "/filesXLSX/write.xlsx",
+        output: "output.json"
+    }, function (err, result) {
+        if (err) {
+            console.error(err);
+        } else {
+
+            var count = Object.keys(result).length;
+
+            for (x = 0; x < count; x++) {
+
+                Despesa.create({
+
+                    data: result[x].DATA,
+                    descricao: result[x].DESCRICAO,
+                    valor: result[x].VALOR,
+                    observacao: result[x].OBSERVACAO,
+
+                }).then(function () {
+                    console.log("Cadastrado com sucesso!");
+                }).catch(function (erro) {
+                    res.send("Houve um erro: " + erro);
+                });
+            }
+        }
+    })
+    res.redirect("/menu/listar-despesas");
+
+})
+    
+
 // ---------- Rotas Fornecedor -------- //
 router.get("/menu/cadastro-fornecedor", (req, res) => {
     res.render('admin/cadastro-fornecedor.html');
