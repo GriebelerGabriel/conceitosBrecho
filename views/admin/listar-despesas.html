@@ -50,10 +50,10 @@
     </div>
     <hr>
     <form name="filtrarDespesas">
-        DATA: <input type="text" class="filtroData">
-        DESCRIÇÃO: <input type="text" class="filtroDescricao">
-        VALOR: <input type="text" class="fitroValor">
-        OBSERVAÇÃO: <input type="test" class="filtroObservacao">
+        DATA: <input type="text" id="filtroData">
+        DESCRIÇÃO: <input type="text" id="filtroDescricao">
+        VALOR: <input type="text" id="fitroValor">
+        OBSERVAÇÃO: <input type="test" id="filtroObservacao">
         <button type="submit" onClick="filtrarDespesas()" value="pesquisar">Pesquisar!</button>
     </form>
     <hr>
@@ -73,7 +73,6 @@
         </table>
     </div>
     <script> //script de requisição e respostas de dados do banco
-
         function readData() {
 
             var xhttp = new XMLHttpRequest();
@@ -137,8 +136,6 @@
 
                     }
 
-
-
                 }
 
             }
@@ -147,6 +144,12 @@
 
     <script>
         function filtrarDespesas() {  // não esta funcando ainda os filtros
+
+            var filtroData = document.getElementById("#filtroData").value;
+            var filtroDescricao = document.getElementById("#filtroDescricao").value;
+            var fitroValor = document.getElementById("#fitroValor").value;
+            var filtroObservacao = document.getElementById("#filtroObservacao").value;
+
             var xhttp = new XMLHttpRequest();
 
             var tipo = "POST"
@@ -156,24 +159,20 @@
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
-            var body = {}
+            var body = { data: filtroData, descricao: filtroDescricao, valor: fitroValor, observacao: filtroObservacao}
 
             xhttp.send(JSON.stringify(body));
-
-            // ---------- Resposta da requisição feita acima ---------------//
-
+            /*
             xhttp.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
                     resposta = JSON.parse(this.responseText)
-                    console.log(resposta);
+
                 }
 
-            }
+            }*/
         }
     </script>
-
-
 
 </body>
 

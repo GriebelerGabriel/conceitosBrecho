@@ -159,7 +159,7 @@ router.get("/menu/excluir-despesa", (req, res) => {
 
 
 router.post("/menu/filtroDespesas", (req, res) => {
-
+    console.log("Estou aqui!");
     Despesa.findAll({
 
         where: {
