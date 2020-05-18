@@ -159,19 +159,27 @@ router.get("/menu/excluir-despesa", (req, res) => {
 
 
 router.post("/menu/filtroDespesas", (req, res) => {
-    console.log(req.body)
+    var whereQuery = {} // cria o objeto que vai receber os dados da DESPESA
+	
+	if(req.body.data){ // verifica se existe algum dado nao nulo ou vazio;
+		whereQuery.data = req.body.data // set o dado dentro do objeto que foi criado
+	}
+	if(req.body.valor){
+		whereQuery.valor = req.body.valor
+	}
+	if(req.body.observacao){
+		whereQuery.observacao = req.body.observacao
+	}
+	if(req.body.descricao){
+		whereQuery.descricao = req.body.descricao
+	}
+
     Despesa.findAll({
-
-        where: {
-
-            data: req.body.data,
-            descricao: req.body.descricao,
-            valor: req.body.valor,
-            observacao: req.body.observacao
-        }
+	
+        where: whereQuery
 
     }).then((despesas) => {
-        res.send(despesas);
+        res.send(despesas)
     })
 })
 

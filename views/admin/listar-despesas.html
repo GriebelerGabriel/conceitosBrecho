@@ -49,11 +49,11 @@
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
     <hr>
-        DATA: <input type="text" id="filtroData">
-        DESCRIÇÃO: <input type="text" id="filtroDescricao">
-        VALOR: <input type="text" id="fitroValor">
-        OBSERVAÇÃO: <input type="test" id="filtroObservacao">
-        <button onclick="filtrarDespesas()">Pesquisar!</button>
+    DATA: <input type="date" id="filtroData">
+    DESCRIÇÃO: <input type="text" id="filtroDescricao">
+    VALOR: <input type="number" id="fitroValor">
+    OBSERVAÇÃO: <input type="test" id="filtroObservacao">
+    <button onclick="filtrarDespesas()">Pesquisar!</button>
     <hr>
     <div class="menu-listagem">
         <table id="TABELA" align="center">
@@ -64,9 +64,6 @@
                 <th><strong>OBSERVAÇÃO</strong></th>
                 <th><strong>EDITAR</strong></th>
                 <th><strong>DELETAR</strong></th>
-            </tr>
-            <tr>
-                <label id="#DATA"></label>
             </tr>
         </table>
     </div>
@@ -143,6 +140,11 @@
     <script>
         function filtrarDespesas() {  // não esta funcando ainda os filtros
 
+            var linhasTotais = document.getElementById("TABELA").rows.length; // retorna a coleção de linhas da tabela para contagem posterior
+            var tabela = document.getElementById("TABELA");
+            for (x = 1; x < linhasTotais; x++) {
+                tabela.deleteRow(1);
+            }
             var xhttp = new XMLHttpRequest();
 
             var tipo = "POST"
@@ -157,9 +159,6 @@
             var fitroValor = document.getElementById("fitroValor").value;
             var filtroObservacao = document.getElementById("filtroObservacao").value;
 
-            if(filtroData != ''){
-
-            }
             var body = { data: filtroData, descricao: filtroDescricao, valor: fitroValor, observacao: filtroObservacao }
 
             xhttp.send(JSON.stringify(body));
@@ -167,8 +166,46 @@
             xhttp.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
+
                     resposta = JSON.parse(this.responseText)
-                    console.log(resposta);
+
+                    for (x = 0; x < resposta.length; x++) {
+
+                        var linha = document.createElement('tr')
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].data);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].descricao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].valor);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].observacao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var botaoEdit = document.createElement("td");
+                        botaoEdit.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
+                            "<img src='/editar.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoEdit);
+
+                        var botaoDelete = document.createElement("td");
+                        botaoDelete.innerHTML = "<a href = '/menu/excluir-despesa?id=" + resposta[x].id + "'>" +
+                            "<img src='/delete.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoDelete);
+
+                        document.getElementById("TABELA").appendChild(linha)
+
+                    }
                 }
 
             }
