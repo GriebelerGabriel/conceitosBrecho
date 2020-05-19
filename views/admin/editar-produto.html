@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Menu</title>
+</head>
+
+<body onload="readData()">
+    <script src="../js/jquery-1.11.3.js"></script>
+    <div id="rodape" class="principal">
+        <a href='/menu'><img src='/logo.jpeg'></a>
+    </div>
+
+    <div id="barra-principal">
+
+        <button class="button-top"> <a href='/menu'>Home</a></button>
+
+        <div class="dropdown-top">
+
+            <button class="button-top">Produto</button>
+
+            <div class="dropdown-top-conteudo">
+                <a href='/menu/cadastro-produto'>Cadastrar</a>
+                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/importar-produtos'>Importar</a>
+            </div>
+        </div>
+
+        <div class="dropdown-top">
+            <button class="button-top">Despesa</button>
+            <div class="dropdown-top-conteudo">
+                <a href='/menu/cadastro-despesa'>Cadastrar</a>
+                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/importar-despesas'>Importar</a>
+            </div>
+        </div>
+
+        <div class="dropdown-top">
+            <button class="button-top">Fornecedor</button>
+            <div class="dropdown-top-conteudo">
+                <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
+                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/importar-fornecedores'>Importar</a>
+            </div>
+        </div>
+        <button class="button-top"> <a href='/sobre'>Sobre</a></button>
+    </div>
+
+    <input type="hidden" id="#ID" value="">
+    Código: <input type="text" name="codigo" id="#CODIGO" value="">
+    Tipo: <select name="tipo" id="#TIPO">
+        <option value="INFANTIL">INFANTIL</option>
+        <option value="JUVENIL">JUVENIL</option>
+        <option value="ADULTO">ADULTO</option>
+    </select>
+    Descrição: <input type="text" name="descricao" value="" id="#DESCRICAO">
+    Sexo: <select name="sexo" id="#SEXO">
+        <option value="M">M</option>
+        <option value="F">F</option>
+        <option value="U">U</option>
+    </select>
+    Tamanho: <input type="text" name="tamanho" value="" id="#TAMANHO">
+    Grupo: <select name="grupo" id="#GRUPO">
+        <option value="ROUPAS">ROUPAS</option>
+        <option value="ACESS.">ACESS.</option>
+        <option value="CALÇADO">CALÇADO</option>
+    </select>
+    Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
+    %: <input type="number" name="porcento" id="#PORCENTAGEM">
+    Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
+    Foto: <input type="text" name="foto" value="" id="#FOTO">
+    Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
+    Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
+    Pago: <select name="pago" id="#PAGO">
+        <option value=" "> </option>
+        <option value="OK">OK</option>
+        <option value="OK/PL">OK/PL</option>
+    </select>
+
+    <button onclick="enviarAlteracao()"> Alterar! </button>
+
+    <script>
+
+        function readData() {
+            var xhttp = new XMLHttpRequest();
+
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var idValue = url.searchParams.get("id");
+
+            console.log(idValue);
+
+
+            var tipo = "POST"
+
+            var url = "/menu/sendIdProduto?=" + idValue;
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var body = { id: idValue }
+
+            xhttp.send(JSON.stringify(body));
+
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    var valores = JSON.parse(this.responseText);
+
+                    var sub = document.getElementById("#ID").value = valores[0].id; // seta nos campos value do formulario
+                    var sub = document.getElementById("#CODIGO").value = valores[0].codigo;
+                    var sub = document.getElementById("#TIPO").value = valores[0].tipo;
+                    var sub = document.getElementById("#DESCRICAO").value = valores[0].descricao;
+                    var sub = document.getElementById("#SEXO").value = valores[0].sexo;
+                    var sub = document.getElementById("#TAMANHO").value = valores[0].tamanho;
+                    var sub = document.getElementById("#GRUPO").value = valores[0].grupo;
+                    var sub = document.getElementById("#PRECOCUSTO").value = valores[0].preco_custo;
+                    var sub = document.getElementById("#PORCENTAGEM").value = valores[0].porcentagem;
+                    var sub = document.getElementById("#PRECOVENDA").value = valores[0].preco_venda;
+                    var sub = document.getElementById("#DATAVENDA").value = valores[0].data_venda;
+                    var sub = document.getElementById("#VENDIDO").value = valores[0].vendido;
+                    var sub = document.getElementById("#PAGO").value = valores[0].pago;
+                    var sub = document.getElementById("#FOTO").value = valores[0].foto;
+
+
+
+                }
+            };
+
+        }
+
+        function enviarAlteracao() {
+
+            var alterId = document.getElementById("#ID").value;
+            var alterCodigo = document.getElementById("#CODIGO").value;
+            var alterTipo = document.getElementById("#TIPO").value
+            var alterDescricao = document.getElementById("#DESCRICAO").value
+            var alterSexo = document.getElementById("#SEXO").value
+            var alterTamanho = document.getElementById("#TAMANHO").value
+            var alterGrupo = document.getElementById("#GRUPO").value
+            var alterPrecoCusto = document.getElementById("#PRECOCUSTO").value
+            var alterPorcentagem = document.getElementById("#PORCENTAGEM").value
+            var alterPrecoVenda = document.getElementById("#PRECOVENDA").value
+            var alterDataVenda = document.getElementById("#DATAVENDA").value
+            var alterVendido = document.getElementById("#VENDIDO").value
+            var alterPago = document.getElementById("#PAGO").value
+            var alterFoto = document.getElementById("#FOTO").value
+
+            var xhttp = new XMLHttpRequest();
+
+            var tipo = "POST"
+
+            var url = "/menu/editandoProduto";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var body = {id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao, 
+            sexo: alterSexo, tamanho: alterTamanho, grupo:alterGrupo, preco_custo: alterPrecoCusto,
+            porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
+            vendido: alterVendido, pago:alterPago, foto:alterFoto
+            }
+
+            xhttp.send(JSON.stringify(body));
+            alert("Alterado com sucesso!");
+            window.location.href = "/menu/listar-produtos";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

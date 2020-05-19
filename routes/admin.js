@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Despesa = require('../models/Despesa');
 const Produto = require('../models/Produto');
+const Fornecedor = require('../models/Fornecedor');
 const Sequelize = require('sequelize');
 
 
@@ -33,26 +34,106 @@ router.get("/menu/importar-produtos", (req, res) => {
     res.render('admin/importar-produtos.html');
 });
 
+router.get("/menu/editar-produto", (req, res) => {
+    res.render("admin/editar-produto.html")
+})
 
-router.post("/menu/sendProducts", (req, res) => { // busca no banco de dados(produtos)
-    Produtos.findAll().then((produtos) => { // .all() trocado atualmente por .findAll()
-        res.send(produtos)
-    })
-});
 
-router.post("/menu/saveProduct", (req, res) => {
+router.post("/menu/saveProduto", (req, res) => {
 
     Produto.create({
 
-        data: req.body.data,
+        codigo: req.body.codigo,
+        tipo: req.body.tipo,
         descricao: req.body.descricao,
-        valor: req.body.valor,
-        observacao: req.body.observacao,
+        sexo: req.body.sexo,
+        tamanho: req.body.tamanho,
+        grupo: req.body.grupo,
+        preco_custo: req.body.precoCusto,
+        porcentagem: req.body.porcento,
+        preco_venda: req.body.precoVenda,
+        foto: req.body.foto,
+        data_venda: req.body.dataVenda,
+        vendido: req.body.vendido,
+        pago: req.body.pago
 
     }).then(function () {
         res.redirect("./listar-produtos");
     }).catch(function (erro) {
         res.send("Houve um erro: " + erro);
+    })
+});
+
+
+router.post("/menu/sendProdutos", (req, res) => { // busca no banco de dados(produtos)
+    Produto.findAll().then((produtos) => { // .all() trocado atualmente por .findAll()
+        res.send(produtos)
+    })
+});
+
+router.post("/menu/editandoProduto", (req, res) => { // Salva a edição de um produto;
+    console.log(req.body.id)
+    Produto.findOne({
+        where: { id: req.body.id }
+
+    }).then(function (produto) {
+
+        produto.codigo = req.body.codigo
+        produto.tipo = req.body.tipo
+        produto.descricao = req.body.descricao
+        produto.sexo = req.body.sexo
+        produto.tamanho = req.body.tamanho
+        produto.grupo = req.body.grupo
+        produto.preco_custo = req.body.preco_custo
+        produto.porcentagem = req.body.porcentagem
+        produto.preco_venda = req.body.preco_venda
+        produto.data_venda = req.body.data_venda
+        produto.vendido = req.body.vendido
+        produto.pago = req.body.pago
+        produto.foto = req.body.foto
+
+
+        produto.save().then(() => {
+            //res.redirect("/menu/listar-despesas");   n funca n sei pq, feito com javascript no front
+        }).catch((err) => {
+            console.log(err);
+        })
+    }).catch((erro) => {
+        res.send(erro);
+    })
+
+})
+
+
+router.get("/menu/excluir-produto", (req, res) => {
+    var valueId = req.query.id; // pega o ID e salva numa variavel
+    console.log(req.query.id) // Pega o ID da query e verifica no console do NODE
+    Produto.destroy({
+        where: {
+
+            id: valueId
+        }
+    }).then((produtos) => {
+        res.render("admin/listar-produtos.html");
+
+    }).catch((erro) => {
+        res.send(erro)
+    })
+})
+
+router.post("/menu/sendIdProduto", (req, res) => { //manda o ID pra pagina de editar;
+    var valueId = req.body.id;
+    //console.log(req.body.id)
+    Produto.findAll({
+
+        where: {
+            id: valueId
+        }
+
+    }).then(function (produto) {
+        res.send(produto)
+    }).catch((erro) => {
+        res.send(erro);
     })
 });
 
@@ -78,22 +159,6 @@ router.get("/menu/editar-despesa", (req, res) => {
     res.render("admin/editar-despesa.html")
 })
 
-router.post("/menu/sendIdDespesa", (req, res) => { //manda o ID pra pagina de editar;
-    var valueId = req.body.id;
-    //console.log(req.body.id)
-    Despesa.findAll({
-
-        where: {
-            id: valueId
-        }
-
-    }).then(function (despesa) {
-        res.send(despesa)
-    }).catch((erro) => {
-        res.send(erro);
-    })
-});
-
 router.post("/menu/saveDespesa", (req, res) => { // Criar no Banco de dados!
 
     Despesa.create({
@@ -117,9 +182,7 @@ router.post("/menu/sendDespesas", (req, res) => { // Listar do Banco de dados!
 });
 
 router.post("/menu/editandoDespesa", (req, res) => { // Salva a edição de uma despesa;
-    console.log(req.body.id);
-    console.log(req.body.valor);
-    console.log(req.body.data);
+
     Despesa.findOne({
         where: { id: req.body.id }
 
@@ -156,6 +219,22 @@ router.get("/menu/excluir-despesa", (req, res) => {
         res.send(erro)
     })
 })
+
+router.post("/menu/sendIdDespesa", (req, res) => { //manda o ID pra pagina de editar;
+    var valueId = req.body.id;
+    //console.log(req.body.id)
+    Despesa.findAll({
+
+        where: {
+            id: valueId
+        }
+
+    }).then(function (despesa) {
+        res.send(despesa)
+    }).catch((erro) => {
+        res.send(erro);
+    })
+});
 
 
 router.post("/menu/filtroDespesas", (req, res) => {
@@ -229,6 +308,9 @@ router.get("/menu/listar-fornecedores", (req, res) => {
 router.get("/menu/importar-fornecedores", (req, res) => {
     res.render('admin/importar-fornecedores.html');
 });
+
+
+
 
 
 

@@ -8,10 +8,10 @@
     <title>Produtos</title>
 </head>
 
-<body>
-    <script src="../js/jquery-1.11.3.js"></script>
+<body onload="readData()">
+    <script src="../../jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -48,7 +48,235 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <br>
+    <hr>
+
+    CÓDIGO: <input type="text" id="filtroCodigo" value="">
+    TIPO: <input type="text" id="filtroTipo" value="">
+    DESCRIÇÃO: <input type="number" id="filtroDescricao" value="">
+    SEXO: <input type="text" id="filtroSexo" value="">
+    TAMANHO: <input type="text" id="filtroTamanho" value="">
+    GRUPO: <input type="text" id="filtroGrupo" value="">
+    PREÇO DE CUSTO: <input type="number" id="filtroPrecoCusto" step="0.01" value="">
+    %: <input type="number" id="filtroPorcento" value="">
+    PREÇO DE VENDA: <input type="number" id="filtroPrecoVenda" step="0.01" value="">
+    DATA DE VENDA: <input type="date" id="filtroDataVenda" value="">
+    VENDIDO: <input type="test" id="filtroVendido" value="">
+    PAGO: <input type="test" id="filtroPago" value="">
+
+    <button onclick="filtrarProdutos()">Pesquisar!</button>
+    <hr>
+    <div class="menu-listagem">
+        <table id="TABELA" align="center">
+            <tr>
+                <th><strong>CÓDIGO</strong></th>
+                <th><strong>TIPO</strong></th>
+                <th><strong>DESCRIÇÃO</strong></th>
+                <th><strong>SEXO</strong></th>
+                <th><strong>TAMANHO</strong></th>
+                <th><strong>GRUPO</strong></th>
+                <th><strong>PREÇO DE CUSTO</strong></th>
+                <th><strong>%</strong></th>
+                <th><strong>PREÇO DE VENDA</strong></th>
+                <th><strong>DATA DE VENDA</strong></th>
+                <th><strong>VENDIDO</strong></th>
+                <th><strong>PAGO</strong></th>
+                <th><strong>FOTO</strong></th>
+                <th><strong>EDITAR</strong></th>
+                <th><strong>EXCLUIR</strong></th>
+
+            </tr>
+        </table>
+    </div>
+    <script> //script de requisição e respostas de dados do banco
+        function readData() {
+
+            var xhttp = new XMLHttpRequest();
+
+            var tipo = "POST"
+            /*
+            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
+            */
+
+            var url = "/menu/sendProdutos";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var body = {}
+
+            xhttp.send(JSON.stringify(body));
+
+            // ---------- Resposta da requisição feita acima ---------------//
+
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    resposta = JSON.parse(this.responseText)
+
+                    for (x = 0; x < resposta.length; x++) {
+
+                        var linha = document.createElement('tr')
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].codigo);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].tipo);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].descricao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].sexo);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].tamanho);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].grupo);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].preco_custo);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].porcentagem);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].preco_venda);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].data_venda);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].vendido);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].pago);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].foto);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var botaoEdit = document.createElement("td");
+                        botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
+                            "<img src='/editar.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoEdit);
+
+                        var botaoDelete = document.createElement("td");
+                        botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x].id + "'>" +
+                            "<img src='/delete.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoDelete);
+
+                        document.getElementById("TABELA").appendChild(linha)
+
+                    }
+
+                }
+
+            }
+        }
+    </script>
+
+    <script>
+        function filtrarProdutos() {  // não esta funcando ainda os filtros
+            /*
+            var linhasTotais = document.getElementById("TABELA").rows.length; // retorna a coleção de linhas da tabela para contagem posterior
+            var tabela = document.getElementById("TABELA");
+            for (x = 1; x < linhasTotais; x++) {
+                tabela.deleteRow(1);
+            }
+            var xhttp = new XMLHttpRequest();
+
+            var tipo = "POST"
+
+            var url = "/menu/filtroDespesas";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var filtroData = document.getElementById("filtroData").value;
+            var filtroDescricao = document.getElementById("filtroDescricao").value;
+            var fitroValor = document.getElementById("fitroValor").value;
+            var filtroObservacao = document.getElementById("filtroObservacao").value;
+
+            var body = { data: filtroData, descricao: filtroDescricao, valor: fitroValor, observacao: filtroObservacao }
+
+            xhttp.send(JSON.stringify(body));
+
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                    resposta = JSON.parse(this.responseText)
+
+                    for (x = 0; x < resposta.length; x++) {
+
+                        var linha = document.createElement('tr')
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].data);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].descricao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].valor);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].observacao);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var botaoEdit = document.createElement("td");
+                        botaoEdit.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
+                            "<img src='/editar.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoEdit);
+
+                        var botaoDelete = document.createElement("td");
+                        botaoDelete.innerHTML = "<a href = '/menu/excluir-despesa?id=" + resposta[x].id + "'>" +
+                            "<img src='/delete.jpeg' width='25' height='25' >"
+                        linha.appendChild(botaoDelete);
+
+                        document.getElementById("TABELA").appendChild(linha)
+
+                    }
+                }
+
+            }*/
+        }
+    </script>
 
 </body>
 

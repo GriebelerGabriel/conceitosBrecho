@@ -52,7 +52,7 @@
         <input type="hidden" id="#ID" value="">
         <strong>DATA</strong> <input type="date" id="#DATA" value="">
         <strong>DESCRIÇÃO</strong> <input type="text" id=#DESCRICAO value="">
-        <strong>VALOR</strong> <input type="number" id=#VALOR value="">
+        <strong>VALOR</strong> <input type="number" id=#VALOR value="" step="0.01">
         <strong>OBSERVAÇÃO</strong> <input type="text" id=#OBSERVACAO value="">
         <button onclick="enviarAlteracao()"> Alterar! </button>
 
@@ -113,7 +113,7 @@
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
             
-            var body = {id: alterId, data: alterData, descricao: alterDescricao, valor: alterValor, observacao: alterObs}
+            var body = {id:alterId, data: alterData, descricao: alterDescricao, valor: alterValor, observacao: alterObs}
 
             xhttp.send(JSON.stringify(body));
             alert("Alterado com sucesso!");

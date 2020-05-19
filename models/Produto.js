@@ -29,9 +29,15 @@ const Produto = db.bd.define('produtos', {
         type: db.Sequelize.FLOAT
     },
     foto: {
-        type: db.Sequelize.BOOLEAN
+        type: db.Sequelize.STRING
     },
     data_venda: {
+        type: db.Sequelize.DATEONLY
+    },
+    vendido: {
+        type: db.Sequelize.STRING
+    },
+    pago: {
         type: db.Sequelize.STRING
     }
 
