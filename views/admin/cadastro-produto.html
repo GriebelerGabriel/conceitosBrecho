@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
+
     <title>Despesa</title>
 </head>
 
@@ -50,40 +51,43 @@
     </div>
     <br>
 
-    <form action="/menu/saveProduto" name="form-cadastros" method="POST">
+    <form action="/menu/saveProduto" name="form-cadastros" method="POST" enctype="multipart/form-data">
 
-            Código: <input type="text" name="codigo">
-            Tipo: <select name="tipo">
-                <option value="INFANTIL">INFANTIL</option>
-                <option value="JUVENIL">JUVENIL</option>
-                <option value="ADULTO">ADULTO</option>
-            </select>
-            Descrição: <input type="text" name="descricao">
-            Sexo: <select name="sexo">
-                <option value="M">M</option>
-                <option value="F">F</option>
-                <option value="U">U</option>
-            </select>
-            Tamanho: <input type="text" name="tamanho">
-            Grupo: <select name="grupo">
-                <option value="ROUPAS">ROUPAS</option>
-                <option value="ACESS.">ACESS.</option>
-                <option value="CALÇADO">CALÇADO</option>
-            </select>
-            Preço de Custo: <input type="number" name="precoCusto" step="0.01">
-            %: <input type="number" name="porcento">
-            Preço de Venda: <input type="number" name="precoVenda" step="0.01">
-            Foto: <input type="text" name="foto">
-            Data de Venda: <input type="date" name="dataVenda">
-            Vendido: <input type="text" name="vendido">
-            Pago: <select name="pago">
-                <option value=" "> </option>
-                <option value="OK">OK</option>
-                <option value="OK/PL">OK/PL</option>
-            </select>
+        Código: <input type="text" name="codigo">
+        Tipo: <select name="tipo">
+            <option value="INFANTIL">INFANTIL</option>
+            <option value="JUVENIL">JUVENIL</option>
+            <option value="ADULTO">ADULTO</option>
+        </select>
+        Descrição: <input type="text" name="descricao">
+        Sexo: <select name="sexo">
+            <option value="M">M</option>
+            <option value="F">F</option>
+            <option value="U">U</option>
+        </select>
+        Tamanho: <input type="text" name="tamanho">
+        Grupo: <select name="grupo">
+            <option value="ROUPAS">ROUPAS</option>
+            <option value="ACESS.">ACESS.</option>
+            <option value="CALÇADO">CALÇADO</option>
+        </select>
+        Preço de Custo: <input type="number" name="precoCusto" step="0.01">
+        %: <input type="number" name="porcento">
+        Preço de Venda: <input type="number" name="precoVenda" step="0.01">
+        Data de Venda: <input type="date" name="dataVenda">
+        Vendido: <input type="text" name="vendido">
+        Pago: <select name="pago">
+            <option value=" "> </option>
+            <option value="OK">OK</option>
+            <option value="OK/PL">OK/PL</option>
+        </select>
 
-            <button type="submit">Cadastrar!</button>
+        <input type="file" name="foto" id="#FOTO" />
+
+        </script>
+        <button type="submit">Cadastrar!</button>
     </form>
+
 
 </body>
 

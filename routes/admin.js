@@ -4,8 +4,36 @@ const Despesa = require('../models/Despesa');
 const Produto = require('../models/Produto');
 const Fornecedor = require('../models/Fornecedor');
 const Sequelize = require('sequelize');
+const multer = require('multer');
+
+const http = require("http");
+const path = require("path");
+const fs = require("fs");
 
 
+const handleError = (err, res) => {
+    res
+        .status(500)
+        .contentType("text/plain")
+        .end("Oops! Something went wrong!");
+};
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+
+        // error first callback
+        cb(null, __dirname + "/public");
+    },
+    filename: function (req, file, cb) {
+
+        // error first callback
+        cb(null, `${file.originalname}`); // salva o nome do arquivo no upldoad
+    }
+});
+const upload = multer({ storage });
+
+
+{// ################################# ROTAS DO MENU E RAIZ ####################################### //
 
 router.get("/", function (req, res) {
     res.render('admin/login.html') //mapeando para HTML, __dirname leva a raiz do projeto;
@@ -18,9 +46,10 @@ router.post("/menu", (req, res) => {
 router.get("/menu", (req, res) => {
     res.render('admin/menu.html');
 });
+}
 
+{ // ##################################### ROTA DE PRODUTOS ####################################### //
 
-// -------- Rotas Produtos ----------- //
 
 router.get("/menu/cadastro-produto", (req, res) => {
     res.render('admin/cadastro-produto.html');
@@ -39,7 +68,7 @@ router.get("/menu/editar-produto", (req, res) => {
 })
 
 
-router.post("/menu/saveProduto", (req, res) => {
+router.post("/menu/saveProduto", upload.single('foto'), (req, res, next) => {
 
     Produto.create({
 
@@ -52,7 +81,7 @@ router.post("/menu/saveProduto", (req, res) => {
         preco_custo: req.body.precoCusto,
         porcentagem: req.body.porcento,
         preco_venda: req.body.precoVenda,
-        foto: req.body.foto,
+        foto: req.file.originalname,
         data_venda: req.body.dataVenda,
         vendido: req.body.vendido,
         pago: req.body.pago
@@ -72,10 +101,9 @@ router.post("/menu/sendProdutos", (req, res) => { // busca no banco de dados(pro
 });
 
 router.post("/menu/editandoProduto", (req, res) => { // Salva a edição de um produto;
-    console.log(req.body.id)
+
     Produto.findOne({
         where: { id: req.body.id }
-
     }).then(function (produto) {
 
         produto.codigo = req.body.codigo
@@ -90,11 +118,10 @@ router.post("/menu/editandoProduto", (req, res) => { // Salva a edição de um p
         produto.data_venda = req.body.data_venda
         produto.vendido = req.body.vendido
         produto.pago = req.body.pago
-        produto.foto = req.body.foto
 
 
         produto.save().then(() => {
-            //res.redirect("/menu/listar-despesas");   n funca n sei pq, feito com javascript no front
+            res.redirect("/menu/listar-despesas"); 
         }).catch((err) => {
             console.log(err);
         })
@@ -102,6 +129,22 @@ router.post("/menu/editandoProduto", (req, res) => { // Salva a edição de um p
         res.send(erro);
     })
 
+})
+
+router.post("/menu/saveEditFoto", upload.single('foto'), (req, res, next) => {
+    console.log(req.body)
+    
+    /*Produto.findOne({
+        where: { id: req.body.id }
+    }).then(function (produto) {
+
+        produto.foto = req.file.originalname;
+
+        produto.save().then(()=>{
+            res.redirect('back');
+        })  
+    })*/
+    
 })
 
 
@@ -137,8 +180,16 @@ router.post("/menu/sendIdProduto", (req, res) => { //manda o ID pra pagina de ed
     })
 });
 
+router.post('/profile', upload.single('avatar'), function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+  })
 
-// -------- Rotas Despesa ----------- //
+}
+
+{// ###################################### ROTA DE DESPESAS ####################################### //
+
+
 router.get("/menu/cadastro-despesa", (req, res) => {
     res.render('admin/cadastro-despesa.html');
 });
@@ -239,22 +290,22 @@ router.post("/menu/sendIdDespesa", (req, res) => { //manda o ID pra pagina de ed
 
 router.post("/menu/filtroDespesas", (req, res) => {
     var whereQuery = {} // cria o objeto que vai receber os dados da DESPESA
-	
-	if(req.body.data){ // verifica se existe algum dado nao nulo ou vazio;
-		whereQuery.data = req.body.data // set o dado dentro do objeto que foi criado
-	}
-	if(req.body.valor){
-		whereQuery.valor = req.body.valor
-	}
-	if(req.body.observacao){
-		whereQuery.observacao = req.body.observacao
-	}
-	if(req.body.descricao){
-		whereQuery.descricao = req.body.descricao
-	}
+
+    if (req.body.data) { // verifica se existe algum dado nao nulo ou vazio;
+        whereQuery.data = req.body.data // set o dado dentro do objeto que foi criado
+    }
+    if (req.body.valor) {
+        whereQuery.valor = req.body.valor
+    }
+    if (req.body.observacao) {
+        whereQuery.observacao = req.body.observacao
+    }
+    if (req.body.descricao) {
+        whereQuery.descricao = req.body.descricao
+    }
 
     Despesa.findAll({
-	
+
         where: whereQuery
 
     }).then((despesas) => {
@@ -294,9 +345,11 @@ router.post("/menu/importandoDespesa", (req, res) => {
     res.redirect("/menu/listar-despesas");
 
 })
-    
 
-// ---------- Rotas Fornecedor -------- //
+}
+
+{ // ################################# ROTA DE FORNECEDORES ####################################### //
+
 router.get("/menu/cadastro-fornecedor", (req, res) => {
     res.render('admin/cadastro-fornecedor.html');
 });
@@ -309,7 +362,7 @@ router.get("/menu/importar-fornecedores", (req, res) => {
     res.render('admin/importar-fornecedores.html');
 });
 
-
+}
 
 
 

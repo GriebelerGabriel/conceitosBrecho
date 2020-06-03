@@ -48,20 +48,43 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
+
     <hr>
 
-    CÓDIGO: <input type="text" id="filtroCodigo" value="">
-    TIPO: <input type="text" id="filtroTipo" value="">
-    DESCRIÇÃO: <input type="number" id="filtroDescricao" value="">
-    SEXO: <input type="text" id="filtroSexo" value="">
-    TAMANHO: <input type="text" id="filtroTamanho" value="">
-    GRUPO: <input type="text" id="filtroGrupo" value="">
-    PREÇO DE CUSTO: <input type="number" id="filtroPrecoCusto" step="0.01" value="">
-    %: <input type="number" id="filtroPorcento" value="">
-    PREÇO DE VENDA: <input type="number" id="filtroPrecoVenda" step="0.01" value="">
-    DATA DE VENDA: <input type="date" id="filtroDataVenda" value="">
-    VENDIDO: <input type="test" id="filtroVendido" value="">
-    PAGO: <input type="test" id="filtroPago" value="">
+    <input type="hidden" id="#ID" value="">
+    Código: <input type="text" name="codigo" id="#CODIGO" value="">
+    Tipo: <select name="tipo" id="#TIPO">
+        <option value="INFANTIL">INFANTIL</option>
+        <option value="JUVENIL">JUVENIL</option>
+        <option value="ADULTO">ADULTO</option>
+    </select>
+    Descrição: <input type="text" name="descricao" value="" id="#DESCRICAO">
+    Sexo: <select name="sexo" id="#SEXO">
+        <option value="M">M</option>
+        <option value="F">F</option>
+        <option value="U">U</option>
+    </select>
+    Tamanho: <input type="text" name="tamanho" value="" id="#TAMANHO">
+    Grupo: <select name="grupo" id="#GRUPO">
+        <option value="ROUPAS">ROUPAS</option>
+        <option value="ACESS.">ACESS.</option>
+        <option value="CALÇADO">CALÇADO</option>
+    </select>
+    Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
+    %: <input type="number" name="porcento" id="#PORCENTAGEM">
+    Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
+
+    <div class="div1">
+    Foto: <input type="text" name="foto" value="" id="#FOTO">
+    </div>
+
+    Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
+    Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
+    Pago: <select name="pago" id="#PAGO">
+        <option value=" "> </option>
+        <option value="OK">OK</option>
+        <option value="OK/PL">OK/PL</option>
+    </select>
 
     <button onclick="filtrarProdutos()">Pesquisar!</button>
     <hr>
@@ -112,7 +135,7 @@
 
                 if (this.readyState == 4 && this.status == 200) {
                     resposta = JSON.parse(this.responseText)
-
+                    console.log(resposta);
                     for (x = 0; x < resposta.length; x++) {
 
                         var linha = document.createElement('tr')
@@ -178,10 +201,9 @@
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].foto);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
+                        var photo = document.createElement("td");
+                        photo.innerHTML = "<img src='/"+resposta[x].foto+"' width='75' height='75'>";
+                        linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +

@@ -48,43 +48,50 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
+        <input type="hidden" id="#ID" value="">
+        Código: <input type="text" name="codigo" id="#CODIGO" value="">
+        Tipo: <select name="tipo" id="#TIPO">
+            <option value="INFANTIL">INFANTIL</option>
+            <option value="JUVENIL">JUVENIL</option>
+            <option value="ADULTO">ADULTO</option>
+        </select>
+        Descrição: <input type="text" name="descricao" value="" id="#DESCRICAO">
+        Sexo: <select name="sexo" id="#SEXO">
+            <option value="M">M</option>
+            <option value="F">F</option>
+            <option value="U">U</option>
+        </select>
+        Tamanho: <input type="text" name="tamanho" value="" id="#TAMANHO">
+        Grupo: <select name="grupo" id="#GRUPO">
+            <option value="ROUPAS">ROUPAS</option>
+            <option value="ACESS.">ACESS.</option>
+            <option value="CALÇADO">CALÇADO</option>
+        </select>
+        Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
+        %: <input type="number" name="porcento" id="#PORCENTAGEM">
+        Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
+        Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
+        Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
+        Pago: <select name="pago" id="#PAGO">
+            <option value=" "> </option>
+            <option value="OK">OK</option>
+            <option value="OK/PL">OK/PL</option>
+        </select>
+        <div id="#FOTOANTIGA"></div>
 
-    <input type="hidden" id="#ID" value="">
-    Código: <input type="text" name="codigo" id="#CODIGO" value="">
-    Tipo: <select name="tipo" id="#TIPO">
-        <option value="INFANTIL">INFANTIL</option>
-        <option value="JUVENIL">JUVENIL</option>
-        <option value="ADULTO">ADULTO</option>
-    </select>
-    Descrição: <input type="text" name="descricao" value="" id="#DESCRICAO">
-    Sexo: <select name="sexo" id="#SEXO">
-        <option value="M">M</option>
-        <option value="F">F</option>
-        <option value="U">U</option>
-    </select>
-    Tamanho: <input type="text" name="tamanho" value="" id="#TAMANHO">
-    Grupo: <select name="grupo" id="#GRUPO">
-        <option value="ROUPAS">ROUPAS</option>
-        <option value="ACESS.">ACESS.</option>
-        <option value="CALÇADO">CALÇADO</option>
-    </select>
-    Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
-    %: <input type="number" name="porcento" id="#PORCENTAGEM">
-    Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
-    Foto: <input type="text" name="foto" value="" id="#FOTO">
-    Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
-    Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
-    Pago: <select name="pago" id="#PAGO">
-        <option value=" "> </option>
-        <option value="OK">OK</option>
-        <option value="OK/PL">OK/PL</option>
-    </select>
+        <form action="/menu/saveEditFoto" method="POST" enctype="multipart/form-data" >
+            <input type="hidden" name="id" id="#ID" value="">
+            Trocar de foto: <input type="file" name="foto" id="#FOTO">
+            <button type="submit">Alterar Foto!</button>
+        </form>
 
-    <button onclick="enviarAlteracao()"> Alterar! </button>
+        <button onclick="enviarAlteracao()">Alterar Dados!</button>
+
 
     <script>
 
         function readData() {
+            
             var xhttp = new XMLHttpRequest();
 
             var url_string = window.location.href;
@@ -123,11 +130,9 @@
                     var sub = document.getElementById("#DATAVENDA").value = valores[0].data_venda;
                     var sub = document.getElementById("#VENDIDO").value = valores[0].vendido;
                     var sub = document.getElementById("#PAGO").value = valores[0].pago;
-                    var sub = document.getElementById("#FOTO").value = valores[0].foto;
-
-
 
                 }
+                document.getElementById("#FOTOANTIGA").innerHTML = "<img src='/" + valores[0].foto + "' width='75' height='75'>";
             };
 
         }
@@ -147,7 +152,6 @@
             var alterDataVenda = document.getElementById("#DATAVENDA").value
             var alterVendido = document.getElementById("#VENDIDO").value
             var alterPago = document.getElementById("#PAGO").value
-            var alterFoto = document.getElementById("#FOTO").value
 
             var xhttp = new XMLHttpRequest();
 
@@ -158,10 +162,11 @@
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
-            var body = {id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao, 
-            sexo: alterSexo, tamanho: alterTamanho, grupo:alterGrupo, preco_custo: alterPrecoCusto,
-            porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
-            vendido: alterVendido, pago:alterPago, foto:alterFoto
+            var body = {
+                id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao,
+                sexo: alterSexo, tamanho: alterTamanho, grupo: alterGrupo, preco_custo: alterPrecoCusto,
+                porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
+                vendido: alterVendido, pago: alterPago
             }
 
             xhttp.send(JSON.stringify(body));

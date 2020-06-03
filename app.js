@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const Sequelize = require('sequelize');
 
 // Public
-app.use(express.static(path.join(__dirname, "/public"))) 
+app.use(express.static(path.join(__dirname, "/routes/public"))) 
 // seta a pasta public de arquivos estaticos, contendo o CSS (necessário vincular nas paginas)//
 
 //Configuração BodyParser para recebimento de dados dos formulários!
