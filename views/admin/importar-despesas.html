@@ -27,7 +27,7 @@
 
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -45,40 +45,30 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <button onclick="importDespesas()">IMPORTE AS DESPESAS</button>
-    <script>
+    <div id="menu_import_export">
+        <form action="/menu/uploadDespesasXLSX" method="POST" enctype="multipart/form-data">
+            <input type="file" name="planilha">
+            <br>
+            <button type="submit">IMPORTAR DESPESAS</button>
+        </form>
+        <br>
+        <button onclick="exportarExcel()">EXPORTAR DESPESAS</button>
 
-        function importDespesas() {
-
-            var xhttp = new XMLHttpRequest();
-
-            var tipo = "POST"
-
-            var url = "/menu/importandoDespesa";
-
-            xhttp.open(tipo, url, true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-
-            var body = {}
-
-            xhttp.send(JSON.stringify(body));
-            xhttp.onreadystatechange = function () {
-
-                if (this.readyState == 4 && this.status == 200) {
-                    alert("Importado com sucesso!");
-                    window.location.href = "/menu/listar-despesas";
-                }
-            };
-        }
-
-    </script>
-
+    </div>
 </body>
+
+<script>
+
+    function exportarExcel() {
+        
+    }
+
+</script>
 
 </html>

@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Fornecedor</title>
+    <link type="text/javascript" src="shim.min.js">
+    <link type="text/javascript" src="xlsx.full.min.js">
+
+    <title>Importar</title>
 </head>
 
-<body>
+<body onload="readData()">
     <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
         <a href='/menu'><img src='/logo.jpeg'></a>
@@ -24,7 +27,7 @@
 
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -33,7 +36,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -42,36 +45,17 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <br>
 
-    <form action="/menu/saveFornecedor" name="form-cadastros" method="POST">
-        Nome: <input type="text" name="nome" id="nome">
-        Endereço: <input type="text" name="endereco" id="endereco">
-        Bairro: <input type="text" name="bairro" id="bairro">
-        CEP: <input type="text" name="cep" id="cep">
-
-        Municipio: <input type="text" name="municipio" id="municipio">
-        Estado: <input type="text" name="estado" id="estado">
-        Telefone: <input type="text" name="telefone" id="telefone">
-        Celular: <input type="text" name="celular" id="celular">
-
-        E-mail: <input type="text" name="email" id="email">
-        CNPJ/CPF: <input type="text" name="cnpj_cpf" id="cnpj_cpf">
-        Grupo: <input type="text" name="grupo" id="grupo">
-        Situação: <input type="text" name="situacao" id="situacao">
-
-        Data de Nascimento: <input type="date" name="data_nascimento" id="data_nascimento">
-        Observação: <input type="text" name="observacao" id="observacao">
-
-        <button type="submit">Cadastrar!</button>
-
-    </form>
+    <strong>
+        <h1><a href='https://www.facebook.com/Conceitosbrechooficial'><img src='/facebook.png' width="75" height="35"></a>Facebook</h1>
+        <h1><a href='https://www.instagram.com/conceitos.brecho/'><img src='/instragam.png' width="35" height="35"></a>@conceitos.brecho</h1>
+    </strong>
 
 </body>
 

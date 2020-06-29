@@ -80,7 +80,7 @@
         <div id="#FOTOANTIGA"></div>
 
         <form action="/menu/saveEditFoto" method="POST" enctype="multipart/form-data" >
-            <input type="hidden" name="id" id="#ID" value="">
+            <input type="hidden" name="id" id="#IDFOTO" value="">
             Trocar de foto: <input type="file" name="foto" id="#FOTO">
             <button type="submit">Alterar Foto!</button>
         </form>
@@ -97,9 +97,6 @@
             var url_string = window.location.href;
             var url = new URL(url_string);
             var idValue = url.searchParams.get("id");
-
-            console.log(idValue);
-
 
             var tipo = "POST"
 
@@ -130,6 +127,7 @@
                     var sub = document.getElementById("#DATAVENDA").value = valores[0].data_venda;
                     var sub = document.getElementById("#VENDIDO").value = valores[0].vendido;
                     var sub = document.getElementById("#PAGO").value = valores[0].pago;
+                    var sub = document.getElementById("#IDFOTO"). value = valores[0].id;
 
                 }
                 document.getElementById("#FOTOANTIGA").innerHTML = "<img src='/" + valores[0].foto + "' width='75' height='75'>";

@@ -48,7 +48,7 @@ const Fornecedor = db.bd.define('fornecedores', {
     },
 
     data_nascimento: {
-        type: db.Sequelize.DATE
+        type: db.Sequelize.DATEONLY
     },
 
     observacao: {
@@ -57,4 +57,5 @@ const Fornecedor = db.bd.define('fornecedores', {
 
 })
 
+module.exports = Fornecedor;
 //Fornecedor.sync({force: true}) // -> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo

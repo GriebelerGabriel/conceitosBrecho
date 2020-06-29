@@ -1,6 +1,6 @@
 const db = require('./db'); //Importa a conexão com o banco criada em db.js
-
 const Produto = db.bd.define('produtos', {
+    
     codigo: {
         type: db.Sequelize.STRING
     },

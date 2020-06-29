@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Produtos</title>
+    <title>Fornecedor</title>
 </head>
 
 <body onload="readData()">
@@ -52,58 +52,39 @@
     <hr>
 
     <input type="hidden" id="#ID" value="">
-    Código: <input type="text" name="codigo" id="#CODIGO" value="">
-    Tipo: <select name="tipo" id="#TIPO">
-        <option value="INFANTIL">INFANTIL</option>
-        <option value="JUVENIL">JUVENIL</option>
-        <option value="ADULTO">ADULTO</option>
-    </select>
-    Descrição: <input type="text" name="descricao" value="" id="#DESCRICAO">
-    Sexo: <select name="sexo" id="#SEXO">
-        <option value="M">M</option>
-        <option value="F">F</option>
-        <option value="U">U</option>
-    </select>
-    Tamanho: <input type="text" name="tamanho" value="" id="#TAMANHO">
-    Grupo: <select name="grupo" id="#GRUPO">
-        <option value="ROUPAS">ROUPAS</option>
-        <option value="ACESS.">ACESS.</option>
-        <option value="CALÇADO">CALÇADO</option>
-    </select>
-    Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
-    %: <input type="number" name="porcento" id="#PORCENTAGEM">
-    Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
-
-    <div class="div1">
-        Foto: <input type="text" name="foto" value="" id="#FOTO">
-    </div>
-
-    Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
-    Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
-    Pago: <select name="pago" id="#PAGO">
-        <option value=""> </option>
-        <option value="OK">OK</option>
-        <option value="OK/PL">OK/PL</option>
-    </select>
+    Nome: <input type="text" name="nome" id="#NOME" value="">
+    Endereço: <input type="text" name="endereco" id="#ENDERECO" value="">
+    Bairro: <input type="text" name="bairro" value="" id="#BAIRRO">
+    CEP: <input type="text" name="cep" value="" id="#CEP">
+    Municipio: <input type="text" name="municipio" value="" id="#MUNICIPIO">
+    Estado: <input type="text" name="estado" value="" id="#ESTADO">
+    Telefone: <input type="text" name="telefone" value="" id="#TELEFONE">
+    Celular: <input type="text" name="celular" id="#CELULAR">
+    CNPJ/CPF: <input type="text" name="cnpjcpf" value="" id="#CNPJCPF">
+    Grupo: <input type="text" name="grupo" value="" id="#GRUPO">
+    Situação: <input type="text" name="situacao" value="" id="#SITUACAO">
+    Data de Nascimento: <input type="date" name="data_nascimento" value="" id="#DATANASCIMENTO">
+    Observação: <input type="text" name="observacao" value="" id="#OBSERVACAO">
 
     <button onclick="filtrarProdutos()">Pesquisar!</button>
     <hr>
     <div class="menu-listagem">
         <table id="TABELA" align="center">
             <tr>
-                <th><strong>CÓDIGO</strong></th>
-                <th><strong>TIPO</strong></th>
-                <th><strong>DESCRIÇÃO</strong></th>
-                <th><strong>SEXO</strong></th>
-                <th><strong>TAMANHO</strong></th>
+                <th><strong>NOME</strong></th>
+                <th><strong>ENDEREÇO</strong></th>
+                <th><strong>BAIRRO</strong></th>
+                <th><strong>CEP</strong></th>
+                <th><strong>MUNICIPIO</strong></th>
+                <th><strong>ESTADO</strong></th>
+                <th><strong>TELEFONE</strong></th>
+                <th><strong>CELULAR</strong></th>
+                <th><strong>E-MAIL</strong></th>
+                <th><strong>CNPJ/CPF</strong></th>
                 <th><strong>GRUPO</strong></th>
-                <th><strong>PREÇO DE CUSTO</strong></th>
-                <th><strong>%</strong></th>
-                <th><strong>PREÇO DE VENDA</strong></th>
-                <th><strong>DATA DE VENDA</strong></th>
-                <th><strong>VENDIDO</strong></th>
-                <th><strong>PAGO</strong></th>
-                <th><strong>FOTO</strong></th>
+                <th><strong>SITUAÇÃO</strong></th>
+                <th><strong>DATA NASCIMENTO</strong></th>
+                <th><strong>OBSERVAÇÃO</strong></th>
                 <th><strong>EDITAR</strong></th>
                 <th><strong>EXCLUIR</strong></th>
 
@@ -120,7 +101,7 @@
             tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
             */
 
-            var url = "/menu/sendProdutos";
+            var url = "/menu/sendFornecedores";
 
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
@@ -141,27 +122,52 @@
                         var linha = document.createElement('tr')
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].codigo);
+                        var textData = document.createTextNode(resposta[x].nome);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].tipo);
+                        var textData = document.createTextNode(resposta[x].endereco);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].descricao);
+                        var textData = document.createTextNode(resposta[x].bairro);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].sexo);
+                        var textData = document.createTextNode(resposta[x].cep);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].tamanho);
+                        var textData = document.createTextNode(resposta[x].municipio);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].estado);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].telefone);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].celular);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].email);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].cnpj_cpf);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
@@ -170,40 +176,21 @@
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
+
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].preco_custo);
+                        var textData = document.createTextNode(resposta[x].situacao);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].porcentagem);
+                        var textData = document.createTextNode(resposta[x].data_nascimento);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].preco_venda);
+                        var textData = document.createTextNode(resposta[x].observacao);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
-
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].data_venda);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
-
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].vendido);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
-
-
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].pago);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
-
-                        var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x].foto + "' width='75' height='75'>";
-                        linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
@@ -226,6 +213,7 @@
     </script>
 
     <script>
+        /*
         function filtrarProdutos() {  // não esta funcando ainda os filtros
 
             var linhasTotais = document.getElementById("TABELA").rows.length; // retorna a coleção de linhas da tabela para contagem posterior
@@ -355,6 +343,7 @@
 
             }
         }
+        */
     </script>
 
 </body>
