@@ -97,40 +97,44 @@
                     }
                 }
                 document.getElementById("#VENDA").innerHTML = venda;
+				
+				////////////////////////////////////////////////////////////
+				////////////////////////////////////////////////////////////
+				
+				var xhttp_despesas = new XMLHttpRequest(); //REQUEST pra buscar os valores das despesas de compra
+
+				var tipo = "POST"
+				/*
+				tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
+				*/
+
+				var url = "/menu/sendDadosDespesas";
+
+				xhttp_despesas.open(tipo, url, true);
+				xhttp_despesas.setRequestHeader("Content-type", "application/json");
+
+				var body = {}
+
+				xhttp_despesas.send(JSON.stringify(body));
+
+				// ---------- Resposta da requisição feita acima ---------------//
+
+				xhttp_despesas.onreadystatechange = function () {
+					
+					if (this.readyState == 4 && this.status == 200) {
+				
+						resposta = JSON.parse(this.responseText);
+						
+						for (x = 0; x < resposta.length; x++){
+							compra += (resposta[x].valor);
+						}
+						
+						document.getElementById("#COMPRA").innerHTML = compra;
+						document.getElementById("#LUCRO").innerHTML = venda - compra 
+					}
+				}
             }
-        }
-
-        var xhttp = new XMLHttpRequest(); //REQUEST pra buscar os valores das despesas de compra
-
-        var tipo = "POST"
-        /*
-        tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-        */
-
-        var url = "/menu/sendDadosDespesas";
-
-        xhttp.open(tipo, url, true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-
-        var body = {}
-
-        xhttp.send(JSON.stringify(body));
-
-        // ---------- Resposta da requisição feita acima ---------------//
-
-        xhttp.onreadystatechange = function () {
-            
-            if (this.readyState == 4 && this.status == 200) {
-        
-                resposta = JSON.parse(this.responseText);
-                
-                for (x = 0; x < resposta.length; x++){
-                    compra += (resposta[x].valor);
-                }
-                document.getElementById("#COMPRA").innerHTML = compra;
-            }
-        }
-        document.getElementById("#LUCRO").innerHTML = document.getElementById("#COMPRA").innerHTML;
+        }        
     }
 </script>
 </body>
