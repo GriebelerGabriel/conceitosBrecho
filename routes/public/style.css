@@ -3,9 +3,13 @@
     background-color: rgb(233, 195, 195);
     text-align: center;
     color: rgb(219, 3, 3);
-    height: 20%;
+    height: 1%;
     width: 100%;
-    
+    position: static;
+}
+#imagem-logo{
+    height: 10px;
+    width: 10px;
 }
 
 #barra-principal{
@@ -13,6 +17,7 @@
     text-align: center;
     word-spacing: 5px; 
     word-spacing: 10px; 
+    position: relative;
 }
 
 .button-top {
@@ -74,6 +79,7 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    margin-bottom:150px;
 }
   
 #TABELA td, #TABELA th {
@@ -95,10 +101,80 @@
     
 }
 
-#photoSquare {
-    width: 350px;
-    height: 70px;
-    padding: 10px;
-    border: 1px solid #aaaaaa;
-    background-color:rgb(164, 236, 206);
-  }
+#fotoProduto{
+    width: 50px;
+    height: 50px;
+}
+
+#fotoProduto:hover{
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: auto;
+    left: auto;
+    bottom: auto;
+    right: auto;
+    margin-left: -50%;
+    margin-top: -30%;
+
+}
+
+input[type=submit], select{
+    width: 100%;
+    background-color: #4CAF50;
+    color: black;
+    padding: 7px 13px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover, select{
+    background-color: rgb(253, 253, 213);
+}
+
+input[type=text], select {
+  width: auto;
+  padding: 5px 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password], select {
+    width: auto;
+    padding: 5px 12px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=number], select {
+    width: auto;
+    padding: 5px 12px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=date], select {
+    width: auto;
+    padding: 5px 12px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#Filtros{
+    background-color: whitesmoke;
+    word-spacing: 5px;
+}
