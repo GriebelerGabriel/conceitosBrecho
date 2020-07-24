@@ -69,15 +69,12 @@
         <option value="ROUPAS">ROUPAS</option>
         <option value="ACESS.">ACESS.</option>
         <option value="CALÇADO">CALÇADO</option>
-    </select>
+    </select> <br>
     Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
     %: <input type="number" name="porcento" id="#PORCENTAGEM">
     Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
-
-    <div class="div1">
-        Foto: <input type="text" name="foto" value="" id="#FOTO">
-    </div>
-
+    Foto: <input type="text" name="foto" value="" id="#FOTO">
+    <br>
     Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
     Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
     Pago: <select name="pago" id="#PAGO">
@@ -202,7 +199,7 @@
                         linha.appendChild(noInterno);
 
                         var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x].foto + "' width='75' height='75'>";
+                        photo.innerHTML = "<img src='/" + resposta[x].foto + "'id='fotoProduto' width='75' height='75'>";
                         linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
@@ -256,10 +253,12 @@
             var filtroVendido = document.getElementById("#VENDIDO").value;
             var filtroPago = document.getElementById("#PAGO").value;
 
-            var body = { codigo: filtroCodigo, tipo: filtroTipo, descricao: filtroDescricao, sexo: filtroSexo, 
-            tamanho: filtroTamanho, grupo: filtroGrupo, preco_custo: filtroPrecoCusto, 
-            porcentagem: filtroPorcentagem, preco_venda: filtroPrecoVenda, foto: filtroFoto, 
-            data_venda: filtroDataVenda, vendido: filtroVendido, pago: filtroPago }
+            var body = {
+                codigo: filtroCodigo, tipo: filtroTipo, descricao: filtroDescricao, sexo: filtroSexo,
+                tamanho: filtroTamanho, grupo: filtroGrupo, preco_custo: filtroPrecoCusto,
+                porcentagem: filtroPorcentagem, preco_venda: filtroPrecoVenda, foto: filtroFoto,
+                data_venda: filtroDataVenda, vendido: filtroVendido, pago: filtroPago
+            }
 
             xhttp.send(JSON.stringify(body));
 

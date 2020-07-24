@@ -62,81 +62,53 @@
         <h1>LUCRO:<label id="#LUCRO"></label></h1>
     </strong>
 
-<script>
-    function readData() {
-        var compra = 0;
-        var venda = 0;
+    <script>
+        function readData() {
+            var compra = 0;
+            var venda = 0;
+            var lucro = 0;
 
-        var xhttp = new XMLHttpRequest(); //REQUEST pra buscar os valores dos produtos vendidos
+            var xhttp = new XMLHttpRequest(); //REQUEST pra buscar os valores dos produtos vendidos
 
-        var tipo = "POST"
-        /*
-        tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-        */
+            var tipo = "POST"
+            /*
+            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
+            */
 
-        var url = "/menu/sendDadosVendidos";
+            var url = "/menu/sendDadosVendidos";
 
-        xhttp.open(tipo, url, true);
-        xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
 
-        var body = {}
+            var body = {}
 
-        xhttp.send(JSON.stringify(body));
+            xhttp.send(JSON.stringify(body));
 
-        // ---------- Resposta da requisição feita acima ---------------//
+            // ---------- Resposta da requisição feita acima ---------------//
 
-        xhttp.onreadystatechange = function () {
-            
-            if (this.readyState == 4 && this.status == 200) {
-                
-                resposta = JSON.parse(this.responseText);
-                
-                for (x = 0; x < resposta.length; x++) {
-                    if((resposta[x].pago == 'OK') || (resposta[x].pago == 'OK/PL')){
-                        venda += resposta[x].preco_venda
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                    resposta = JSON.parse(this.responseText);
+
+                    for (x = 0; x < resposta.length; x++) {
+                        if (resposta[x].vendido != '') {
+
+                            compra += resposta[x].preco_custo
+                            venda += resposta[x].preco_venda
+                            lucro += (resposta[x].preco_venda-resposta[x].preco_custo);
+
+                        }
                     }
+                    document.getElementById("#VENDA").innerHTML = venda;
+                    document.getElementById("#LUCRO").innerHTML = lucro;
+                    document.getElementById("#COMPRA").innerHTML = compra;
+        
                 }
-                document.getElementById("#VENDA").innerHTML = venda;
-				
-				////////////////////////////////////////////////////////////
-				////////////////////////////////////////////////////////////
-				
-				var xhttp_despesas = new XMLHttpRequest(); //REQUEST pra buscar os valores das despesas de compra
-
-				var tipo = "POST"
-				/*
-				tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-				*/
-
-				var url = "/menu/sendDadosDespesas";
-
-				xhttp_despesas.open(tipo, url, true);
-				xhttp_despesas.setRequestHeader("Content-type", "application/json");
-
-				var body = {}
-
-				xhttp_despesas.send(JSON.stringify(body));
-
-				// ---------- Resposta da requisição feita acima ---------------//
-
-				xhttp_despesas.onreadystatechange = function () {
-					
-					if (this.readyState == 4 && this.status == 200) {
-				
-						resposta = JSON.parse(this.responseText);
-						
-						for (x = 0; x < resposta.length; x++){
-							compra += (resposta[x].valor);
-						}
-						
-						document.getElementById("#COMPRA").innerHTML = compra;
-						document.getElementById("#LUCRO").innerHTML = venda - compra 
-					}
-				}
             }
-        }        
-    }
-</script>
+        }
+    </script>
 </body>
 
 </html>

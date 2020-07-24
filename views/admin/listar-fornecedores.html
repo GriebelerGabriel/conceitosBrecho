@@ -66,7 +66,7 @@
     Data de Nascimento: <input type="date" name="data_nascimento" value="" id="#DATANASCIMENTO">
     Observação: <input type="text" name="observacao" value="" id="#OBSERVACAO">
 
-    <button onclick="filtrarProdutos()">Pesquisar!</button>
+    <button onclick="filtrarFornecedores()">Pesquisar!</button>
     <hr>
     <div class="menu-listagem">
         <table id="TABELA" align="center">
@@ -213,8 +213,7 @@
     </script>
 
     <script>
-        /*
-        function filtrarProdutos() {  // não esta funcando ainda os filtros
+        function filtrarFornecedores() {  // não esta funcando ainda os filtros
 
             var linhasTotais = document.getElementById("TABELA").rows.length; // retorna a coleção de linhas da tabela para contagem posterior
             var tabela = document.getElementById("TABELA");
@@ -225,29 +224,31 @@
 
             var tipo = "POST"
 
-            var url = "/menu/filtroProdutos";
+            var url = "/menu/filtroFornecedores";
 
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
-            var filtroCodigo = document.getElementById("#CODIGO").value;
-            var filtroTipo = document.getElementById("#TIPO").value;
-            var filtroDescricao = document.getElementById("#DESCRICAO").value;
-            var filtroSexo = document.getElementById("#SEXO").value;
-            var filtroTamanho = document.getElementById("#TAMANHO").value;
+            var filtroNome = document.getElementById("#NOME").value;
+            var filtroEndereco = document.getElementById("#ENDERECO").value;
+            var filtroBairro = document.getElementById("#BAIRRO").value;
+            var filtroCep = document.getElementById("#CEP").value;
+            var filtroMunicipio = document.getElementById("#MUNICIPIO").value;
+            var filtroEstado = document.getElementById("#ESTADO").value;
+            var filtroTelefone = document.getElementById("#TELEFONE").value;
+            var filtroCelular = document.getElementById("#CELULAR").value;
+            var filtroCNPJCPF = document.getElementById("#CNPJCPF").value;
             var filtroGrupo = document.getElementById("#GRUPO").value;
-            var filtroPrecoCusto = document.getElementById("#PRECOCUSTO").value;
-            var filtroPorcentagem = document.getElementById("#PORCENTAGEM").value;
-            var filtroPrecoVenda = document.getElementById("#PRECOVENDA").value;
-            var filtroFoto = document.getElementById("#FOTO").value;
-            var filtroDataVenda = document.getElementById("#DATAVENDA").value;
-            var filtroVendido = document.getElementById("#VENDIDO").value;
-            var filtroPago = document.getElementById("#PAGO").value;
+            var filtroSituacao = document.getElementById("#SITUACAO").value;
+            var filtroDataNascimento = document.getElementById("#DATANASCIMENTO").value;
+            var filtroObservacao = document.getElementById("#OBSERVACAO").value;
 
-            var body = { codigo: filtroCodigo, tipo: filtroTipo, descricao: filtroDescricao, sexo: filtroSexo, 
-            tamanho: filtroTamanho, grupo: filtroGrupo, preco_custo: filtroPrecoCusto, 
-            porcentagem: filtroPorcentagem, preco_venda: filtroPrecoVenda, foto: filtroFoto, 
-            data_venda: filtroDataVenda, vendido: filtroVendido, pago: filtroPago }
+            var body = {
+                nome: filtroNome, Endereco: filtroEndereco, Bairro: filtroBairro, cep: filtroCep,
+                municipio: filtroMunicipio, estado: filtroEstado, Telefone: filtroTelefone,
+                celular: filtroCelular, cnpj_cpf: filtroCNPJCPF, grupo: filtroGrupo,
+                situacao: filtroSituacao, data_nascimento: filtroDataNascimento, observacao: filtroObservacao
+            }
 
             xhttp.send(JSON.stringify(body));
 
@@ -261,27 +262,52 @@
                         var linha = document.createElement('tr')
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].codigo);
+                        var textData = document.createTextNode(resposta[x].nome);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].tipo);
+                        var textData = document.createTextNode(resposta[x].endereco);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].descricao);
+                        var textData = document.createTextNode(resposta[x].bairro);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].sexo);
+                        var textData = document.createTextNode(resposta[x].cep);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].tamanho);
+                        var textData = document.createTextNode(resposta[x].municipio);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].estado);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].telefone);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].celular);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].email);
+                        noInterno.appendChild(textData);
+                        linha.appendChild(noInterno);
+
+                        var noInterno = document.createElement("td");
+                        var textData = document.createTextNode(resposta[x].cnpj_cpf);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
@@ -290,40 +316,21 @@
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
+
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].preco_custo);
+                        var textData = document.createTextNode(resposta[x].situacao);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].porcentagem);
+                        var textData = document.createTextNode(resposta[x].data_nascimento);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].preco_venda);
+                        var textData = document.createTextNode(resposta[x].observacao);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
-
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].data_venda);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
-
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].vendido);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
-
-
-                        var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].pago);
-                        noInterno.appendChild(textData);
-                        linha.appendChild(noInterno);
-
-                        var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x].foto + "' width='75' height='75'>";
-                        linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
@@ -343,7 +350,6 @@
 
             }
         }
-        */
     </script>
 
 </body>
