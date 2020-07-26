@@ -58,17 +58,39 @@
             <button type="submit">IMPORTAR DESPESAS</button>
         </form>
         <br>
-        <button onclick="exportarExcel()">EXPORTAR DESPESAS</button>
 
+        <form action="/menu/downloadDespesasXLSX" method="POST" enctype="multipart/form-data">
+            <button type="submit">EXPORTAR DESPESAS</button>
+        </form>
     </div>
+    <script>
+        function exportarXLSX() {
+
+            var xhttp = new XMLHttpRequest();
+
+            var tipo = "POST"
+
+            var url = "/menu/downloadDespesasXLSX";
+
+            xhttp.open(tipo, url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            var body = {}
+
+            xhttp.send(JSON.stringify(body));
+
+            // ---------- Resposta da requisição feita acima ---------------//
+
+            xhttp.onreadystatechange = function () {
+                
+                const data = [{ foo: 'foo' }, { bar: 'bar' }]
+                const fileName = 'download'
+                const exportType = 'csv'
+
+                window.exportFromJSON({ data, fileName, exportType })
+            }
+        }
+    </script>
 </body>
-
-<script>
-
-    function exportarExcel() {
-        
-    }
-
-</script>
 
 </html>

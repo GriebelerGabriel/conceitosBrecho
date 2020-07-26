@@ -53,7 +53,10 @@
     DESCRIÇÃO: <input type="text" id="filtroDescricao">
     VALOR: <input type="number" id="fitroValor">
     OBSERVAÇÃO: <input type="test" id="filtroObservacao">
+
     <button onclick="filtrarDespesas()">Pesquisar!</button>
+
+    <button onclick="exportarExcel()">Exportar!</button>
     <hr>
     <div class="menu-listagem">
         <table id="TABELA" align="center">
@@ -138,7 +141,7 @@
     </script>
 
     <script>
-        function filtrarDespesas() {  
+        function filtrarDespesas() {
 
             var linhasTotais = document.getElementById("TABELA").rows.length; // retorna a coleção de linhas da tabela para contagem posterior
             var tabela = document.getElementById("TABELA");
@@ -210,6 +213,37 @@
 
             }
         }
+    </script>
+
+    <script>
+        function exportarExcel() {
+            
+            var element_id = "TABELA";
+            var name = "tabela";
+
+            function base64(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            }
+
+            function format(s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+
+            var uri = 'data:application/vnd.ms-excel;base64,'
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+
+            var table = document.getElementById(element_id)
+            var ctx = { worksheet: name, table: table.innerHTML }
+
+            var a = document.createElement('a');
+            a.href = uri + base64(format(template, ctx).replace(/<input type="checkbox" class="no-print">/g, ""))
+            a.download = name + '.xls';
+            a.click();
+
+            downloadSheet("TABELA")
+
+        }
+
     </script>
 
 </body>

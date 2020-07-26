@@ -67,6 +67,8 @@
     Observação: <input type="text" name="observacao" value="" id="#OBSERVACAO">
 
     <button onclick="filtrarFornecedores()">Pesquisar!</button>
+    
+    <button onclick="exportarExcel()">Exportar!</button>
     <hr>
     <div class="menu-listagem">
         <table id="TABELA" align="center">
@@ -116,12 +118,12 @@
 
                 if (this.readyState == 4 && this.status == 200) {
                     resposta = JSON.parse(this.responseText)
-                    console.log(resposta);
+
                     for (x = 0; x < resposta.length; x++) {
 
                         var linha = document.createElement('tr')
 
-                        var noInterno = document.createElement("td");
+                        var noInterno  = document.createElement("td");
                         var textData = document.createTextNode(resposta[x].nome);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
@@ -351,6 +353,36 @@
             }
         }
     </script>
+        <script>
+            function exportarExcel() {
+                
+                var element_id = "TABELA";
+                var name = "tabela";
+    
+                function base64(s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                }
+    
+                function format(s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+                }
+    
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    
+                var table = document.getElementById(element_id)
+                var ctx = { worksheet: name, table: table.innerHTML }
+    
+                var a = document.createElement('a');
+                a.href = uri + base64(format(template, ctx).replace(/<input type="checkbox" class="no-print">/g, ""))
+                a.download = name + '.xls';
+                a.click();
+    
+                downloadSheet("TABELA")
+    
+            }
+    
+        </script>
 
 </body>
 

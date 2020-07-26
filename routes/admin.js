@@ -7,6 +7,8 @@ const Sequelize = require('sequelize');
 const multer = require('multer');
 const xlsxj = require("xlsx-to-json");
 const Op = Sequelize.Op;
+const exportFromJSON = require('export-from-json');
+
 
 const http = require("http");
 const path = require("path");
@@ -57,7 +59,7 @@ const upload = multer({ storage });
 
         Produto.findAll({
         }).then((produtos) => { // .all() trocado atualmente por .findAll()
-           res.send(produtos);
+            res.send(produtos);
         })
     });
 
@@ -65,7 +67,7 @@ const upload = multer({ storage });
 
         Despesa.findAll({
         }).then((despesas) => { // .all() trocado atualmente por .findAll()
-           res.send(despesas);
+            res.send(despesas);
         })
     });
 }
@@ -229,22 +231,22 @@ const upload = multer({ storage });
         var whereQuery = {} // cria o objeto que vai receber os dados da DESPESA
 
         if (req.body.codigo) { // verifica se existe algum dado nao nulo ou vazio;
-            whereQuery.codigo = {[Op.like]: '%'+ req.body.codigo + '%'} // set o dado dentro do objeto que foi criado
+            whereQuery.codigo = { [Op.like]: '%' + req.body.codigo + '%' } // set o dado dentro do objeto que foi criado
         }
         if (req.body.tipo) {
-            whereQuery.tipo = {[Op.like]: '%'+ req.body.tipo + '%'}
+            whereQuery.tipo = { [Op.like]: '%' + req.body.tipo + '%' }
         }
         if (req.body.descricao) {
-            whereQuery.descricao = {[Op.like]: '%'+ req.body.descricao + '%'}
+            whereQuery.descricao = { [Op.like]: '%' + req.body.descricao + '%' }
         }
         if (req.body.sexo) {
-            whereQuery.sexo = {[Op.like]: '%'+ req.body.sexo + '%'}
+            whereQuery.sexo = { [Op.like]: '%' + req.body.sexo + '%' }
         }
         if (req.body.tamanho) {
-            whereQuery.tamanho = {[Op.like]: '%'+ req.body.tamanho + '%'}
+            whereQuery.tamanho = { [Op.like]: '%' + req.body.tamanho + '%' }
         }
         if (req.body.grupo) {
-            whereQuery.grupo = {[Op.like]: '%'+ req.body.grupo + '%'}
+            whereQuery.grupo = { [Op.like]: '%' + req.body.grupo + '%' }
         }
         if (req.body.preco_custo) {
             whereQuery.preco_custo = req.body.preco_custo
@@ -259,13 +261,13 @@ const upload = multer({ storage });
             whereQuery.data_venda = req.body.data_venda
         }
         if (req.body.vendido) {
-            whereQuery.vendido = {[Op.like]: '%'+ req.body.vendido + '%'}
+            whereQuery.vendido = { [Op.like]: '%' + req.body.vendido + '%' }
         }
         if (req.body.pago) {
             whereQuery.pago = req.body.pago
         }
         if (req.body.foto) {
-            whereQuery.foto = {[Op.like]: '%'+ req.body.foto + '%'}
+            whereQuery.foto = { [Op.like]: '%' + req.body.foto + '%' }
         }
 
         Produto.findAll({
@@ -505,10 +507,10 @@ const upload = multer({ storage });
             whereQuery.valor = req.body.valor// set o dado dentro do objeto que foi criado
         }
         if (req.body.observacao) { // verifica se existe algum dado nao nulo ou vazio;
-            whereQuery.observacao = {[Op.like]: '%'+ req.body.observacao + '%'}// set o dado dentro do objeto que foi criado
+            whereQuery.observacao = { [Op.like]: '%' + req.body.observacao + '%' }// set o dado dentro do objeto que foi criado
         }
         if (req.body.descricao) { // verifica se existe algum dado nao nulo ou vazio;
-            whereQuery.descricao = {[Op.like]: '%'+ req.body.descricao + '%'}// set o dado dentro do objeto que foi criado
+            whereQuery.descricao = { [Op.like]: '%' + req.body.descricao + '%' }// set o dado dentro do objeto que foi criado
         }
 
         Despesa.findAll({
@@ -551,6 +553,14 @@ const upload = multer({ storage });
         })
         res.redirect("/menu/listar-despesas");
     })
+
+    router.post("/menu/downloadDespesasXLSX", (req, res) => {
+
+        Despesa.findAll().then((despesas) => { // .all() trocado atualmente por .findAll()
+
+        })
+    })
+
 
 }
 
@@ -644,43 +654,43 @@ const upload = multer({ storage });
         var whereQuery = {} // cria o objeto que vai receber os dados da DESPESA
 
         if (req.body.nome) { // verifica se existe algum dado nao nulo ou vazio;
-            whereQuery.nome = {[Op.like]: '%'+ req.body.nome + '%'} // set o dado dentro do objeto que foi criado
+            whereQuery.nome = { [Op.like]: '%' + req.body.nome + '%' } // set o dado dentro do objeto que foi criado
         }
         if (req.body.endereco) {
-            whereQuery.endereco = {[Op.like]: '%'+ req.body.endereco + '%'}
+            whereQuery.endereco = { [Op.like]: '%' + req.body.endereco + '%' }
         }
         if (req.body.bairro) {
-            whereQuery.bairro = {[Op.like]: '%'+ req.body.bairro + '%'}
+            whereQuery.bairro = { [Op.like]: '%' + req.body.bairro + '%' }
         }
         if (req.body.cep) {
-            whereQuery.cep = {[Op.like]: '%'+ req.body.cep + '%'}
+            whereQuery.cep = { [Op.like]: '%' + req.body.cep + '%' }
         }
         if (req.body.municipio) {
-            whereQuery.municipio = {[Op.like]: '%'+ req.body.municipio + '%'}
+            whereQuery.municipio = { [Op.like]: '%' + req.body.municipio + '%' }
         }
         if (req.body.estado) {
-            whereQuery.estado = {[Op.like]: '%'+ req.body.estado + '%'}
+            whereQuery.estado = { [Op.like]: '%' + req.body.estado + '%' }
         }
         if (req.body.telefone) {
-            whereQuery.telefone = {[Op.like]: '%'+ req.body.telefone + '%'}
+            whereQuery.telefone = { [Op.like]: '%' + req.body.telefone + '%' }
         }
         if (req.body.celular) {
-            whereQuery.celular = {[Op.like]: '%'+ req.body.celular + '%'}
+            whereQuery.celular = { [Op.like]: '%' + req.body.celular + '%' }
         }
         if (req.body.cnpj_cpf) {
-            whereQuery.cnpj_cpf = {[Op.like]: '%'+ req.body.cnpj_cpf + '%'}
+            whereQuery.cnpj_cpf = { [Op.like]: '%' + req.body.cnpj_cpf + '%' }
         }
         if (req.body.grupo) {
-            whereQuery.grupo = {[Op.like]: '%'+ req.body.grupo + '%'}
+            whereQuery.grupo = { [Op.like]: '%' + req.body.grupo + '%' }
         }
         if (req.body.situacao) {
-            whereQuery.situacao = {[Op.like]: '%'+ req.body.situacao + '%'}
+            whereQuery.situacao = { [Op.like]: '%' + req.body.situacao + '%' }
         }
         if (req.body.data_nascimento) {
             whereQuery.data_nascimento = req.body.data_nascimento
         }
         if (req.body.observacao) {
-            whereQuery.observacao = {[Op.like]: '%'+ req.body.observacao + '%'}
+            whereQuery.observacao = { [Op.like]: '%' + req.body.observacao + '%' }
         }
 
         Fornecedor.findAll({
