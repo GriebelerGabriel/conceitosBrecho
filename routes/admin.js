@@ -13,6 +13,7 @@ const exportFromJSON = require('export-from-json');
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+const { where } = require('sequelize');
 
 
 const handleError = (err, res) => {
@@ -143,7 +144,14 @@ const upload = multer({ storage });
 
 
     router.post("/menu/sendProdutos", (req, res) => { // busca no banco de dados(produtos)
-        Produto.findAll().then((produtos) => { // .all() trocado atualmente por .findAll()
+        Produto.findAll({
+            where:{
+                
+            },
+            order:[
+                ['id', 'DESC'],
+            ],
+        }).then((produtos) => { // .all() trocado atualmente por .findAll()
             res.send(produtos)
         })
     });
@@ -218,7 +226,7 @@ const upload = multer({ storage });
 
             where: {
                 id: valueId
-            }
+            },
 
         }).then(function (produto) {
             res.send(produto)

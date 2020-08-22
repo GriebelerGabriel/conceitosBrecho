@@ -93,7 +93,8 @@
                     resposta = JSON.parse(this.responseText);
 
                     for (x = 0; x < resposta.length; x++) {
-                        if (resposta[x].vendido != '') {
+                        if (resposta[x].vendido[0] == 'V' && resposta[x].vendido[1] == 'E' && resposta[x].vendido[2] == 'N'
+                        && resposta[x].vendido[3] == 'D' && resposta[x].vendido[4] == 'I' && resposta[x].vendido[5] == 'D') {
 
                             compra += resposta[x].preco_custo
                             venda += resposta[x].preco_venda
