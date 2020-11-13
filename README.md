@@ -6,7 +6,6 @@
 1º instalar nodejs -> https://nodejs.org/en/ (backend) <br>
 2º instalar mysql ->  https://dev.mysql.com/downloads/installer/ (Database), instalador para windows <br>
 // DEVE SER INSTALADO COMO SERVIDOR // <br>
-3º utilizar o comando pelo cmd dentro da pasta conceitosBrecho -> "npm install"; <br>
 
 <br>
 
