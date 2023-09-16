@@ -20,6 +20,9 @@
 <h1> Configuração WINDOWS: </h1><br><br>
 1º  veja em: https://www.youtube.com/watch?v=OUZIaoCSJas <br>
 
+2º Para iniciar o mysql via terminal(cmd) utilize mysql -u root -p 
+3º Digite a senha: password
+
 <h1> Configuração LINUX: </h1><br><br>
 
 1º no terminal digite os comandos: <br>
