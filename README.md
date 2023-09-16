@@ -10,8 +10,6 @@
 <h1> Para Instalar as Dependências: -> passos para LINUX</h1>
 
 1º No terminal, com atalho CTRL+ALT+T digite os seguintes comandos: <br><br>
-2º instalar nodejs(digite no terminal) -> sudo apt install nodejs  <br>
-3º instalar mysql(digite no terminal) ->  sudo apt install mysql-server  <br>
 
 <h1> IMPORTANTE! Configuração do MYSQL(banco de dados)</h1> 
 <br>
