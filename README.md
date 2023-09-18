@@ -5,6 +5,9 @@
 
 1º instalar nodejs -> https://nodejs.org/en/ (backend) <br>
 2º instalar mysql ->  https://dev.mysql.com/downloads/installer/ (Database), instalador para windows <br>
+3º instalar Sequelize(for database connection) -> npm install --save sequelize
+4º instalar sqlite3 -> npm install --save sqlite3
+
 // DEVE SER INSTALADO COMO SERVIDOR // <br>
 
 <h1> Para Instalar as Dependências: -> passos para LINUX</h1>
