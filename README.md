@@ -5,8 +5,9 @@
 
 1º instalar nodejs -> https://nodejs.org/en/ (backend) <br>
 2º instalar mysql ->  https://dev.mysql.com/downloads/installer/ (Database), instalador para windows <br>
-3º instalar Sequelize(for database connection) -> npm install --save sequelize
-4º instalar sqlite3 -> npm install --save sqlite3
+3º instalar Sequelize(for database connection) -> npm install --save sequelize <br>
+4º instalar sqlite3 -> npm install sqlite3 --save <br>
+5º instalar express -> $ npm install express --save <br>
 
 // DEVE SER INSTALADO COMO SERVIDOR // <br>
 
