@@ -8,6 +8,7 @@
 3º instalar Sequelize(for database connection) -> npm install --save sequelize <br>
 4º instalar sqlite3 -> npm install sqlite3 --save <br>
 5º instalar express -> $ npm install express --save <br>
+6º pode ser necessário instalar mysql2 manualmente(no terminal) -> npm install mysql2 <br>
 
 // DEVE SER INSTALADO COMO SERVIDOR // <br>
 
@@ -53,11 +54,14 @@
 
 <h1> <strong>IMPORTANTE:</strong></h1> Ao realizar as proximas etapas deve-se descomentar as ultimas linhas dos seguintes arquivos(Fornecedor.js, Despesas.js e Produtos.js), e, após rodar as proximas linhas, deve-se comentá-las(colocar // antes delas) novamente caso contrário irá sempre criar tabelas novas para cada fornecedor, despesa e produto.<br><br>
 
+
+
 1º cd models <br>
-2º node Fornecedor.js <br>
-3º node Produtos.js <br> 
-4º node Despesas.js <br> 
-5º <strong> comentar novamente as linhas descritas no aviso anterio. </strong> <br><br>
+2º node db.js (para testar a conexão com o banco de dados)<br>
+3º node Fornecedor.js <br>
+4º node Produtos.js <br> 
+5º node Despesas.js <br> 
+6º <strong> comentar novamente as linhas descritas no aviso anterio. </strong> <br><br>
 
 <h1> Para rodar no servidor de aplicação local(Deixar ligado no CMD): </h1>
 <br><br>
