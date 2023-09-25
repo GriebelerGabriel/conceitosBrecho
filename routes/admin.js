@@ -1,19 +1,18 @@
 const express = require('express');
-const router = express.Router();
-const Despesa = require('../models/Despesa');
-const Produto = require('../models/Produto');
-const Fornecedor = require('../models/Fornecedor');
+var router = express.Router();
 const Sequelize = require('sequelize');
-const multer = require('multer');
-const xlsxj = require("xlsx-to-json");
 const Op = Sequelize.Op;
-const exportFromJSON = require('export-from-json');
 
-
+const multer = require('multer');
+const XLSX = require("xlsx");
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const { where } = require('sequelize');
+
+const Despesa = require('../models/Despesa');
+const Produto = require('../models/Produto');
+const Fornecedor = require('../models/Fornecedor');
 
 
 const handleError = (err, res) => {
@@ -23,19 +22,8 @@ const handleError = (err, res) => {
         .end("Oops! Something went wrong!");
 };
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-
-        // error first callback
-        cb(null, __dirname + "/public");
-    },
-    filename: function (req, file, cb) {
-
-        // error first callback
-        cb(null, `${file.originalname}`); // salva o nome do arquivo no upldoad
-    }
-});
-const upload = multer({ storage });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 
 {// ################################# ROTAS DO MENU E RAIZ ####################################### //
@@ -143,7 +131,7 @@ const upload = multer({ storage });
     });
 
 
-    router.post("/menu/sendProdutos", (req, res) => { // busca no banco de dados(produtos)
+    router.get("/menu/buscar-produtos", (req, res) => { // busca no banco de dados(produtos)
         Produto.findAll({
             where:{
                 
@@ -205,7 +193,7 @@ const upload = multer({ storage });
 
     router.get("/menu/excluir-produto", (req, res) => {
         var valueId = req.query.id; // pega o ID e salva numa variavel
-        console.log(req.query.id) // Pega o ID da query e verifica no console do NODE
+
         Produto.destroy({
             where: {
 
@@ -287,119 +275,50 @@ const upload = multer({ storage });
         })
     })
 
-    router.post("/menu/uploadProdutosXLSX", upload.single("planilha"), (req, res, next) => {
-        xlsxj({
-            input: __dirname + "/public/" + req.file.originalname,
-            output: "output.json"
-        }, function (err, result) {
-            if (err) {
-                console.error(err);
-            } else {
-                var count = Object.keys(result).length;
+    router.post("/menu/uploadProdutosXLSX", upload.single("excelFile"), (req, res, next) => {
+            if (!req.file) {
+                return res.status(400).send("Selecione o arquivo.");
+            }
+            else{
+                const buffer = req.file.buffer;
+                const workbook = XLSX.read(buffer, { cellDates: true, cellNF: false });
 
-                for (x = 0; x < count; x++) {
+                // Assuming you want to work with the first sheet
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
 
-                    if ((result[x].FOTO == 'OK' || result[x].FOTO == '') && result[x].DATA_VENDA == '') {
+                // Convert the sheet data to JSON
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { raw: false });
+                try{
+                    jsonData.map( (item) =>{
 
+                        let precoCustoFormatted = item.PRECO_CUSTO.replace(/,/g, '.');
+                        let precoVendaFormatted = item.PRECO_VENDA.replace(/,/g, '.');
+                    
                         Produto.create({
 
-                            codigo: result[x].CODIGO,
-                            tipo: result[x].TIPO,
-                            descricao: result[x].DESCRICAO,
-                            sexo: result[x].SEXO,
-                            tamanho: result[x].TAM,
-                            grupo: result[x].GRUPO,
-                            preco_custo: result[x].PRECO_CUSTO,
-                            porcentagem: result[x].PORCENTAGEM,
-                            preco_venda: result[x].PRECO_VENDA,
-                            data_venda: '01-01-1000', // 01/01/1000 --> setado como default; 
-                            vendido: result[x].VENDIDO,
-                            pago: result[x].PAGO,
-                            foto: 'question.png'  // setado como foto default
+                            codigo: item.CODIGO,
+                            tipo: item.TIPO,
+                            descricao: item.DESCRICAO,
+                            sexo: item.SEXO,
+                            tamanho: item.TAM,
+                            grupo: item.GRUPO,
+                            preco_custo: precoCustoFormatted,
+                            porcentagem: item.PORCENTAGEM,
+                            preco_venda: precoVendaFormatted,
+                            foto: "question.png",
+                            data_venda: item.DATA_VENDA,
+                            vendido: item.VENDIDO,
+                            pago: item.PAGO
 
-
-                        }).then(function () {
-                            console.log("Cadastrado com sucesso!");
-                        }).catch(function (erro) {
-                            console.log("Houve um erro: " + erro);
-                        });
-                    }
-                    else if ((result[x].FOTO == 'OK' || result[x].FOTO == '') && result[x].DATA_VENDA != '') {
-                        Produto.create({
-
-                            codigo: result[x].CODIGO,
-                            tipo: result[x].TIPO,
-                            descricao: result[x].DESCRICAO,
-                            sexo: result[x].SEXO,
-                            tamanho: result[x].TAM,
-                            grupo: result[x].GRUPO,
-                            preco_custo: result[x].PRECO_CUSTO,
-                            porcentagem: result[x].PORCENTAGEM,
-                            preco_venda: result[x].PRECO_VENDA,
-                            data_venda: result[x].DATA_VENDA,
-                            vendido: result[x].VENDIDO,
-                            pago: result[x].PAGO,
-                            foto: 'question.png'  // setado como foto default
-
-
-                        }).then(function () {
-                            console.log("Cadastrado com sucesso!");
-                        }).catch(function (erro) {
-                            console.log("Houve um erro: " + erro);
-                        });
-                    }
-                    else if ((result[x].FOTO != 'OK' && result[x].FOTO != '') && result[x].DATA_VENDA != '') {
-                        Produto.create({
-
-                            codigo: result[x].CODIGO,
-                            tipo: result[x].TIPO,
-                            descricao: result[x].DESCRICAO,
-                            sexo: result[x].SEXO,
-                            tamanho: result[x].TAM,
-                            grupo: result[x].GRUPO,
-                            preco_custo: result[x].PRECO_CUSTO,
-                            porcentagem: result[x].PORCENTAGEM,
-                            preco_venda: result[x].PRECO_VENDA,
-                            data_venda: result[x].DATA_VENDA,
-                            vendido: result[x].VENDIDO,
-                            pago: result[x].PAGO,
-                            foto: result[x].FOTO
-
-
-                        }).then(function () {
-                            console.log("Cadastrado com sucesso!");
-                        }).catch(function (erro) {
-                            console.log("Houve um erro: " + erro);
-                        });
-                    }
-                    else if ((result[x].FOTO != 'OK' && result[x].FOTO != '') && result[x].DATA_VENDA == '') {
-                        Produto.create({
-
-                            codigo: result[x].CODIGO,
-                            tipo: result[x].TIPO,
-                            descricao: result[x].DESCRICAO,
-                            sexo: result[x].SEXO,
-                            tamanho: result[x].TAM,
-                            grupo: result[x].GRUPO,
-                            preco_custo: result[x].PRECO_CUSTO,
-                            porcentagem: result[x].PORCENTAGEM,
-                            preco_venda: result[x].PRECO_VENDA,
-                            data_venda: '01-01-1000',
-                            vendido: result[x].VENDIDO,
-                            pago: result[x].PAGO,
-                            foto: result[x].FOTO
-
-
-                        }).then(function () {
-                            console.log("Cadastrado com sucesso!");
-                        }).catch(function (erro) {
-                            console.log("Houve um erro: " + erro);
-                        });
-                    }
+                        })
+                    })
+                    
+                }catch(e){
+                    console.log("ERRO! "+ e)
                 }
             }
-        })
-        res.redirect("/menu/listar-produtos");
+        // res.redirect("/menu/listar-produtos");
     })
 
 }
@@ -532,39 +451,13 @@ const upload = multer({ storage });
 
 
     router.post("/menu/uploadDespesasXLSX", upload.single("planilha"), (req, res, next) => {
-        xlsxj({
-            input: __dirname + "/public/" + req.file.originalname,
-            output: "output.json"
-        }, function (err, result) {
-            if (err) {
-                console.error(err);
-            } else {
-
-                var count = Object.keys(result).length;
-
-                for (x = 0; x < count; x++) {
-
-                    Despesa.create({
-
-                        data: result[x].DATA,
-                        descricao: result[x].DESCRICAO,
-                        valor: result[x].VALOR,
-                        observacao: result[x].OBSERVACAO,
-
-                    }).then(function () {
-                        console.log("Cadastrado com sucesso!");
-                    }).catch(function (erro) {
-                        res.send("Houve um erro: " + erro);
-                    });
-                }
-            }
-        })
+        
         res.redirect("/menu/listar-despesas");
     })
 
     router.post("/menu/downloadDespesasXLSX", (req, res) => {
 
-        Despesa.findAll().then((despesas) => { // .all() trocado atualmente por .findAll()
+        Despesa.findAll().then((despesas) => {
 
         })
     })
@@ -618,42 +511,7 @@ const upload = multer({ storage });
     });
 
     router.post("/menu/uploadFornecedoresXLSX", upload.single("planilha"), (req, res, next) => {
-        xlsxj({
-            input: __dirname + "/public/" + req.file.originalname,
-            output: "output.json"
-        }, function (err, result) {
-            if (err) {
-                console.error(err);
-            } else {
-                var count = Object.keys(result).length;
-
-                for (x = 0; x < count; x++) {
-
-                    Fornecedor.create({
-
-                        nome: result[x].NOME,
-                        endereco: result[x].ENDERECO,
-                        bairro: result[x].BAIRRO,
-                        cep: result[x].CEP,
-                        municipio: result[x].MUNICIPIO,
-                        estado: result[x].ESTADO,
-                        telefone: result[x].TELEFONE,
-                        celular: result[x].CELULAR,
-                        email: result[x].EMAIL,
-                        cnpj_cpf: result[x].CNPJ_CPF,
-                        grupo: result[x].GRUPO,
-                        situacao: result[x].SITUACAO,
-                        data_nascimento: result[x].DATA_NASCIMENTO,
-                        observacao: result[x].OBSERVACAO,
-
-                    }).then(function () {
-                        console.log("Cadastrado com sucesso!");
-                    }).catch(function (erro) {
-                        console.log("Houve um erro: " + erro);
-                    });
-                }
-            }
-        })
+        
         res.redirect("/menu/listar-fornecedores");
     })
 

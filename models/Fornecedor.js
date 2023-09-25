@@ -58,4 +58,4 @@ const Fornecedor = db.bd.define('fornecedores', {
 })
 
 module.exports = Fornecedor;
-//Fornecedor.sync({force: true}) // -> sincroniza o bd para coluna produtos, rodar para criar o banco ou resetá-lo
+Fornecedor.sync()

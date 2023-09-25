@@ -9,7 +9,6 @@
 </head>
 
 <body onload="readData()">
-    <script src="../../jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
         <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
     </div>
@@ -91,7 +90,7 @@
     <button onclick="exportarExcel()">Exportar!</button>
     <hr>
     <div class="menu-listagem">
-        <table id="TABELA" align="center">
+        <table class="table" id="TABELA" align="center">
             <tr>
                 <th><strong>CÓDIGO</strong></th>
                 <th><strong>TIPO</strong></th>
@@ -112,117 +111,152 @@
             </tr>
         </table>
     </div>
-    <script> //script de requisição e respostas de dados do banco
-        function readData() {
+    <div class="pagination-container" id="pagination-container">
+        <ul class="pagination" id="pagination"></ul>
+    </div>
+    <script> 
+        async function readData() {
 
             var xhttp = new XMLHttpRequest();
-
-            var tipo = "POST"
-            /*
-            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-            */
-
-            var url = "/menu/sendProdutos";
-
-            xhttp.open(tipo, url, true);
+            await xhttp.open("GET", "/menu/buscar-produtos", true);
             xhttp.setRequestHeader("Content-type", "application/json");
-
-            var body = {}
-
-            xhttp.send(JSON.stringify(body));
+            xhttp.send(null);
 
             // ---------- Resposta da requisição feita acima ---------------//
 
             xhttp.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
-                    resposta = JSON.parse(this.responseText)
-                    console.log(resposta);
-                    for (x = 0; x < resposta.length; x++) {
+                    const resposta = JSON.parse(this.responseText)
+                    const numberPerPage = 20
 
+                    createPagination(resposta, numberPerPage)
+                    let currentPage = 1;
+                    displayTableItems(resposta, numberPerPage, currentPage)
+                }
+            }
+
+            function displayTableItems(resposta, numberPerPage, currentPage){
+
+                const positionInObjectArray = (currentPage-1)*numberPerPage; // calculates the selected page * number of items per page
+                
+                for (x = 0; x < numberPerPage; x++) {
+                    try{
                         var linha = document.createElement('tr')
-
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].codigo);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].codigo);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].tipo);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].tipo);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].descricao);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].descricao);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].sexo);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].sexo);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].tamanho);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].tamanho);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].grupo);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].grupo);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].preco_custo);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].preco_custo);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].porcentagem);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].porcentagem);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].preco_venda);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].preco_venda);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].data_venda);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].data_venda);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].vendido);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].vendido);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
 
                         var noInterno = document.createElement("td");
-                        var textData = document.createTextNode(resposta[x].pago);
+                        var textData = document.createTextNode(resposta[x+positionInObjectArray].pago);
                         noInterno.appendChild(textData);
                         linha.appendChild(noInterno);
 
                         var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x].foto + "'id='fotoProduto' width='75' height='75'>";
+                        photo.innerHTML = "<img src='/" + resposta[x+positionInObjectArray].foto + "'id='fotoProduto' width='75' height='75'>";
                         linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
-                        botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
+                        botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x+positionInObjectArray].id + "'>" +
                             "<img src='/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
-                        botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x].id + "'>" +
+                        botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x+positionInObjectArray].id + "'>" +
                             "<img src='/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)
-
+                    }catch(e){
                     }
-
                 }
+            }
+            function createPagination(resposta, numberPerPage){
+                let numberOfPages = resposta.length/numberPerPage;
 
+                if(numberOfPages - Math.floor(numberOfPages)!= 0){
+                    if(Math.trunc(numberOfPages) == 0){
+                        numberOfPages = 1
+                    }
+                    else{
+                        numberOfPages = (Math.trunc(numberOfPages))+1
+                    }
+                }
+                const paginationContainer = document.querySelector('.pagination');
+                const table = document.querySelector('.table')
+                const rows = table.getElementsByTagName('tr');
+
+                for (let i = 1; i <= numberOfPages; i++) {
+                    const li = document.createElement('li');
+                    li.textContent = i;
+                    li.addEventListener('click', () => {
+
+                        for (let i = rows.length - 1; i > 0; i--) {
+                            table.removeChild(rows[i]);
+                        }
+
+                        displayTableItems(resposta, numberPerPage, i)
+                    });
+                    paginationContainer.appendChild(li);
+                }
+            }
+
+            function highlightActivePage() {
+                const paginationItems = document.querySelectorAll('.pagination li');
+                paginationItems.forEach(item => item.classList.remove('active'));
+                paginationItems[currentPage - 1].classList.add('active');
             }
         }
     </script>
@@ -360,37 +394,36 @@
             }
         }
     </script>
-        <script>
-            function exportarExcel() {
-                
-                var element_id = "TABELA";
-                var name = "tabela";
-    
-                function base64(s) {
-                    return window.btoa(unescape(encodeURIComponent(s)))
-                }
-    
-                function format(s, c) {
-                    return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
-                }
-    
-                var uri = 'data:application/vnd.ms-excel;base64,'
-                var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-    
-                var table = document.getElementById(element_id)
-                var ctx = { worksheet: name, table: table.innerHTML }
-    
-                var a = document.createElement('a');
-                a.href = uri + base64(format(template, ctx).replace(/<input type="checkbox" class="no-print">/g, ""))
-                a.download = name + '.xls';
-                a.click();
-    
-                downloadSheet("TABELA")
-    
-            }
-    
-        </script>
+    <script>
+        function exportarExcel() {
+            
+            var element_id = "TABELA";
+            var name = "tabela";
 
+            function base64(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            }
+
+            function format(s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+            }
+
+            var uri = 'data:application/vnd.ms-excel;base64,'
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+
+            var table = document.getElementById(element_id)
+            var ctx = { worksheet: name, table: table.innerHTML }
+
+            var a = document.createElement('a');
+            a.href = uri + base64(format(template, ctx).replace(/<input type="checkbox" class="no-print">/g, ""))
+            a.download = name + '.xls';
+            a.click();
+
+            downloadSheet("TABELA")
+
+        }
+
+    </script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const bd = new Sequelize('conceitosbd', 'root', '12345', { //faz a conexão com o banco de dados
+const bd = new Sequelize('conceitosbd', 'root', 'password', { //faz a conexão com o banco de dados
     host: "localhost",
     dialect: "mysql"
 });

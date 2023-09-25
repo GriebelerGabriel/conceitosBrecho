@@ -79,7 +79,6 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    margin-bottom:150px;
 }
   
 #TABELA td, #TABELA th {
@@ -177,4 +176,34 @@ input[type=date], select {
 #Filtros{
     background-color: whitesmoke;
     word-spacing: 5px;
+}
+
+.menu-listagem{
+    margin-top: 2%;
+}
+
+.pagination-container {
+    text-align: center;
+    margin-top: 1%;
+}
+
+.pagination {
+    display: inline-block;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination li {
+    display: inline;
+    margin: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pagination li.active {
+    background-color: #007bff;
+    color: #fff;
 }
