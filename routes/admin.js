@@ -65,19 +65,19 @@ const upload = multer({ storage: storage });
 
 
     router.get("/menu/cadastro-produto", (req, res) => {
-        res.render('admin/cadastro-produto.html');
+        res.render('admin/produtos/cadastro-produto.html');
     });
 
     router.get("/menu/listar-produtos", (req, res) => {
-        res.render('admin/listar-produtos.html');
+        res.render('admin/produtos/listar-produtos.html');
     });
 
     router.get("/menu/importar-produtos", (req, res) => {
-        res.render('admin/importar-produtos.html');
+        res.render('admin/produtos/importar-produtos.html');
     });
 
     router.get("/menu/editar-produto", (req, res) => {
-        res.render("admin/editar-produto.html")
+        res.render("admin/produtos/editar-produto.html")
     })
 
 
@@ -100,7 +100,7 @@ const upload = multer({ storage: storage });
                 pago: req.body.pago
 
             }).then(function () {
-                res.redirect("./listar-produtos");
+                res.render("admin/produtos/listar-produtos.html");
             }).catch(function (erro) {
                 res.send("Houve um erro: " + erro);
             })
@@ -123,7 +123,7 @@ const upload = multer({ storage: storage });
                 pago: req.body.pago
 
             }).then(function () {
-                res.redirect("./listar-produtos");
+                res.render("admin/produtos/listar-produtos.html");
             }).catch(function (erro) {
                 res.send("Houve um erro: " + erro);
             })
@@ -165,7 +165,7 @@ const upload = multer({ storage: storage });
 
 
             produto.save().then(() => {
-                res.redirect("/menu/listar-despesas");
+                res.render("admin/produtos/listar-produtos.html");
             }).catch((err) => {
                 console.log(err);
             })
@@ -200,8 +200,7 @@ const upload = multer({ storage: storage });
                 id: valueId
             }
         }).then((produtos) => {
-            res.render("admin/listar-produtos.html");
-
+            res.render("admin/produtos/listar-produtos.html");
         }).catch((erro) => {
             res.send(erro)
         })
@@ -290,6 +289,7 @@ const upload = multer({ storage: storage });
                 // Convert the sheet data to JSON
                 const jsonData = XLSX.utils.sheet_to_json(sheet, { raw: false });
                 try{
+                    let countItems = 0;
                     jsonData.map( (item) =>{
 
                         let precoCustoFormatted = item.PRECO_CUSTO.replace(/,/g, '.');
@@ -312,13 +312,15 @@ const upload = multer({ storage: storage });
                             pago: item.PAGO
 
                         })
-                    })
+                        countItems++
+                        console.log(countItems)
+                        })
                     
                 }catch(e){
                     console.log("ERRO! "+ e)
                 }
             }
-        // res.redirect("/menu/listar-produtos");
+        res.redirect("/menu/listar-produtos");
     })
 
 }
@@ -327,23 +329,23 @@ const upload = multer({ storage: storage });
 
 
     router.get("/menu/cadastro-despesa", (req, res) => {
-        res.render('admin/cadastro-despesa.html');
+        res.render('admin/despesas/cadastro-despesa.html');
     });
 
     router.get("/menu/listar-despesas", (req, res) => {
 
-        res.render('admin/listar-despesas.html');
+        res.render('admin/despesas/listar-despesas.html');
 
     });
 
     router.get("/menu/importar-despesas", (req, res) => {
 
-        res.render('admin/importar-despesas.html');
+        res.render('admin/despesas/importar-despesas.html');
 
     });
 
     router.get("/menu/editar-despesa", (req, res) => {
-        res.render("admin/editar-despesa.html")
+        res.render("admin/despesas/editar-despesa.html")
     })
 
     router.post("/menu/saveDespesa", (req, res) => { // Criar no Banco de dados!
@@ -356,7 +358,7 @@ const upload = multer({ storage: storage });
             observacao: req.body.observacao,
 
         }).then(function () {
-            res.redirect("./listar-despesas");
+            res.render("admin/despesas/listar-despesas.html");
         }).catch(function (erro) {
             res.send("Houve um erro: " + erro);
         })
@@ -400,7 +402,7 @@ const upload = multer({ storage: storage });
                 id: valueId
             }
         }).then((despesas) => {
-            res.render("admin/listar-despesas.html");
+            res.render("admin/despesas/listar-despesas.html");
 
         }).catch((erro) => {
             res.send(erro)
@@ -452,7 +454,7 @@ const upload = multer({ storage: storage });
 
     router.post("/menu/uploadDespesasXLSX", upload.single("planilha"), (req, res, next) => {
         
-        res.redirect("/menu/listar-despesas");
+        res.render("admin/despesas/listar-despesas.html");
     })
 
     router.post("/menu/downloadDespesasXLSX", (req, res) => {
@@ -468,15 +470,15 @@ const upload = multer({ storage: storage });
 { // ################################# ROTA DE FORNECEDORES ####################################### //
 
     router.get("/menu/cadastro-fornecedor", (req, res) => {
-        res.render('admin/cadastro-fornecedor.html');
+        res.render('admin/fornecedores/cadastro-fornecedor.html');
     });
 
     router.get("/menu/listar-fornecedores", (req, res) => {
-        res.render('admin/listar-fornecedores.html');
+        res.render('admin/fornecedores/listar-fornecedores.html');
     });
 
     router.get("/menu/importar-fornecedores", (req, res) => {
-        res.render('admin/importar-fornecedores.html');
+        res.render('admin/fornecedores/importar-fornecedores.html');
     });
 
     router.post("/menu/saveFornecedor", (req, res) => {

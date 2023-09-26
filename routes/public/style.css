@@ -18,6 +18,19 @@
     word-spacing: 5px; 
     word-spacing: 10px; 
     position: relative;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+.filtersContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 1%;
+    margin-left: 1%;
+    justify-content: start;
+}
+.filterTuple{
+    margin-right: 1%;
 }
 
 .button-top {
@@ -49,7 +62,8 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.63); /* sombra do dropdown (fora)*/
     z-index: 1;
     text-align: justify;
-    word-spacing: 0px; 
+    word-spacing: 0px;
+    
 
 }
 
@@ -72,7 +86,7 @@
   }
 
 .dropdown-top:hover .button-top {
-    background-color: blue;
+    background-color: rgb(121, 175, 255);
 }
 
 #TABELA {
@@ -101,10 +115,9 @@
 }
 
 #fotoProduto{
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
 }
-
 #fotoProduto:hover{
     width: 500px;
     height: 500px;
@@ -118,33 +131,22 @@
 
 }
 
-input[type=submit], select{
-    width: 100%;
-    background-color: #4CAF50;
-    color: black;
-    padding: 7px 13px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 input[type=submit]:hover, select{
     background-color: rgb(253, 253, 213);
 }
 
 input[type=text], select {
-  width: auto;
+  width: 150px;
   padding: 5px 12px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
 input[type=password], select {
-    width: auto;
+    width: 150px;
     padding: 5px 12px;
     margin: 8px 0;
     display: inline-block;
@@ -154,23 +156,25 @@ input[type=password], select {
 }
 
 input[type=number], select {
-    width: auto;
+    width: 150px;
     padding: 5px 12px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
 input[type=date], select {
-    width: auto;
+    width: 130px;
     padding: 5px 12px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 4px;
     box-sizing: border-box;
+    cursor: pointer;
+    background-color: white;
 }
 
 #Filtros{
@@ -179,7 +183,7 @@ input[type=date], select {
 }
 
 .menu-listagem{
-    margin-top: 2%;
+    margin-top: 1%;
 }
 
 .pagination-container {
@@ -204,6 +208,13 @@ input[type=date], select {
 }
 
 .pagination li.active {
-    background-color: #007bff;
+    background-color: #ff0000;
     color: #fff;
+}
+.filterButtonContainer{
+    margin-left: 5%;
+    align-self: center;
+}
+.filterButtons{
+    height: 30px;
 }

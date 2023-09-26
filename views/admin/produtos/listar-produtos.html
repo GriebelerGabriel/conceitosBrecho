@@ -48,47 +48,85 @@
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
 
-    <hr>
+    <div class="filtersContainer" id="filtersContainer">
+        
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Código: </label> 
+            <input type="text" name="codigo" id="#CODIGO" value="">
+        </div> 
+        <div class="filterTuple" id="filterTuple">
+        <label class="filterLabel">Tipo: </label>
+            <select name="tipo" id="#TIPO">
+                <option value=""> </option>
+                <option value="INFANTIL">INFANTIL</option>
+                <option value="JUVENIL">JUVENIL</option>
+                <option value="ADULTO">ADULTO</option>
+            </select>
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Descrição: </label>
+            <input type="text" name="descricao" value="" id="#DESCRICAO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Sexo: </label>
+            <select name="sexo" id="#SEXO">
+                <option value=""> </option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="U">Unissex</option>
+            </select>
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Tamanho: </label>
+            <input type="text" name="tamanho" value="" id="#TAMANHO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Grupo: </label>
+            <select name="grupo" id="#GRUPO">
+                <option value=""> </option>
+                <option value="ROUPAS">ROUPAS</option>
+                <option value="ACESS.">ACESS.</option>
+                <option value="CALÇADO">CALÇADO</option>
+            </select>
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Preço de Custo: </label>
+            <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">%: </label>
+            <input type="number" name="porcento" id="#PORCENTAGEM">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Preço de Venda: </label>
+            <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Foto: </label>
+            <input type="text" name="foto" value="" id="#FOTO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Data de Venda: </label>
+            <input type="date" name="dataVenda" value="" id="#DATAVENDA">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Vendido: </label>
+            <input type="text" name="vendido" value="" id="#VENDIDO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Pago: </label>
+            <select name="pago" id="#PAGO">
+                <option value=""> </option>
+                <option value="OK">OK</option>
+                <option value="OK/PL">OK/PL</option>
+            </select>
+        </div>
+        <div class="filterButtonContainer">
+            <button class="filterButtons" onclick="filtrarProdutos()">Pesquisar!</button>
+            <button class="filterButtons" onclick="exportarExcel()">Exportar!</button>
+        </div>
 
-    <input type="hidden" id="#ID" value="">
-    Código: <input type="text" name="codigo" id="#CODIGO" value="">
-    Tipo: <select name="tipo" id="#TIPO">
-        <option value=""> </option>
-        <option value="INFANTIL">INFANTIL</option>
-        <option value="JUVENIL">JUVENIL</option>
-        <option value="ADULTO">ADULTO</option>
-    </select>
-    Descrição: <input type="text" name="descricao" value="" id="#DESCRICAO">
-    Sexo: <select name="sexo" id="#SEXO">
-        <option value=""> </option>
-        <option value="M">M</option>
-        <option value="F">F</option>
-        <option value="U">U</option>
-    </select>
-    Tamanho: <input type="text" name="tamanho" value="" id="#TAMANHO">
-    Grupo: <select name="grupo" id="#GRUPO">
-        <option value=""> </option>
-        <option value="ROUPAS">ROUPAS</option>
-        <option value="ACESS.">ACESS.</option>
-        <option value="CALÇADO">CALÇADO</option>
-    </select> <br>
-    Preço de Custo: <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
-    %: <input type="number" name="porcento" id="#PORCENTAGEM">
-    Preço de Venda: <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
-    Foto: <input type="text" name="foto" value="" id="#FOTO">
-    <br>
-    Data de Venda: <input type="date" name="dataVenda" value="" id="#DATAVENDA">
-    Vendido: <input type="text" name="vendido" value="" id="#VENDIDO">
-    Pago: <select name="pago" id="#PAGO">
-        <option value=""> </option>
-        <option value="OK">OK</option>
-        <option value="OK/PL">OK/PL</option>
-    </select>
-
-    <button onclick="filtrarProdutos()">Pesquisar!</button>
-    
-    <button onclick="exportarExcel()">Exportar!</button>
-    <hr>
+    </div>
     <div class="menu-listagem">
         <table class="table" id="TABELA" align="center">
             <tr>
@@ -114,9 +152,9 @@
     <div class="pagination-container" id="pagination-container">
         <ul class="pagination" id="pagination"></ul>
     </div>
-    <script> 
-        async function readData() {
+    <script>
 
+        async function readData() {
             var xhttp = new XMLHttpRequest();
             await xhttp.open("GET", "/menu/buscar-produtos", true);
             xhttp.setRequestHeader("Content-type", "application/json");
@@ -205,7 +243,7 @@
                         linha.appendChild(noInterno);
 
                         var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x+positionInObjectArray].foto + "'id='fotoProduto' width='75' height='75'>";
+                        photo.innerHTML = "<img src='/" + resposta[x+positionInObjectArray].foto + "'id='fotoProduto'>";
                         linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
@@ -259,9 +297,7 @@
                 paginationItems[currentPage - 1].classList.add('active');
             }
         }
-    </script>
 
-    <script>
         function filtrarProdutos() {  // não esta funcando ainda os filtros
 
             var linhasTotais = document.getElementById("TABELA").rows.length; // retorna a coleção de linhas da tabela para contagem posterior
@@ -305,9 +341,8 @@
 
                 if (this.readyState == 4 && this.status == 200) {
                     resposta = JSON.parse(this.responseText)
-                    console.log(resposta);
-                    for (x = 0; x < resposta.length; x++) {
 
+                    for (x = 0; x < resposta.length; x++) {
                         var linha = document.createElement('tr')
 
                         var noInterno = document.createElement("td");
@@ -393,8 +428,7 @@
 
             }
         }
-    </script>
-    <script>
+
         function exportarExcel() {
             
             var element_id = "TABELA";
