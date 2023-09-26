@@ -1,5 +1,4 @@
 #rodape{
-
     background-color: rgb(233, 195, 195);
     text-align: center;
     color: rgb(219, 3, 3);
@@ -217,4 +216,27 @@ input[type=date], select {
 }
 .filterButtons{
     height: 30px;
+    align-self: center;
+    margin-left: 2vw;
+}
+.inputFileElement{
+    height: 30px;
+    max-width: 500px;
+}
+.importContainer{
+    margin-top: 5%;
+    display: grid;
+    justify-content: center;
+    margin-left: 35%;
+    margin-right: 35%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: rgb(115, 222, 236);
+    border-style: dashed;
+    border-color: rgb(121, 175, 255);
+}
+.loadPhotoContainer{
+    align-self: center;
+    margin-top: 1vh;
+    margin-left: 2vw;
 }

@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-
-    <title>Despesa</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Novo Produto</title>
 </head>
 
 <body>
     <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -20,12 +20,10 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -34,7 +32,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -43,51 +41,89 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <br>
 
     <form action="/menu/saveProduto" name="form-cadastros" method="POST" enctype="multipart/form-data">
-
-        Código: <input type="text" name="codigo">
-        Tipo: <select name="tipo">
-            <option value="INFANTIL">INFANTIL</option>
-            <option value="JUVENIL">JUVENIL</option>
-            <option value="ADULTO">ADULTO</option>
-        </select>
-        Descrição: <input type="text" name="descricao">
-        Sexo: <select name="sexo">
-            <option value="M">M</option>
-            <option value="F">F</option>
-            <option value="U">U</option>
-        </select>
-        Tamanho: <input type="text" name="tamanho">
-        Grupo: <select name="grupo">
-            <option value="ROUPAS">ROUPAS</option>
-            <option value="ACESS.">ACESS.</option>
-            <option value="CALÇADO">CALÇADO</option>
-        </select>
-        Preço de Custo: <input type="number" name="precoCusto" step="0.01">
-        %: <input type="number" name="porcento">
-        Preço de Venda: <input type="number" name="precoVenda" step="0.01">
-        Data de Venda: <input type="date" name="dataVenda">
-        Vendido: <input type="text" name="vendido">
-        Pago: <select name="pago">
-            <option value=" "> </option>
-            <option value="OK">OK</option>
-            <option value="OK/PL">OK/PL</option>
-        </select>
-
-        <input type="file" name="foto" id="#FOTO" value="">
-
-        </script>
-        <button type="submit">Cadastrar!</button>
+        <div class="filtersContainer" id="filtersContainer">
+        
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Código: </label> 
+                <input type="text" name="codigo" id="#CODIGO" value="">
+            </div> 
+            <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Tipo: </label>
+                <select name="tipo" id="#TIPO">
+                    <option value=""> </option>
+                    <option value="INFANTIL">INFANTIL</option>
+                    <option value="JUVENIL">JUVENIL</option>
+                    <option value="ADULTO">ADULTO</option>
+                </select>
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Descrição: </label>
+                <input type="text" name="descricao" value="" id="#DESCRICAO">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Sexo: </label>
+                <select name="sexo" id="#SEXO">
+                    <option value=""> </option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                    <option value="U">Unissex</option>
+                </select>
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Tamanho: </label>
+                <input type="text" name="tamanho" value="" id="#TAMANHO">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Grupo: </label>
+                <select name="grupo" id="#GRUPO">
+                    <option value=""> </option>
+                    <option value="ROUPAS">ROUPAS</option>
+                    <option value="ACESS.">ACESS.</option>
+                    <option value="CALÇADO">CALÇADO</option>
+                </select>
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Preço de Custo: </label>
+                <input type="number" name="precoCusto" step="0.01" value="" id="#PRECOCUSTO">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">%: </label>
+                <input type="number" name="porcento" id="#PORCENTAGEM">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Preço de Venda: </label>
+                <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Data de Venda: </label>
+                <input type="date" name="dataVenda" value="" id="#DATAVENDA">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Vendido: </label>
+                <input type="text" name="vendido" value="" id="#VENDIDO">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Pago: </label>
+                <select name="pago" id="#PAGO">
+                    <option value=""> </option>
+                    <option value="OK">OK</option>
+                    <option value="OK/PL">OK/PL</option>
+                </select>
+            </div>
+            
+            <button class="filterButtons" type="submit">Cadastrar!</button>
+            <div class="loadPhotoContainer" id="loadPhotoContainer">
+                <input class="inputFileElement" type="file" name="foto" id="#FOTO" value="">
+            </div>
     </form>
-
 
 </body>
 

@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Produtos</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Listar Produtos</title>
 </head>
 
 <body onload="readData()">
     <div id="rodape" class="principal">
-        <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
+        <a href='/menu' id="imagem-logo"><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -248,12 +249,12 @@
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x+positionInObjectArray].id + "'>" +
-                            "<img src='/editar.jpeg' width='25' height='25' >"
+                            "<img src='/icons/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
                         botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x+positionInObjectArray].id + "'>" +
-                            "<img src='/delete.jpeg' width='25' height='25' >"
+                            "<img src='/icons/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)

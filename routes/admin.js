@@ -117,7 +117,7 @@ const upload = multer({ storage: storage });
                 preco_custo: req.body.precoCusto,
                 porcentagem: req.body.porcento,
                 preco_venda: req.body.precoVenda,
-                foto: "question.png",
+                foto: "icons/question.png",
                 data_venda: req.body.dataVenda,
                 vendido: req.body.vendido,
                 pago: req.body.pago
@@ -306,7 +306,7 @@ const upload = multer({ storage: storage });
                             preco_custo: precoCustoFormatted,
                             porcentagem: item.PORCENTAGEM,
                             preco_venda: precoVendaFormatted,
-                            foto: "question.png",
+                            foto: "icons/question.png",
                             data_venda: item.DATA_VENDA,
                             vendido: item.VENDIDO,
                             pago: item.PAGO

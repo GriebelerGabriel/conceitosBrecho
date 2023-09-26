@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="/style.css">
     <link type="text/javascript" src="shim.min.js">
     <link type="text/javascript" src="xlsx.full.min.js">
-
-    <title>Importar</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Importar Produtos</title>
 </head>
 
 <body>
     <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -51,10 +51,13 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <form action="/menu/uploadProdutosXLSX" method="POST" enctype="multipart/form-data">
-        <input type="file" name="excelFile">
-        <button type="submit">IMPORTAR PRODUTOS</button>
-    </form>
+    
+        <form action="/menu/uploadProdutosXLSX" method="POST" enctype="multipart/form-data">
+            <div class="importContainer">
+                <input class="inputFileElement" type="file" name="excelFile">
+                <button class="filterButtons" type="submit">Importar Produtos</button>
+            </div>  
+        </form>
 
 </body>
 
