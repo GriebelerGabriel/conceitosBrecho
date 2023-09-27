@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Menu</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Editar Despesa</title>
 </head>
 
 <body onload="readData()">
     <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -19,12 +20,10 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -33,7 +32,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -42,19 +41,35 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
 
-        <input type="hidden" id="#ID" value="">
-        <strong>DATA</strong> <input type="date" id="#DATA" value="">
-        <strong>DESCRIÇÃO</strong> <input type="text" id=#DESCRICAO value="">
-        <strong>VALOR</strong> <input type="number" id=#VALOR value="" step="0.01">
-        <strong>OBSERVAÇÃO</strong> <input type="text" id=#OBSERVACAO value="">
-        <button onclick="enviarAlteracao()"> Alterar! </button>
+    <div class="filtersContainer" id="filtersContainer">
+        <input type="hidden" name="id" id="#ID" value="">
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Data:  </label> 
+            <input type="date" name="data" id="#DATA" value="">
+        </div> 
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Descrição:  </label> 
+            <textarea class="textArea" name="descricao" id=#DESCRICAO value=""></textarea>
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Valor: </label>
+            <input type="number" name="valor" id=#VALOR value="" step="0.01">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Observação: </label>
+            <textarea class="textArea" name="observacao" id=#OBSERVACAO value=""></textarea>
+        </div>
+        <button class="filterButtons" onclick="enviarAlteracao()"> Alterar! </button>
+    </div>
+
+        
 
     <script>
 
@@ -83,7 +98,7 @@
 
                 if (this.readyState == 4 && this.status == 200) {
                     var valores = JSON.parse(this.responseText);
-
+                    console.log(valores)
                     var sub = document.getElementById("#ID").value = valores[0].id; // seta nos campos value do formulario
                     var sub = document.getElementById("#DATA").value = valores[0].data;
                     var sub = document.getElementById("#DESCRICAO").value = valores[0].descricao;

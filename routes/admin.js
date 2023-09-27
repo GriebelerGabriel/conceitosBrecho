@@ -82,7 +82,9 @@ const upload = multer({ storage: storage });
 
 
     router.post("/menu/saveProduto", upload.single('foto'), (req, res, next) => {
-        if (req.body.foto) {
+        console.log(req.file.originalname)
+        if (req.file.originalname) {
+            console.log("entrei aqui")
             Produto.create({
 
                 codigo: req.body.codigo,
@@ -100,7 +102,7 @@ const upload = multer({ storage: storage });
                 pago: req.body.pago
 
             }).then(function () {
-                res.render("admin/produtos/listar-produtos.html");
+                res.redirect("/menu/listar-produtos");
             }).catch(function (erro) {
                 res.send("Houve um erro: " + erro);
             })
@@ -117,13 +119,13 @@ const upload = multer({ storage: storage });
                 preco_custo: req.body.precoCusto,
                 porcentagem: req.body.porcento,
                 preco_venda: req.body.precoVenda,
-                foto: "icons/question.png",
+                foto: "/question.png",
                 data_venda: req.body.dataVenda,
                 vendido: req.body.vendido,
                 pago: req.body.pago
 
             }).then(function () {
-                res.render("admin/produtos/listar-produtos.html");
+                res.redirect("/menu/listar-produtos");
             }).catch(function (erro) {
                 res.send("Houve um erro: " + erro);
             })
@@ -145,7 +147,6 @@ const upload = multer({ storage: storage });
     });
 
     router.post("/menu/editandoProduto", (req, res) => { // Salva a edição de um produto;
-
         Produto.findOne({
             where: { id: req.body.id }
         }).then(function (produto) {
@@ -162,10 +163,12 @@ const upload = multer({ storage: storage });
             produto.data_venda = req.body.data_venda
             produto.vendido = req.body.vendido
             produto.pago = req.body.pago
-
+            if(produto.foto){
+                produto.foto = req.body.foto
+            }
 
             produto.save().then(() => {
-                res.render("admin/produtos/listar-produtos.html");
+                res.redirect("/menu/listar-produtos");
             }).catch((err) => {
                 console.log(err);
             })
@@ -174,22 +177,6 @@ const upload = multer({ storage: storage });
         })
 
     })
-
-    router.post("/menu/saveEditFoto", upload.single('foto'), (req, res, next) => {
-
-        Produto.findOne({
-            where: { id: req.body.id }
-        }).then(function (produto) {
-
-            produto.foto = req.file.originalname;
-
-            produto.save().then(() => {
-                res.redirect('back');
-            })
-        })
-
-    })
-
 
     router.get("/menu/excluir-produto", (req, res) => {
         var valueId = req.query.id; // pega o ID e salva numa variavel
@@ -200,7 +187,7 @@ const upload = multer({ storage: storage });
                 id: valueId
             }
         }).then((produtos) => {
-            res.render("admin/produtos/listar-produtos.html");
+            res.redirect("/menu/listar-produtos");
         }).catch((erro) => {
             res.send(erro)
         })
@@ -208,7 +195,6 @@ const upload = multer({ storage: storage });
 
     router.post("/menu/sendIdProduto", (req, res) => { //manda o ID pra pagina de editar;
         var valueId = req.body.id;
-        //console.log(req.body.id)
         Produto.findAll({
 
             where: {
@@ -306,7 +292,7 @@ const upload = multer({ storage: storage });
                             preco_custo: precoCustoFormatted,
                             porcentagem: item.PORCENTAGEM,
                             preco_venda: precoVendaFormatted,
-                            foto: "icons/question.png",
+                            foto: "photos/question.png",
                             data_venda: item.DATA_VENDA,
                             vendido: item.VENDIDO,
                             pago: item.PAGO

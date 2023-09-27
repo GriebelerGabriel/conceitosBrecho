@@ -49,8 +49,9 @@
     </div>
 
     <form action="/menu/saveProduto" name="form-cadastros" method="POST" enctype="multipart/form-data">
-        <div class="filtersContainer" id="filtersContainer">
-        
+
+
+        <div class="formsContainer" id="formsContainer">
             <div class="filterTuple" id="filterTuple">
                 <label class="filterLabel">Código: </label> 
                 <input type="text" name="codigo" id="#CODIGO" value="">
@@ -118,11 +119,11 @@
                     <option value="OK/PL">OK/PL</option>
                 </select>
             </div>
-            
-            <button class="filterButtons" type="submit">Cadastrar!</button>
             <div class="loadPhotoContainer" id="loadPhotoContainer">
-                <input class="inputFileElement" type="file" name="foto" id="#FOTO" value="">
+                <input type="hidden" name="id" id="#IDFOTO" value="">
+                <input type="file" name="foto" id="#FOTO">
             </div>
+            <button class="filterButtons" type="submit">Cadastrar!</button>
     </form>
 
 </body>

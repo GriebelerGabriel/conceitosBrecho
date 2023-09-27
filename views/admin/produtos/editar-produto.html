@@ -25,7 +25,7 @@
 
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -34,7 +34,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -43,14 +43,15 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <div class="filtersContainer" id="filtersContainer">
-        
+
+    <div class="formsContainer" id="formsContainer">
+        <input type="hidden" name="id" id="#ID" value="">
         <div class="filterTuple" id="filterTuple">
             <label class="filterLabel">Código: </label> 
             <input type="text" name="codigo" id="#CODIGO" value="">
@@ -103,10 +104,6 @@
             <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
         </div>
         <div class="filterTuple" id="filterTuple">
-            <label class="filterLabel">Foto: </label>
-            <input type="text" name="foto" value="" id="#FOTO">
-        </div>
-        <div class="filterTuple" id="filterTuple">
             <label class="filterLabel">Data de Venda: </label>
             <input type="date" name="dataVenda" value="" id="#DATAVENDA">
         </div>
@@ -121,17 +118,18 @@
                 <option value="OK">OK</option>
                 <option value="OK/PL">OK/PL</option>
             </select>
-        </div>      
+            
+        </div>
+        
+        <div class="filterTuple" id="filterTuple">
+            <div class="editPhotoContainer">
+                <div id="#FOTOANTIGA"></div>
+                <input type="hidden" name="id" id="#IDFOTO" value="">
+                <input class="fileSelector" type="file" name="foto" id="#FOTO"> 
+            </div>
+        </div>
         <button class="filterButton" onclick="enviarAlteracao()">Alterar Dados!</button>
     </div>
-    <div id="#FOTOANTIGA"></div>
-
-    <form action="/menu/saveEditFoto" method="POST" enctype="multipart/form-data" >
-        <input type="hidden" name="id" id="#IDFOTO" value="">
-        Trocar de foto: <input type="file" name="foto" id="#FOTO">
-        <button type="submit">Alterar Foto!</button>
-    </form>
-
 
     <script>
 
@@ -158,7 +156,7 @@
 
                 if (this.readyState == 4 && this.status == 200) {
                     var valores = JSON.parse(this.responseText);
-
+                    console.log(valores)
                     var sub = document.getElementById("#ID").value = valores[0].id; // seta nos campos value do formulario
                     var sub = document.getElementById("#CODIGO").value = valores[0].codigo;
                     var sub = document.getElementById("#TIPO").value = valores[0].tipo;
@@ -172,10 +170,9 @@
                     var sub = document.getElementById("#DATAVENDA").value = valores[0].data_venda;
                     var sub = document.getElementById("#VENDIDO").value = valores[0].vendido;
                     var sub = document.getElementById("#PAGO").value = valores[0].pago;
-                    var sub = document.getElementById("#IDFOTO"). value = valores[0].id;
-
+                    var sub = document.getElementById("#IDFOTO").value = valores[0].id;
                 }
-                document.getElementById("#FOTOANTIGA").innerHTML = "<img src='/" + valores[0].foto + "'>";
+                document.getElementById("#FOTOANTIGA").innerHTML = "<img src='/photos/" + valores[0].foto + "'class=\"fotoAntiga\"'>";
             };
 
         }
@@ -184,38 +181,46 @@
 
             var alterId = document.getElementById("#ID").value;
             var alterCodigo = document.getElementById("#CODIGO").value;
-            var alterTipo = document.getElementById("#TIPO").value
-            var alterDescricao = document.getElementById("#DESCRICAO").value
-            var alterSexo = document.getElementById("#SEXO").value
-            var alterTamanho = document.getElementById("#TAMANHO").value
-            var alterGrupo = document.getElementById("#GRUPO").value
-            var alterPrecoCusto = document.getElementById("#PRECOCUSTO").value
-            var alterPorcentagem = document.getElementById("#PORCENTAGEM").value
-            var alterPrecoVenda = document.getElementById("#PRECOVENDA").value
-            var alterDataVenda = document.getElementById("#DATAVENDA").value
-            var alterVendido = document.getElementById("#VENDIDO").value
-            var alterPago = document.getElementById("#PAGO").value
-
+            var alterTipo = document.getElementById("#TIPO").value;
+            var alterDescricao = document.getElementById("#DESCRICAO").value;
+            var alterSexo = document.getElementById("#SEXO").value;
+            var alterTamanho = document.getElementById("#TAMANHO").value;
+            var alterGrupo = document.getElementById("#GRUPO").value;
+            var alterPrecoCusto = document.getElementById("#PRECOCUSTO").value;
+            var alterPorcentagem = document.getElementById("#PORCENTAGEM").value;
+            var alterPrecoVenda = document.getElementById("#PRECOVENDA").value;
+            var alterDataVenda = document.getElementById("#DATAVENDA").value;
+            var alterVendido = document.getElementById("#VENDIDO").value;
+            var alterPago = document.getElementById("#PAGO").value;
+            var foto = document.getElementById("#FOTO").files[0].name;
+            
             var xhttp = new XMLHttpRequest();
-
             var tipo = "POST"
-
             var url = "/menu/editandoProduto";
-
+            
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
-            var body = {
-                id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao,
-                sexo: alterSexo, tamanho: alterTamanho, grupo: alterGrupo, preco_custo: alterPrecoCusto,
-                porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
-                vendido: alterVendido, pago: alterPago
+            if(foto == ""){
+                var body = {
+                    id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao,
+                    sexo: alterSexo, tamanho: alterTamanho, grupo: alterGrupo, preco_custo: alterPrecoCusto,
+                    porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
+                    vendido: alterVendido, pago: alterPago
+                }
+
+            }else{
+                var body = {
+                    id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao,
+                    sexo: alterSexo, tamanho: alterTamanho, grupo: alterGrupo, preco_custo: alterPrecoCusto,
+                    porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
+                    vendido: alterVendido, pago: alterPago, foto:foto
+                }
             }
 
             xhttp.send(JSON.stringify(body));
             alert("Alterado com sucesso!");
             window.location.href = "/menu/listar-produtos";
-
         }
 
     </script>

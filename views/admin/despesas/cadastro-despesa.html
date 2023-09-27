@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Despesa</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Nova Despesa</title>
 </head>
 
 <body>
     <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -19,12 +20,10 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -33,7 +32,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -42,20 +41,33 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <br>
 
     <form action="/menu/saveDespesa" name="form-cadastros" method="POST">
-            Data: <input type="date" name="data">
-            Descrição: <textarea name="descricao"></textarea>
-            Valor: <input type="number" name="valor" step="0.01">
-            Observação: <textarea name="observacao"></textarea>
-            <button type="submit">Cadastrar!</button>
+        <div class="formsContainer" id="formContainer">
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Data:  </label> 
+                <input type="date" name="data">
+            </div> 
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Descrição:  </label> 
+                <textarea class="textArea" name="descricao"></textarea>
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Valor: </label>
+                <input type="number" name="valor" step="0.01">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Observação: </label>
+                <textarea class="textArea" name="observacao"></textarea>
+            </div>
+            <button class="filterButtons" type="submit">Cadastrar!</button>
+        </div>
     </form>
 
 </body>

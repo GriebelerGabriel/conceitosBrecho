@@ -168,9 +168,8 @@
                 if (this.readyState == 4 && this.status == 200) {
                     const resposta = JSON.parse(this.responseText)
                     const numberPerPage = 20
-
-                    createPagination(resposta, numberPerPage)
                     let currentPage = 1;
+                    createPagination(resposta, numberPerPage)
                     displayTableItems(resposta, numberPerPage, currentPage)
                 }
             }
@@ -244,7 +243,7 @@
                         linha.appendChild(noInterno);
 
                         var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x+positionInObjectArray].foto + "'id='fotoProduto'>";
+                        photo.innerHTML = "<img src='/photos/" + resposta[x+positionInObjectArray].foto + "'id='fotoProduto'>";
                         linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
@@ -262,6 +261,7 @@
                     }
                 }
             }
+
             function createPagination(resposta, numberPerPage){
                 let numberOfPages = resposta.length/numberPerPage;
 
@@ -285,14 +285,14 @@
                         for (let i = rows.length - 1; i > 0; i--) {
                             table.removeChild(rows[i]);
                         }
-
+                        highlightActivePage(i)
                         displayTableItems(resposta, numberPerPage, i)
                     });
                     paginationContainer.appendChild(li);
                 }
             }
 
-            function highlightActivePage() {
+            function highlightActivePage(currentPage) {
                 const paginationItems = document.querySelectorAll('.pagination li');
                 paginationItems.forEach(item => item.classList.remove('active'));
                 paginationItems[currentPage - 1].classList.add('active');
@@ -408,7 +408,7 @@
                         linha.appendChild(noInterno);
 
                         var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/" + resposta[x].foto + "' width='75' height='75'>";
+                        photo.innerHTML = "<img src='/photos/" + resposta[x].foto +"'>";
                         linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
