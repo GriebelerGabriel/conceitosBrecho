@@ -9,6 +9,7 @@ const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const { where } = require('sequelize');
+const alert = require('alert')
 
 const Despesa = require('../models/Despesa');
 const Produto = require('../models/Produto');
@@ -44,11 +45,24 @@ const upload = multer({ storage: storage });
         res.render('admin/sobre.html');
     });
 
-    router.post("/menu/sendDadosVendidos", (req, res) => {
+    router.get("/menu/busca-produtos-vendidos", (req, res) => {
+        
+        let values = {
+            valorVenda : 0,
+            valorCompra : 0,
+            valorLucro : 0,
+        }
 
         Produto.findAll({
-        }).then((produtos) => { // .all() trocado atualmente por .findAll()
-            res.send(produtos);
+        }).then((produtos) => {
+            produtos.forEach(produto => {
+                if(produto.vendido != "" || produto.vendido != "Não"){
+                    values.valorVenda += (produto.preco_venda);
+                    values.valorLucro += (produto.preco_venda-produto.preco_custo);
+            }
+            values.valorCompra = (values.valorCompra + produto.preco_custo);
+            });
+            res.send(values);
         })
     });
 
@@ -82,54 +96,41 @@ const upload = multer({ storage: storage });
 
 
     router.post("/menu/saveProduto", upload.single('foto'), (req, res, next) => {
-        console.log(req.file.originalname)
-        if (req.file.originalname) {
-            console.log("entrei aqui")
-            Produto.create({
-
-                codigo: req.body.codigo,
-                tipo: req.body.tipo,
-                descricao: req.body.descricao,
-                sexo: req.body.sexo,
-                tamanho: req.body.tamanho,
-                grupo: req.body.grupo,
-                preco_custo: req.body.precoCusto,
-                porcentagem: req.body.porcento,
-                preco_venda: req.body.precoVenda,
-                foto: req.file.originalname,
-                data_venda: req.body.dataVenda,
-                vendido: req.body.vendido,
-                pago: req.body.pago
-
-            }).then(function () {
-                res.redirect("/menu/listar-produtos");
-            }).catch(function (erro) {
-                res.send("Houve um erro: " + erro);
-            })
+        var produto = {
+            codigo: null,
+            tipo: null,
+            descricao: null,
+            sexo: null,
+            tamanho: null,
+            grupo: null,
+            preco_custo: null,
+            porcentagem: null,
+            preco_venda: null,
+            foto: null,
+            data_venda: null,
+            vendido: null,
+            pago: null,
         }
-        else {
-            Produto.create({
 
-                codigo: req.body.codigo,
-                tipo: req.body.tipo,
-                descricao: req.body.descricao,
-                sexo: req.body.sexo,
-                tamanho: req.body.tamanho,
-                grupo: req.body.grupo,
-                preco_custo: req.body.precoCusto,
-                porcentagem: req.body.porcento,
-                preco_venda: req.body.precoVenda,
-                foto: "/question.png",
-                data_venda: req.body.dataVenda,
-                vendido: req.body.vendido,
-                pago: req.body.pago
+        if(req.file)
+            produto.foto = req.file.originalname;
+        else
+            produto.foto = "question.png"
 
-            }).then(function () {
-                res.redirect("/menu/listar-produtos");
-            }).catch(function (erro) {
-                res.send("Houve um erro: " + erro);
-            })
+        const properties = Object.keys(req.body);
+        for (const prop of properties) {
+            if(req.body[prop] == ''){
+                produto[prop] = null;
+            }
+            else{
+                produto[prop] = req.body[prop];
+            }
         }
+        Produto.create(produto).then(function () {
+            res.redirect("/menu/listar-produtos");
+        }).catch(function (erro) {
+            res.send("Houve um erro: " + erro);
+        })
     });
 
 
@@ -150,7 +151,6 @@ const upload = multer({ storage: storage });
         Produto.findOne({
             where: { id: req.body.id }
         }).then(function (produto) {
-
             produto.codigo = req.body.codigo
             produto.tipo = req.body.tipo
             produto.descricao = req.body.descricao
@@ -160,20 +160,23 @@ const upload = multer({ storage: storage });
             produto.preco_custo = req.body.preco_custo
             produto.porcentagem = req.body.porcentagem
             produto.preco_venda = req.body.preco_venda
-            produto.data_venda = req.body.data_venda
+            produto.foto = req.body.foto
             produto.vendido = req.body.vendido
-            produto.pago = req.body.pago
-            if(produto.foto){
-                produto.foto = req.body.foto
-            }
+            produto.pago = req.body.pago 
+
+            if(req.body.data_venda == 'Invalid date' || req.body.data_venda == ''){
+                produto.data_venda = null
+                
+            }else
+                produto.data_venda = req.body.data_venda
 
             produto.save().then(() => {
-                res.redirect("/menu/listar-produtos");
+                res.status(200).json({ "status": true, "result": 'Edit successful!' })
             }).catch((err) => {
-                console.log(err);
+                res.status(200).json({ "status": false, "result": "Request Failed! Reason: "+err })
             })
         }).catch((erro) => {
-            res.send(erro);
+            res.status(200).json({ "status": false, "result": "Can't find the product! ID: " + req.body.id })
         })
 
     })
@@ -183,7 +186,6 @@ const upload = multer({ storage: storage });
 
         Produto.destroy({
             where: {
-
                 id: valueId
             }
         }).then((produtos) => {
@@ -193,14 +195,11 @@ const upload = multer({ storage: storage });
         })
     })
 
-    router.post("/menu/sendIdProduto", (req, res) => { //manda o ID pra pagina de editar;
-        var valueId = req.body.id;
+    router.get("/menu/getProdutoById", (req, res) => { //manda o ID pra pagina de editar;
         Produto.findAll({
-
             where: {
-                id: valueId
+                id: req.query.id
             },
-
         }).then(function (produto) {
             res.send(produto)
         }).catch((erro) => {
@@ -250,7 +249,6 @@ const upload = multer({ storage: storage });
         if (req.body.foto) {
             whereQuery.foto = { [Op.like]: '%' + req.body.foto + '%' }
         }
-
         Produto.findAll({
 
             where: whereQuery
@@ -381,7 +379,6 @@ const upload = multer({ storage: storage });
 
     router.get("/menu/excluir-despesa", (req, res) => {
         var valueId = req.query.id; // pega o ID e salva numa variavel
-        //console.log(req.query.id) // Pega o ID da query e verifica no console do NODE
         Despesa.destroy({
             where: {
 
@@ -397,7 +394,6 @@ const upload = multer({ storage: storage });
 
     router.post("/menu/sendIdDespesa", (req, res) => { //manda o ID pra pagina de editar;
         var valueId = req.body.id;
-        //console.log(req.body.id)
         Despesa.findAll({
 
             where: {

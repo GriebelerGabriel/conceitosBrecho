@@ -100,7 +100,7 @@
         </div>
         <div class="filterTuple" id="filterTuple">
             <label class="filterLabel">Preço de Venda: </label>
-            <input type="number" name="precoVenda" step="0.01" value="" id="#PRECOVENDA">
+            <input type="number" name="precoVenda" value="" id="#PRECOVENDA">
         </div>
         <div class="filterTuple" id="filterTuple">
             <label class="filterLabel">Foto: </label>
@@ -117,7 +117,7 @@
         <div class="filterTuple" id="filterTuple">
             <label class="filterLabel">Pago: </label>
             <select name="pago" id="#PAGO">
-                <option value=""> </option>
+                <option value=""></option>
                 <option value="OK">OK</option>
                 <option value="OK/PL">OK/PL</option>
             </select>
@@ -408,17 +408,17 @@
                         linha.appendChild(noInterno);
 
                         var photo = document.createElement("td");
-                        photo.innerHTML = "<img src='/photos/" + resposta[x].foto +"'>";
+                        photo.innerHTML = "<img src='/photos/" + resposta[x].foto +"'id='fotoProduto'>";
                         linha.appendChild(photo);
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
-                            "<img src='/editar.jpeg' width='25' height='25' >"
+                            "<img src='/icons/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
                         botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x].id + "'>" +
-                            "<img src='/delete.jpeg' width='25' height='25' >"
+                            "<img src='/icons/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)

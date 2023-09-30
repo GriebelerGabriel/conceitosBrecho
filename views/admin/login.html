@@ -5,23 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
     <title>Login</title>
 </head>
 
-<body>
-
+<body>  
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
-    <br>
 
     <form action="/menu" id=menu-login method="POST">
-        <div id="menu-login-interno">
-            Usuário:
-            <input type="text" name="username" id="username"><br>
-            Senha:
-            <input type="password" name="password" id="password">
-            <button type="submit" id='login'> Login </button>
+        <div class="formsContainer" id="formsContainer">
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Usuário: </label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Senha: </label>
+                <input type="password" name="password" id="password">
+            </div>
+            <button class="filterButtons" type="submit" id='login'> Login </button>
         </div>
     </form>
 

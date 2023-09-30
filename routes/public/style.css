@@ -28,6 +28,14 @@
     margin-left: 1%;
     justify-content: start;
 }
+.showValuesContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 1%;
+    margin-left: 1%;
+    justify-content: start;
+}
 .filterTuple{
     display: flex;
     flex-direction: row;
@@ -37,6 +45,11 @@
 }
 .filterLabel{
     padding-right: 0.2vw;
+}
+.menuLabel{
+    font-size: large;
+    font-weight: bold;
+    margin-top: 3%;
 }
 
 .button-top {
@@ -155,7 +168,7 @@ input[type=password], select {
     padding: 5px 12px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -221,9 +234,9 @@ input[type=date], select {
     align-self: center;
 }
 .filterButtons{
+    margin-top: 3%;
     height: 30px;
     align-self: center;
-    margin-left: 2vw;
 }
 .inputFileElement{
     height: 30px;
@@ -264,6 +277,20 @@ input[type=date], select {
     padding-left: 5%;
     padding-right: 5%;
 }
+.showMenuInfosContainer{
+    background-color: rgb(212, 212, 202) ;
+    border-style: dashed;
+    border-color: rgb(234, 169, 253);
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 2%;
+    padding-bottom: 2%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2vh;
+    padding-left: 5%;
+    padding-right: 5%;
+}
 
 .editPhotoContainer{
     display: flex;
@@ -282,5 +309,20 @@ input[type=date], select {
     min-width: 300px;
     margin-top: 25%;
     margin-left: 2%;
+}
+.moedaEValor{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.tipoMoeda{
+    margin-right: 1vw;
+    margin-top: 1.5vh;
+}
+.valor{
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 3%;  
+    width: 10vw;
 }
 

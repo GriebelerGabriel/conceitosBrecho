@@ -10,7 +10,6 @@
 </head>
 
 <body onload="readData()">
-    <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
         <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
@@ -123,9 +122,9 @@
         
         <div class="filterTuple" id="filterTuple">
             <div class="editPhotoContainer">
-                <div id="#FOTOANTIGA"></div>
+                <div id="#DIVFOTOANTIGA"></div>
                 <input type="hidden" name="id" id="#IDFOTO" value="">
-                <input class="fileSelector" type="file" name="foto" id="#FOTO"> 
+                <input class="fileSelector" type="file" name="foto" id="#FOTO" value=""> 
             </div>
         </div>
         <button class="filterButton" onclick="enviarAlteracao()">Alterar Dados!</button>
@@ -133,94 +132,86 @@
 
     <script>
 
-        function readData() {
+        async function readData() {
             
             var xhttp = new XMLHttpRequest();
-
             var url_string = window.location.href;
             var url = new URL(url_string);
             var idValue = url.searchParams.get("id");
 
-            var tipo = "POST"
-
-            var url = "/menu/sendIdProduto?=" + idValue;
-
-            xhttp.open(tipo, url, true);
+            var tipo = "GET"
+            var url = "/menu/getProdutoById?id=" + idValue;
+            await xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
-
-            var body = { id: idValue }
-
-            xhttp.send(JSON.stringify(body));
-
+            xhttp.send(null);
             xhttp.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
+
                     var valores = JSON.parse(this.responseText);
-                    console.log(valores)
-                    var sub = document.getElementById("#ID").value = valores[0].id; // seta nos campos value do formulario
-                    var sub = document.getElementById("#CODIGO").value = valores[0].codigo;
-                    var sub = document.getElementById("#TIPO").value = valores[0].tipo;
-                    var sub = document.getElementById("#DESCRICAO").value = valores[0].descricao;
-                    var sub = document.getElementById("#SEXO").value = valores[0].sexo;
-                    var sub = document.getElementById("#TAMANHO").value = valores[0].tamanho;
-                    var sub = document.getElementById("#GRUPO").value = valores[0].grupo;
-                    var sub = document.getElementById("#PRECOCUSTO").value = valores[0].preco_custo;
-                    var sub = document.getElementById("#PORCENTAGEM").value = valores[0].porcentagem;
-                    var sub = document.getElementById("#PRECOVENDA").value = valores[0].preco_venda;
-                    var sub = document.getElementById("#DATAVENDA").value = valores[0].data_venda;
-                    var sub = document.getElementById("#VENDIDO").value = valores[0].vendido;
-                    var sub = document.getElementById("#PAGO").value = valores[0].pago;
-                    var sub = document.getElementById("#IDFOTO").value = valores[0].id;
+                    
+                    document.getElementById("#ID").value = valores[0].id; // seta nos campos value do formulario
+                    document.getElementById("#CODIGO").value = valores[0].codigo;
+                    document.getElementById("#TIPO").value = valores[0].tipo;
+                    document.getElementById("#DESCRICAO").value = valores[0].descricao;
+                    document.getElementById("#SEXO").value = valores[0].sexo;
+                    document.getElementById("#TAMANHO").value = valores[0].tamanho;
+                    document.getElementById("#GRUPO").value = valores[0].grupo;
+                    document.getElementById("#PRECOCUSTO").value = valores[0].preco_custo;
+                    document.getElementById("#PORCENTAGEM").value = valores[0].porcentagem;
+                    document.getElementById("#PRECOVENDA").value = valores[0].preco_venda;
+                    document.getElementById("#DATAVENDA").value = valores[0].data_venda;
+                    document.getElementById("#VENDIDO").value = valores[0].vendido;
+                    document.getElementById("#PAGO").value = valores[0].pago;
+                    document.getElementById("#IDFOTO").value = valores[0].id;
+                    document.getElementById("#DIVFOTOANTIGA").innerHTML = 
+                    "<img src='/photos/"+valores[0].foto+"'class=\"fotoAntiga\" name="+valores[0].foto+" id=\"#FOTOANTIGA\">";
                 }
-                document.getElementById("#FOTOANTIGA").innerHTML = "<img src='/photos/" + valores[0].foto + "'class=\"fotoAntiga\"'>";
             };
 
         }
 
         function enviarAlteracao() {
+            const alterDataBody = {
+                id: (document.getElementById("#ID").value), 
+                codigo: document.getElementById("#CODIGO").value, 
+                tipo: document.getElementById("#TIPO").value, 
+                descricao: document.getElementById("#DESCRICAO").value,
+                sexo: document.getElementById("#SEXO").value, 
+                tamanho: document.getElementById("#TAMANHO").value, 
+                grupo: document.getElementById("#GRUPO").value, 
+                preco_custo: document.getElementById("#PRECOCUSTO").value,
+                porcentagem: document.getElementById("#PORCENTAGEM").value, 
+                preco_venda: document.getElementById("#PRECOVENDA").value, 
+                data_venda: document.getElementById("#DATAVENDA").value,
+                vendido: document.getElementById("#VENDIDO").value, 
+                pago: document.getElementById("#PAGO").value,
+                foto: document.getElementById("#FOTOANTIGA").name,
+            }
+            if(document.getElementById("#FOTO").files[0]){
+                alterDataBody.foto = document.getElementById("#FOTO").files[0].name
+            }
 
-            var alterId = document.getElementById("#ID").value;
-            var alterCodigo = document.getElementById("#CODIGO").value;
-            var alterTipo = document.getElementById("#TIPO").value;
-            var alterDescricao = document.getElementById("#DESCRICAO").value;
-            var alterSexo = document.getElementById("#SEXO").value;
-            var alterTamanho = document.getElementById("#TAMANHO").value;
-            var alterGrupo = document.getElementById("#GRUPO").value;
-            var alterPrecoCusto = document.getElementById("#PRECOCUSTO").value;
-            var alterPorcentagem = document.getElementById("#PORCENTAGEM").value;
-            var alterPrecoVenda = document.getElementById("#PRECOVENDA").value;
-            var alterDataVenda = document.getElementById("#DATAVENDA").value;
-            var alterVendido = document.getElementById("#VENDIDO").value;
-            var alterPago = document.getElementById("#PAGO").value;
-            var foto = document.getElementById("#FOTO").files[0].name;
-            
             var xhttp = new XMLHttpRequest();
             var tipo = "POST"
             var url = "/menu/editandoProduto";
             
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(alterDataBody));
 
-            if(foto == ""){
-                var body = {
-                    id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao,
-                    sexo: alterSexo, tamanho: alterTamanho, grupo: alterGrupo, preco_custo: alterPrecoCusto,
-                    porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
-                    vendido: alterVendido, pago: alterPago
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                   jsonResponse = JSON.parse(this.response)
+                   if(jsonResponse.status == true){
+                        alert(jsonResponse.result)
+                        window.location.href = "/menu/listar-produtos";
+                   }
+                   else{
+                        alert(jsonResponse.result)
+                   }
                 }
-
-            }else{
-                var body = {
-                    id: alterId, codigo: alterCodigo, tipo: alterTipo, descricao: alterDescricao,
-                    sexo: alterSexo, tamanho: alterTamanho, grupo: alterGrupo, preco_custo: alterPrecoCusto,
-                    porcentagem: alterPorcentagem, preco_venda: alterPrecoVenda, data_venda: alterDataVenda,
-                    vendido: alterVendido, pago: alterPago, foto:foto
-                }
-            }
-
-            xhttp.send(JSON.stringify(body));
-            alert("Alterado com sucesso!");
-            window.location.href = "/menu/listar-produtos";
+            };
         }
 
     </script>
