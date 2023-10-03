@@ -51,12 +51,21 @@ const upload = multer({ storage: storage });
             valorVenda : 0,
             valorCompra : 0,
             valorLucro : 0,
+            valorDespesasPagas: 0,
+            valorDespesasAPagar: 0, 
         }
+        
+        Despesa.findAll().then((despesas) => despesas.forEach(despesa =>{
+            if(despesa.observacao != "" && despesa.observacao != "Não" && despesa.observacao != null){
+                values.valorDespesasPagas += despesa.valor;
+            }
+            else
+                values.valorDespesasAPagar += despesa.valor
+        }))
 
-        Produto.findAll({
-        }).then((produtos) => {
+        Produto.findAll().then((produtos) => { 
             produtos.forEach(produto => {
-                if(produto.vendido != "" || produto.vendido != "Não"){
+                if(produto.vendido != "" && produto.vendido != null && produto.vendido != "Não" && produto.data_venda != null){
                     values.valorVenda += (produto.preco_venda);
                     values.valorLucro += (produto.preco_venda-produto.preco_custo);
             }
@@ -103,9 +112,9 @@ const upload = multer({ storage: storage });
             sexo: null,
             tamanho: null,
             grupo: null,
-            preco_custo: null,
-            porcentagem: null,
-            preco_venda: null,
+            preco_custo: 0,
+            porcentagem: 0,
+            preco_venda: 0,
             foto: null,
             data_venda: null,
             vendido: null,
@@ -157,9 +166,20 @@ const upload = multer({ storage: storage });
             produto.sexo = req.body.sexo
             produto.tamanho = req.body.tamanho
             produto.grupo = req.body.grupo
-            produto.preco_custo = req.body.preco_custo
-            produto.porcentagem = req.body.porcentagem
-            produto.preco_venda = req.body.preco_venda
+
+            if(req.body.preco_custo == ''){
+                produto.preco_custo = 0;
+            }else produto.preco_custo = req.body.preco_custo;
+            
+            if(req.body.preco_venda == ''){
+                produto.porcentagem = 0;
+            }else produto.porcentagem = req.body.porcentagem;
+            
+
+            if(req.body.preco_venda == ''){
+                produto.preco_venda = 0;
+            }else produto.preco_venda = req.body.preco_venda;
+            
             produto.foto = req.body.foto
             produto.vendido = req.body.vendido
             produto.pago = req.body.pago 
@@ -332,47 +352,57 @@ const upload = multer({ storage: storage });
         res.render("admin/despesas/editar-despesa.html")
     })
 
-    router.post("/menu/saveDespesa", (req, res) => { // Criar no Banco de dados!
+    router.post("/menu/saveDespesa", (req, res) => {
+        var despesa = {
+            data: null,
+            descricao: null,
+            valor: null,
+            observacao: null,
+        }
 
-        Despesa.create({
-
-            data: req.body.data,
-            descricao: req.body.descricao,
-            valor: req.body.valor,
-            observacao: req.body.observacao,
-
-        }).then(function () {
-            res.render("admin/despesas/listar-despesas.html");
-        }).catch(function (erro) {
-            res.send("Houve um erro: " + erro);
+        const properties = Object.keys(req.body);
+        for (const prop of properties) {
+            if(req.body[prop] == ''){
+                despesa[prop] = null;
+            }
+            else{
+                despesa[prop] = req.body[prop];
+            }
+        }
+        Despesa.create(despesa).then(function () {
+            res.redirect("/menu/listar-despesas");
+        }).catch(function (err) {
+            res.send("Houve um erro: " + err);
         })
     });
 
-    router.post("/menu/sendDespesas", (req, res) => { // Listar do Banco de dados!
-        Despesa.findAll().then((despesas) => { // .all() trocado atualmente por .findAll()
+    router.get("/menu/sendDespesas", (req, res) => { 
+        Despesa.findAll().then((despesas) => {
             res.send(despesas)
         })
     });
 
-    router.post("/menu/editandoDespesa", (req, res) => { // Salva a edição de uma despesa;
-
+    router.post("/menu/editandoDespesa", (req, res) => {
         Despesa.findOne({
             where: { id: req.body.id }
-
         }).then(function (despesa) {
 
-            despesa.data = req.body.data
+            if(req.body.data == 'Invalid date' || req.body.data == ''){
+                despesa.data = null
+            }else
+                despesa.data = req.body.data
+
             despesa.descricao = req.body.descricao
             despesa.valor = req.body.valor
             despesa.observacao = req.body.observacao
 
             despesa.save().then(() => {
-                //res.redirect("/menu/listar-despesas");   n funca n sei pq, feito com javascript no front
+                res.status(200).json({ "status": true, "result": 'Despesa alterada com successo!' })
             }).catch((err) => {
-                console.log(err);
+                res.status(200).json({ "status": false, "result": "Request Failed! Reason: "+err })
             })
         }).catch((erro) => {
-            res.send(erro);
+            res.status(200).json({ "status": false, "result": "Can't find the product! ID: " + req.body.id })
         })
 
     })
@@ -381,11 +411,10 @@ const upload = multer({ storage: storage });
         var valueId = req.query.id; // pega o ID e salva numa variavel
         Despesa.destroy({
             where: {
-
                 id: valueId
             }
         }).then((despesas) => {
-            res.render("admin/despesas/listar-despesas.html");
+            res.redirect("/menu/listar-despesas");
 
         }).catch((erro) => {
             res.send(erro)
@@ -395,7 +424,6 @@ const upload = multer({ storage: storage });
     router.post("/menu/sendIdDespesa", (req, res) => { //manda o ID pra pagina de editar;
         var valueId = req.body.id;
         Despesa.findAll({
-
             where: {
                 id: valueId
             }
@@ -459,43 +487,103 @@ const upload = multer({ storage: storage });
         res.render('admin/fornecedores/listar-fornecedores.html');
     });
 
+    router.get("/menu/editar-fornecedor", (req, res) => {
+        res.render('admin/fornecedores/editar-fornecedor.html');
+    });
+
     router.get("/menu/importar-fornecedores", (req, res) => {
         res.render('admin/fornecedores/importar-fornecedores.html');
     });
 
     router.post("/menu/saveFornecedor", (req, res) => {
-        Fornecedor.create({
+        var fornecedor = {
+            nome: null,
+            endereco: null,
+            bairro: null,
+            cep: null,
+            municipio: null,
+            estado: null,
+            telefone: null,
+            celular: null,
+            email: null,
+            cnpj_cpf: null,
+            grupo: null,
+            situacao: null,
+            data_nascimento: null,
+            observacao: null,
+        }
 
-            nome: req.body.nome,
-            endereco: req.body.endereco,
-            bairro: req.body.bairro,
-            cep: req.body.cep,
-            municipio: req.body.municipio,
-            estado: req.body.estado,
-            telefone: req.body.telefone,
-            celular: req.body.celular,
-            email: req.body.email,
-            cnpj_cpf: req.body.cnpj_cpf,
-            grupo: req.body.grupo,
-            situacao: req.body.situacao,
-            data_nascimento: req.body.data_nascimento,
-            observacao: req.body.observacao,
+        const properties = Object.keys(req.body);
+        for (const prop of properties) {
+            if(req.body[prop] == ''){
+                fornecedor[prop] = null;
+            }
+            else{
+                fornecedor[prop] = req.body[prop];
+            }
+        }
 
-        }).then(function () {
-            res.redirect("./listar-Fornecedores");
+        Fornecedor.create(fornecedor).then(function () {
+            res.redirect("/menu/listar-Fornecedores");
         }).catch(function (erro) {
             res.send("Houve um erro: " + erro);
         })
     });
 
-    router.post("/menu/sendFornecedores", (req, res) => { // busca no banco de dados(fornecedores)
+    router.get("/menu/sendFornecedores", (req, res) => { // busca no banco de dados(fornecedores)
         Fornecedor.findAll().then((fornecedores) => { // .all() trocado atualmente por .findAll()
             res.send(fornecedores)
         })
     });
 
+    router.get("/menu/getFornecedorById", (req, res) => { //manda o ID pra pagina de editar;
+
+        Fornecedor.findAll({
+            where: {
+                id: req.query.id
+            },
+        }).then(function (fornecedor) {
+            res.send(fornecedor)
+        }).catch((erro) => {
+            res.send(erro);
+        })
+    });
+    router.post("/menu/editandoFornecedor", (req, res) => { // Salva a edição de um produto;
+        console.log(req.body)
+        Fornecedor.findOne({
+            where: { id: req.body.id }
+        }).then(function (fornecedor) {
+            fornecedor.nome = req.body.nome
+            fornecedor.endereco = req.body.endereco
+            fornecedor.bairro = req.body.bairro
+            fornecedor.cep = req.body.cep
+            fornecedor.municipio = req.body.municipio
+            fornecedor.telefone = req.body.telefone
+            fornecedor.celular = req.body.celular
+            fornecedor.email = req.body.email
+            fornecedor.cnpj_cpf = req.body.cnpj_cpf
+            fornecedor.grupo = req.body.grupo
+            fornecedor.situacao = req.body.situacao
+
+            if(req.body.data_nascimento == 'Invalid date' || req.body.data_nascimento == ''){
+                fornecedor.data_nascimento = null
+            }else
+                fornecedor.data_nascimento = req.body.data_nascimento
+
+            fornecedor.observacao = req.body.observacao,
+
+            fornecedor.save().then(() => {
+                res.status(200).json({ "status": true, "result": 'Fornecedor editado com successo!' })
+            }).catch((err) => {
+                res.status(200).json({ "status": false, "result": "Request Failed! Reason: "+err })
+            })
+        }).catch((erro) => {
+            res.status(200).json({ "status": false, "result": "Can't find the product! ID: " + req.body.id })
+        })
+
+    })
+
     router.post("/menu/uploadFornecedoresXLSX", upload.single("planilha"), (req, res, next) => {
-        
         res.redirect("/menu/listar-fornecedores");
     })
 

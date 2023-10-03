@@ -5,23 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Fornecedor</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Fornecedores</title>
 </head>
 
 <body onload="readData()">
-    <script src="../../jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
-
     <div id="barra-principal">
-
         <button class="button-top"> <a href='/menu'>Home</a></button>
-
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
                 <a href='/menu/listar-produtos'>Listar</a></button>
@@ -49,27 +44,64 @@
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
 
-    <hr>
-
-    <input type="hidden" id="#ID" value="">
-    Nome: <input type="text" name="nome" id="#NOME" value="">
-    Endereço: <input type="text" name="endereco" id="#ENDERECO" value="">
-    Bairro: <input type="text" name="bairro" value="" id="#BAIRRO">
-    CEP: <input type="text" name="cep" value="" id="#CEP">
-    Municipio: <input type="text" name="municipio" value="" id="#MUNICIPIO">
-    Estado: <input type="text" name="estado" value="" id="#ESTADO">
-    Telefone: <input type="text" name="telefone" value="" id="#TELEFONE">
-    Celular: <input type="text" name="celular" id="#CELULAR">
-    CNPJ/CPF: <input type="text" name="cnpjcpf" value="" id="#CNPJCPF">
-    Grupo: <input type="text" name="grupo" value="" id="#GRUPO">
-    Situação: <input type="text" name="situacao" value="" id="#SITUACAO">
-    Data de Nascimento: <input type="date" name="data_nascimento" value="" id="#DATANASCIMENTO">
-    Observação: <input type="text" name="observacao" value="" id="#OBSERVACAO">
-
-    <button onclick="filtrarFornecedores()">Pesquisar!</button>
-    
-    <button onclick="exportarExcel()">Exportar!</button>
-    <hr>
+    <div class="filtersContainer" id="filtersContainer">
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Nome: </label>
+            <input type="text" name="nome" id="#NOME" value="">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Endereço: </label>
+            <input type="text" name="endereco" id="#ENDERECO" value="">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Bairro: </label>
+            <input type="text" name="bairro" value="" id="#BAIRRO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">CEP: </label>
+            <input type="text" name="cep" value="" id="#CEP">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Municipio: </label>
+            <input type="text" name="municipio" value="" id="#MUNICIPIO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Estado: </label>
+            <input type="text" name="estado" value="" id="#ESTADO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Telefone: </label>
+            <input type="text" name="telefone" value="" id="#TELEFONE">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Celular: </label>
+            <input type="text" name="celular" id="#CELULAR">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">CNPJ/CPF: </label>
+            <input type="text" name="cnpjcpf" value="" id="#CNPJCPF">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Grupo: </label>
+            <input type="text" name="grupo" value="" id="#GRUPO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Situação: </label>
+            <input type="text" name="situacao" value="" id="#SITUACAO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Data de Nascimento: </label>
+            <input type="date" name="data_nascimento" value="" id="#DATANASCIMENTO">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">Observação: </label>
+            <input type="text" name="observacao" value="" id="#OBSERVACAO">
+        </div>
+        <div class="filterButtonContainer">
+            <button class="filterButtons" onclick="filtrarFornecedores()">Pesquisar!</button>
+            <button class="filterButtons" onclick="exportarExcel()">Exportar!</button>
+        </div>
+    </div>
     <div class="menu-listagem">
         <table id="TABELA" align="center">
             <tr>
@@ -97,20 +129,11 @@
         function readData() {
 
             var xhttp = new XMLHttpRequest();
-
-            var tipo = "POST"
-            /*
-            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-            */
-
+            var tipo = "GET"
             var url = "/menu/sendFornecedores";
-
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
-
-            var body = {}
-
-            xhttp.send(JSON.stringify(body));
+            xhttp.send(null);
 
             // ---------- Resposta da requisição feita acima ---------------//
 
@@ -195,13 +218,13 @@
                         linha.appendChild(noInterno);
 
                         var botaoEdit = document.createElement("td");
-                        botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
-                            "<img src='/editar.jpeg' width='25' height='25' >"
+                        botaoEdit.innerHTML = "<a href = '/menu/editar-fornecedor?id=" + resposta[x].id + "'>" +
+                            "<img src='/icons/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
-                        botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x].id + "'>" +
-                            "<img src='/delete.jpeg' width='25' height='25' >"
+                        botaoDelete.innerHTML = "<a href = '/menu/excluir-fornecedor?id=" + resposta[x].id + "'>" +
+                            "<img src='/icons/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)
@@ -336,12 +359,12 @@
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-produto?id=" + resposta[x].id + "'>" +
-                            "<img src='/editar.jpeg' width='25' height='25' >"
+                            "<img src='/icons/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
                         botaoDelete.innerHTML = "<a href = '/menu/excluir-produto?id=" + resposta[x].id + "'>" +
-                            "<img src='/delete.jpeg' width='25' height='25' >"
+                            "<img src='/icons/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)

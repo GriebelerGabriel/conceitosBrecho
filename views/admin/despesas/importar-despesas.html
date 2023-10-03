@@ -5,16 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <link type="text/javascript" src="shim.min.js">
-    <link type="text/javascript" src="xlsx.full.min.js">
-
-    <title>Importar</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Importar Despesas</title>
 </head>
 
 <body>
-    <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -22,9 +19,7 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
                 <a href='/menu/listar-produtos'>Listar</a></button>
@@ -51,46 +46,14 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <div id="menu_import_export">
-        <form action="/menu/uploadDespesasXLSX" method="POST" enctype="multipart/form-data">
-            <input type="file" name="planilha">
-            <br>
-            <button type="submit">IMPORTAR DESPESAS</button>
-        </form>
-        <br>
+    
+    <form action="/menu/uploadDespesasXLSX" method="POST" enctype="multipart/form-data">
+        <div class="importContainer">
+            <input class="inputFileElement" type="file" name="planilhaDespesas">
+            <button class="filterButtons" type="submit">Importar Despesas</button>
+        </div>  
+    </form>
 
-        <form action="/menu/downloadDespesasXLSX" method="POST" enctype="multipart/form-data">
-            <button type="submit">EXPORTAR DESPESAS</button>
-        </form>
-    </div>
-    <script>
-        function exportarXLSX() {
-
-            var xhttp = new XMLHttpRequest();
-
-            var tipo = "POST"
-
-            var url = "/menu/downloadDespesasXLSX";
-
-            xhttp.open(tipo, url, true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-
-            var body = {}
-
-            xhttp.send(JSON.stringify(body));
-
-            // ---------- Resposta da requisição feita acima ---------------//
-
-            xhttp.onreadystatechange = function () {
-                
-                const data = [{ foo: 'foo' }, { bar: 'bar' }]
-                const fileName = 'download'
-                const exportType = 'csv'
-
-                window.exportFromJSON({ data, fileName, exportType })
-            }
-        }
-    </script>
 </body>
 
 </html>

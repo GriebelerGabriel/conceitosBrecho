@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Produtos</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Despesas</title>
 </head>
 
 <body onload="readData()">
-    <script src="../../jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu' id="imagem-logo"><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -19,9 +19,7 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
                 <a href='/menu/listar-produtos'>Listar</a></button>
@@ -48,16 +46,30 @@
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <hr>
-    DATA: <input type="date" id="filtroData">
-    DESCRIÇÃO: <input type="text" id="filtroDescricao">
-    VALOR: <input type="number" id="fitroValor">
-    OBSERVAÇÃO: <input type="test" id="filtroObservacao">
 
-    <button onclick="filtrarDespesas()">Pesquisar!</button>
-
-    <button onclick="exportarExcel()">Exportar!</button>
-    <hr>
+    <div class="filtersContainer" id="filtersContainer">
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">DATA: </label>
+            <input type="date" id="filtroData">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">DESCRIÇÃO: </label>
+            <input type="text" id="filtroDescricao">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">VALOR: </label>
+            <input type="number" id="fitroValor">
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="filterLabel">OBSERVAÇÃO: </label>
+            <input type="test" id="filtroObservacao">
+        </div>
+        <div class="filterButtonContainer">
+            <button class="filterButtons" onclick="filtrarDespesas()">Pesquisar!</button>
+            <button class="filterButtons" onclick="exportarExcel()">Exportar!</button>
+        </div>
+    </div>
+    
     <div class="menu-listagem">
         <table id="TABELA" align="center">
             <tr>
@@ -74,22 +86,12 @@
         function readData() {
 
             var xhttp = new XMLHttpRequest();
-
-            var tipo = "POST"
-            /*
-            tipo pode ser POST, GET, DELETE, PATCH depende do que vc quer
-            */
-
+            var tipo = "GET"
             var url = "/menu/sendDespesas";
 
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
-
-            var body = {}
-
-            xhttp.send(JSON.stringify(body));
-
-            // ---------- Resposta da requisição feita acima ---------------//
+            xhttp.send(null);
 
             xhttp.onreadystatechange = function () {
 
@@ -122,12 +124,12 @@
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
-                            "<img src='/editar.jpeg' width='25' height='25' >"
+                            "<img src='/icons/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
                         botaoDelete.innerHTML = "<a href = '/menu/excluir-despesa?id=" + resposta[x].id + "'>" +
-                            "<img src='/delete.jpeg' width='25' height='25' >"
+                            "<img src='/icons/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)
@@ -198,12 +200,12 @@
 
                         var botaoEdit = document.createElement("td");
                         botaoEdit.innerHTML = "<a href = '/menu/editar-despesa?id=" + resposta[x].id + "'>" +
-                            "<img src='/editar.jpeg' width='25' height='25' >"
+                            "<img src='/icons/editar.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoEdit);
 
                         var botaoDelete = document.createElement("td");
                         botaoDelete.innerHTML = "<a href = '/menu/excluir-despesa?id=" + resposta[x].id + "'>" +
-                            "<img src='/delete.jpeg' width='25' height='25' >"
+                            "<img src='/icons/delete.jpeg' width='25' height='25' >"
                         linha.appendChild(botaoDelete);
 
                         document.getElementById("TABELA").appendChild(linha)

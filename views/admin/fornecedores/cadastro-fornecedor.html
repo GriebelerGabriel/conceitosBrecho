@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Fornecedor</title>
+    <link rel="icon" href="/icons/logo.jpeg" type="image/x-icon">
+    <title>Novo Fornecedor</title>
 </head>
 
 <body>
-    <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
-        <a href='/menu'><img src='/logo.jpeg'></a>
+        <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
 
     <div id="barra-principal">
@@ -19,12 +19,10 @@
         <button class="button-top"> <a href='/menu'>Home</a></button>
 
         <div class="dropdown-top">
-
             <button class="button-top">Produto</button>
-
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-produto'>Cadastrar</a>
-                <a href='/menu/listar-produtos'>Editar</a></button>
+                <a href='/menu/listar-produtos'>Listar</a></button>
                 <a href='/menu/importar-produtos'>Importar</a>
             </div>
         </div>
@@ -33,7 +31,7 @@
             <button class="button-top">Despesa</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-despesa'>Cadastrar</a>
-                <a href='/menu/listar-despesas'>Editar</a></button>
+                <a href='/menu/listar-despesas'>Listar</a></button>
                 <a href='/menu/importar-despesas'>Importar</a>
             </div>
         </div>
@@ -42,37 +40,74 @@
             <button class="button-top">Fornecedor</button>
             <div class="dropdown-top-conteudo">
                 <a href='/menu/cadastro-fornecedor'>Cadastrar</a>
-                <a href='/menu/listar-fornecedores'>Editar</a></button>
+                <a href='/menu/listar-fornecedores'>Listar</a></button>
                 <a href='/menu/importar-fornecedores'>Importar</a>
             </div>
         </div>
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
-    <br>
 
     <form action="/menu/saveFornecedor" name="form-cadastros" method="POST">
-        Nome: <input type="text" name="nome" id="nome">
-        Endereço: <input type="text" name="endereco" id="endereco">
-        Bairro: <input type="text" name="bairro" id="bairro">
-        CEP: <input type="text" name="cep" id="cep">
-
-        Municipio: <input type="text" name="municipio" id="municipio">
-        Estado: <input type="text" name="estado" id="estado">
-        Telefone: <input type="text" name="telefone" id="telefone">
-        Celular: <input type="text" name="celular" id="celular">
-
-        E-mail: <input type="text" name="email" id="email">
-        CNPJ/CPF: <input type="text" name="cnpj_cpf" id="cnpj_cpf">
-        Grupo: <input type="text" name="grupo" id="grupo">
-        Situação: <input type="text" name="situacao" id="situacao">
-
-        Data de Nascimento: <input type="date" name="data_nascimento" id="data_nascimento">
-        Observação: <input type="text" name="observacao" id="observacao">
-
-        <button type="submit">Cadastrar!</button>
-
+        <div class="formsContainer" id="formContainer">
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Nome: </label>
+                <input type="text" name="nome" id="nome">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Endereço: </label>
+                <input type="text" name="endereco" id="endereco">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Bairro: </label>
+                <input type="text" name="bairro" id="bairro">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">CEP: </label>
+                <input type="text" name="cep" id="cep">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Municipio: </label>
+                <input type="text" name="municipio" id="municipio">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Estado: </label>
+                <input type="text" name="estado" id="estado">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Telefone: </label>
+                <input type="text" name="telefone" id="telefone">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Celular: </label>
+                <input type="text" name="celular" id="celular">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">E-mail: </label>
+                <input type="text" name="email" id="email">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">CNPJ/CPF: </label>
+                <input type="text" name="cnpj_cpf" id="cnpj_cpf">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Grupo: </label>
+                <input type="text" name="grupo" id="grupo">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Situação: </label>
+                <input type="text" name="situacao" id="situacao">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Data de Nascimento: </label>
+                <input type="date" name="data_nascimento" id="data_nascimento">
+            </div>
+            <div class="filterTuple" id="filterTuple">
+                <label class="filterLabel">Observação: </label>
+                <input type="text" name="observacao" id="observacao">
+            </div>
+            <button class="filterButtons" type="submit">Cadastrar!</button>
+        </div>
     </form>
-
 </body>
 
 </html>

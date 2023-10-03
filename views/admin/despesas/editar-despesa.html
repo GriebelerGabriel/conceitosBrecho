@@ -10,7 +10,6 @@
 </head>
 
 <body onload="readData()">
-    <script src="../js/jquery-1.11.3.js"></script>
     <div id="rodape" class="principal">
         <a href='/menu'><img src='/icons/logo.jpeg'></a>
     </div>
@@ -48,7 +47,7 @@
         <button class="button-top"> <a href='/sobre'>Sobre</a></button>
     </div>
 
-    <div class="filtersContainer" id="filtersContainer">
+    <div class="formsContainer" id="filtersContainer">
         <input type="hidden" name="id" id="#ID" value="">
         <div class="filterTuple" id="filterTuple">
             <label class="filterLabel">Data:  </label> 
@@ -66,7 +65,7 @@
             <label class="filterLabel">Observação: </label>
             <textarea class="textArea" name="observacao" id=#OBSERVACAO value=""></textarea>
         </div>
-        <button class="filterButtons" onclick="enviarAlteracao()"> Alterar! </button>
+        <button class="filterButtons" onclick="enviarAlteracao()"> Alterar Dados! </button>
     </div>
 
         
@@ -75,23 +74,15 @@
 
         function readData() {
             var xhttp = new XMLHttpRequest();
-
             var url_string = window.location.href;
             var url = new URL(url_string);
             var idValue = url.searchParams.get("id");
-
-            console.log(idValue);
-
-
             var tipo = "POST"
-
             var url = "/menu/sendIdDespesa?=" + idValue;
 
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
-
             var body = { id: idValue }
-
             xhttp.send(JSON.stringify(body));
 
             xhttp.onreadystatechange = function () {
@@ -113,26 +104,34 @@
 
         function enviarAlteracao(){
 
-            var alterId = document.getElementById("#ID").value;
-            var alterData = document.getElementById("#DATA").value;
-            var alterDescricao = document.getElementById("#DESCRICAO").value;
-            var alterValor = document.getElementById("#VALOR").value;
-            var alterObs = document.getElementById("#OBSERVACAO").value;
+            var alterDataBody = {
+                id: document.getElementById("#ID").value, 
+                data: document.getElementById("#DATA").value, 
+                descricao: document.getElementById("#DESCRICAO").value, 
+                valor:  document.getElementById("#VALOR").value, 
+                observacao: document.getElementById("#OBSERVACAO").value
+            }
 
             var xhttp = new XMLHttpRequest();
-
             var tipo = "POST"
-
             var url = "/menu/editandoDespesa";
-
             xhttp.open(tipo, url, true);
             xhttp.setRequestHeader("Content-type", "application/json");
-            
-            var body = {id:alterId, data: alterData, descricao: alterDescricao, valor: alterValor, observacao: alterObs}
 
-            xhttp.send(JSON.stringify(body));
-            alert("Alterado com sucesso!");
-            window.location.href = "/menu/listar-despesas";
+            xhttp.send(JSON.stringify(alterDataBody));
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                   jsonResponse = JSON.parse(this.response)
+                   if(jsonResponse.status == true){
+                        alert(jsonResponse.result)
+                        window.location.href = "/menu/listar-despesas";
+                   }
+                   else{
+                        alert(jsonResponse.result)
+                   }
+                }
+            };
 
         }
 

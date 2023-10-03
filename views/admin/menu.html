@@ -68,6 +68,20 @@
                 <label class="valor"id="#LUCRO"></label>
             </div>
         </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="menuLabel">DESPESAS (OK):</label>
+            <div class="moedaEValor">
+                <label class="tipoMoeda">R$</label>
+                <label class="valor"id="#DESPESASPAGAS"></label>
+            </div>
+        </div>
+        <div class="filterTuple" id="filterTuple">
+            <label class="menuLabel">DESPESAS (A PAGAR):</label>
+            <div class="moedaEValor">
+                <label class="tipoMoeda">R$</label>
+                <label class="valor"id="#DESPESASAPAGAR"></label>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -92,7 +106,8 @@
                     document.getElementById("#VENDA").innerHTML = resposta.valorVenda.toFixed(2);
                     document.getElementById("#COMPRA").innerHTML = resposta.valorCompra.toFixed(2);
                     document.getElementById("#LUCRO").innerHTML = resposta.valorLucro.toFixed(2);
-        
+                    document.getElementById("#DESPESASPAGAS").innerHTML = resposta.valorDespesasPagas.toFixed(2);
+                    document.getElementById("#DESPESASAPAGAR").innerHTML = resposta.valorDespesasAPagar.toFixed(2);
                 }
             }
         }
